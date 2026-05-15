@@ -35,9 +35,9 @@
 
 <!-- Hero -->
 <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-amber-50/50 to-white dark:from-gray-900 dark:to-gray-900"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-amber-200/20 rounded-full blur-3xl"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="absolute inset-0 bg-gradient-to-b from-amber-50/50 to-white dark:from-gray-900 dark:to-gray-900 pointer-events-none"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-amber-200/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center max-w-4xl mx-auto">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full text-sm font-medium mb-6">
                 <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>Platform Undangan #1 di Indonesia

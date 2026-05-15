@@ -5,7 +5,7 @@
 <div class="min-h-screen flex">
     <!-- Left Side - Branding -->
     <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-amber-900 via-amber-800 to-yellow-900">
-        <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0 opacity-10 pointer-events-none">
             <div class="absolute top-20 left-20 w-72 h-72 bg-amber-300 rounded-full blur-3xl"></div>
             <div class="absolute bottom-20 right-20 w-96 h-96 bg-yellow-300 rounded-full blur-3xl"></div>
         </div>
