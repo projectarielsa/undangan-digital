@@ -1,0 +1,74 @@
+<?php
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\InvitationController as AdminInvitation;
+use App\Http\Controllers\Admin\PaymentController as AdminPayment;
+use App\Http\Controllers\Admin\TemplateController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\OtpVerificationController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Customer\DashboardController;
+use App\Http\Controllers\Customer\GalleryController;
+use App\Http\Controllers\Customer\GuestController;
+use App\Http\Controllers\Customer\InvitationController;
+use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\MidtransWebhookController;
+use App\Http\Controllers\PublicInvitationController;
+use Illuminate\Support\Facades\Route;
+
+Route::get("/", [LandingPageController::class, "index"])->name("home");
+Route::middleware("guest")->group(function () {
+    Route::get("/login", [LoginController::class, "showLoginForm"])->name("login");
+    Route::post("/login", [LoginController::class, "login"]);
+    Route::get("/register", [RegisterController::class, "showRegistrationForm"])->name("register");
+    Route::post("/register", [RegisterController::class, "register"]);
+    Route::get("/forgot-password", [ForgotPasswordController::class, "showLinkRequestForm"])->name("password.request");
+    Route::post("/forgot-password", [ForgotPasswordController::class, "sendResetLinkEmail"])->name("password.email");
+    Route::get("/reset-password/{token}", [ForgotPasswordController::class, "showResetForm"])->name("password.reset");
+    Route::post("/reset-password", [ForgotPasswordController::class, "reset"])->name("password.update");
+    Route::get("/auth/google/redirect", [GoogleAuthController::class, "redirect"])->name("auth.google");
+    Route::get("/auth/google/callback", [GoogleAuthController::class, "callback"]);
+});
+Route::middleware("auth")->group(function () {
+    Route::post("/logout", [LoginController::class, "logout"])->name("logout");
+    Route::get("/verify-otp", [OtpVerificationController::class, "show"])->name("verification.otp");
+    Route::post("/verify-otp", [OtpVerificationController::class, "verify"])->name("verification.otp.verify");
+    Route::post("/resend-otp", [OtpVerificationController::class, "resend"])->name("verification.otp.resend");
+    Route::middleware(["verified.email","role:customer"])->prefix("customer")->name("customer.")->group(function () {
+        Route::get("/dashboard", [DashboardController::class, "index"])->name("dashboard");
+        Route::resource("invitations", InvitationController::class);
+        Route::post("/invitations/{invitation}/publish", [InvitationController::class, "publish"])->name("invitations.publish");
+        Route::post("/invitations/{invitation}/pause", [InvitationController::class, "pause"])->name("invitations.pause");
+        Route::post("/invitations/{invitation}/duplicate", [InvitationController::class, "duplicate"])->name("invitations.duplicate");
+        Route::get("/invitations/{invitation}/guests", [GuestController::class, "index"])->name("guests.index");
+        Route::post("/invitations/{invitation}/guests", [GuestController::class, "store"])->name("guests.store");
+        Route::delete("/invitations/{invitation}/guests/{guest}", [GuestController::class, "destroy"])->name("guests.destroy");
+        Route::post("/invitations/{invitation}/guests/import", [GuestController::class, "import"])->name("guests.import");
+        Route::post("/invitations/{invitation}/gallery", [GalleryController::class, "store"])->name("gallery.store");
+        Route::put("/invitations/{invitation}/gallery/order", [GalleryController::class, "updateOrder"])->name("gallery.order");
+        Route::delete("/invitations/{invitation}/gallery/{gallery}", [GalleryController::class, "destroy"])->name("gallery.destroy");
+        Route::get("/packages", [PaymentController::class, "packages"])->name("packages");
+        Route::post("/checkout/{package}", [PaymentController::class, "checkout"])->name("checkout");
+        Route::get("/payments/finish", [PaymentController::class, "finish"])->name("payments.finish");
+        Route::get("/payments/history", [PaymentController::class, "history"])->name("payments.history");
+    });
+    Route::middleware(["verified.email","role:super_admin"])->prefix("admin")->name("admin.")->group(function () {
+        Route::get("/dashboard", [AdminDashboard::class, "index"])->name("dashboard");
+        Route::get("/users", [UserController::class, "index"])->name("users.index");
+        Route::get("/users/{user}", [UserController::class, "show"])->name("users.show");
+        Route::post("/users/{user}/toggle-active", [UserController::class, "toggleActive"])->name("users.toggle");
+        Route::get("/invitations", [AdminInvitation::class, "index"])->name("invitations.index");
+        Route::get("/invitations/{invitation}", [AdminInvitation::class, "show"])->name("invitations.show");
+        Route::delete("/invitations/{invitation}", [AdminInvitation::class, "destroy"])->name("invitations.destroy");
+        Route::resource("templates", TemplateController::class);
+        Route::get("/payments", [AdminPayment::class, "index"])->name("payments.index");
+        Route::get("/payments/{payment}", [AdminPayment::class, "show"])->name("payments.show");
+    });
+});
+Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])->name("midtrans.webhook");
+Route::get("/{slug}", [PublicInvitationController::class, "show"])->name("invitation.show");
+Route::post("/{slug}/rsvp", [PublicInvitationController::class, "rsvp"])->name("invitation.rsvp");
+Route::post("/{slug}/guestbook", [PublicInvitationController::class, "guestbook"])->name("invitation.guestbook");
