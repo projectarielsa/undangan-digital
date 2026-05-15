@@ -13,8 +13,23 @@ class InvitationController extends Controller
     public function create() { $templates = InvitationTemplate::active()->orderBy("sort_order")->get(); return view("customer.invitations.create", compact("templates")); }
     public function store(Request $request)
     {
-        $v = $request->validate(["template_id"=>"required|exists:invitation_templates,id","groom_name"=>"required|string|max:255","bride_name"=>"required|string|max:255","groom_father"=>"nullable|string","groom_mother"=>"nullable|string","bride_father"=>"nullable|string","bride_mother"=>"nullable|string","groom_instagram"=>"nullable|string","bride_instagram"=>"nullable|string","event_date"=>"required|date|after:today","event_time_start"=>"required","event_time_end"=>"nullable","event_venue"=>"required|string|max:255","event_address"=>"nullable|string","event_maps_url"=>"nullable|url","opening_text"=>"nullable|string","closing_text"=>"nullable|string","dress_code"=>"nullable|string","cover_image"=>"nullable|image|max:5120","groom_photo"=>"nullable|image|max:2048","bride_photo"=>"nullable|image|max:2048","music_file"=>"nullable|file|mimes:mp3,wav|max:10240"]);
+        $v = $request->validate([
+            "template_id"=>"required|exists:invitation_templates,id",
+            "groom_name"=>"required|string|max:255","bride_name"=>"required|string|max:255",
+            "groom_father"=>"nullable|string","groom_mother"=>"nullable|string",
+            "bride_father"=>"nullable|string","bride_mother"=>"nullable|string",
+            "groom_instagram"=>"nullable|string","bride_instagram"=>"nullable|string",
+            "event_date"=>"required|date|after:today","event_time_start"=>"required","event_time_end"=>"nullable",
+            "event_venue"=>"required|string|max:255","event_address"=>"nullable|string","event_maps_url"=>"nullable|url",
+            "opening_text"=>"nullable|string","closing_text"=>"nullable|string","dress_code"=>"nullable|string",
+            "cover_image"=>"nullable|image|max:5120","groom_photo"=>"nullable|image|max:2048","bride_photo"=>"nullable|image|max:2048",
+            "music_file"=>"nullable|file|mimes:mp3,wav|max:10240","music_autoplay"=>"nullable",
+            "gift_info"=>"nullable|string","bank_name"=>"nullable|string|max:100",
+            "bank_account_number"=>"nullable|string|max:50","bank_account_name"=>"nullable|string|max:100",
+            "qris_image"=>"nullable|image|max:2048",
+        ]);
         $v["title"] = $v["groom_name"] . " & " . $v["bride_name"];
+        $v["music_autoplay"] = $request->has("music_autoplay");
         $inv = $this->service->create($request->user(), $v);
         return redirect()->route("customer.invitations.edit", $inv)->with("success", "Undangan berhasil dibuat!");
     }
@@ -23,8 +38,24 @@ class InvitationController extends Controller
     public function update(Request $request, Invitation $invitation)
     {
         $this->authorize("update", $invitation);
-        $v = $request->validate(["template_id"=>"sometimes|exists:invitation_templates,id","groom_name"=>"sometimes|string|max:255","bride_name"=>"sometimes|string|max:255","event_date"=>"sometimes|date","event_time_start"=>"sometimes","event_venue"=>"sometimes|string|max:255","event_address"=>"nullable|string","event_maps_url"=>"nullable|url","opening_text"=>"nullable|string","closing_text"=>"nullable|string","dress_code"=>"nullable|string","slug"=>"nullable|string|max:255|unique:invitations,slug,".$invitation->id,"cover_image"=>"nullable|image|max:5120","music_file"=>"nullable|file|mimes:mp3,wav|max:10240"]);
+        $v = $request->validate([
+            "template_id"=>"sometimes|exists:invitation_templates,id",
+            "groom_name"=>"sometimes|string|max:255","bride_name"=>"sometimes|string|max:255",
+            "groom_father"=>"nullable|string","groom_mother"=>"nullable|string",
+            "bride_father"=>"nullable|string","bride_mother"=>"nullable|string",
+            "groom_instagram"=>"nullable|string","bride_instagram"=>"nullable|string",
+            "event_date"=>"sometimes|date","event_time_start"=>"sometimes","event_time_end"=>"nullable",
+            "event_venue"=>"sometimes|string|max:255","event_address"=>"nullable|string","event_maps_url"=>"nullable|url",
+            "opening_text"=>"nullable|string","closing_text"=>"nullable|string","dress_code"=>"nullable|string",
+            "slug"=>"nullable|string|max:255|unique:invitations,slug,".$invitation->id,
+            "cover_image"=>"nullable|image|max:5120","groom_photo"=>"nullable|image|max:2048","bride_photo"=>"nullable|image|max:2048",
+            "music_file"=>"nullable|file|mimes:mp3,wav|max:10240","music_autoplay"=>"nullable",
+            "gift_info"=>"nullable|string","bank_name"=>"nullable|string|max:100",
+            "bank_account_number"=>"nullable|string|max:50","bank_account_name"=>"nullable|string|max:100",
+            "qris_image"=>"nullable|image|max:2048",
+        ]);
         if (isset($v["groom_name"]) && isset($v["bride_name"])) $v["title"] = $v["groom_name"] . " & " . $v["bride_name"];
+        $v["music_autoplay"] = $request->has("music_autoplay");
         $this->service->update($invitation, $v);
         return redirect()->route("customer.invitations.edit", $invitation)->with("success", "Undangan diperbarui!");
     }

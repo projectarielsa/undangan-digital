@@ -65,16 +65,36 @@
             </div>
         </div>
 
-        <!-- Content -->
+        <!-- Content & Media -->
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Konten Undangan</h3>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Konten & Media</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Kata-kata, cover, dan musik undangan</p>
             <div class="space-y-4">
-                <div><label class="block text-sm text-gray-600 mb-1">Kata Pembuka</label><textarea name="opening_text" rows="3" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Dengan memohon rahmat dan ridho Allah SWT...">{{ old('opening_text') }}</textarea></div>
-                <div><label class="block text-sm text-gray-600 mb-1">Kata Penutup</label><textarea name="closing_text" rows="3" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Merupakan suatu kebahagiaan bagi kami...">{{ old('closing_text') }}</textarea></div>
+                <div><label class="block text-xs text-gray-500 mb-1">Kata Pembuka</label><textarea name="opening_text" rows="3" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Dengan memohon rahmat dan ridho Allah SWT...">{{ old('opening_text') }}</textarea></div>
+                <div><label class="block text-xs text-gray-500 mb-1">Kata Penutup</label><textarea name="closing_text" rows="3" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Merupakan suatu kehormatan dan kebahagiaan bagi kami...">{{ old('closing_text') }}</textarea></div>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm text-gray-600 mb-1">Dress Code</label><input type="text" name="dress_code" value="{{ old('dress_code') }}" placeholder="Sage Green / Formal" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-sm text-gray-600 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">Dress Code</label><input type="text" name="dress_code" value="{{ old('dress_code') }}" placeholder="Sage Green / Formal" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"></div>
                 </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div><label class="block text-xs text-gray-500 mb-1">Background Music (MP3/WAV)</label><input type="file" name="music_file" accept=".mp3,.wav" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"></div>
+                    <div class="flex items-end pb-1"><label class="flex items-center gap-2"><input type="checkbox" name="music_autoplay" value="1" checked class="rounded border-gray-300 text-amber-600 focus:ring-amber-500"><span class="text-sm text-gray-600 dark:text-gray-400">Autoplay musik</span></label></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amplop Digital -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Amplop Digital</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Informasi rekening bank dan QRIS (opsional)</p>
+            <div class="space-y-4">
+                <div><label class="block text-xs text-gray-500 mb-1">Pesan untuk tamu</label><textarea name="gift_info" rows="2" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent" placeholder="Contoh: Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih...">{{ old('gift_info') }}</textarea></div>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div><label class="block text-xs text-gray-500 mb-1">Nama Bank</label><input type="text" name="bank_name" value="{{ old('bank_name') }}" placeholder="BCA / BNI / Mandiri" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">No. Rekening</label><input type="text" name="bank_account_number" value="{{ old('bank_account_number') }}" placeholder="1234567890" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">Atas Nama</label><input type="text" name="bank_account_name" value="{{ old('bank_account_name') }}" placeholder="Nama pemilik" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                </div>
+                <div><label class="block text-xs text-gray-500 mb-1">Upload QRIS (opsional)</label><input type="file" name="qris_image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100"></div>
             </div>
         </div>
 
