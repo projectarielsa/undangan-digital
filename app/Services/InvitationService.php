@@ -26,8 +26,53 @@ class InvitationService
     }
     public function duplicate(Invitation $inv): Invitation
     {
-        $new = $inv->replicate(); $new->slug = null; $new->status = 'draft'; $new->published_at = null; $new->view_count = 0; $new->title = $inv->title . ' (Copy)'; $new->save();
-        foreach ($inv->galleries as $g) $new->galleries()->create($g->only(['image_path', 'thumbnail_path', 'caption', 'sort_order']));
+        $new = $inv->replicate();
+        $new->slug = null;
+        $new->status = 'draft';
+        $new->published_at = null;
+        $new->view_count = 0;
+        $new->title = $inv->title . ' (Copy)';
+
+        // Duplicate uploaded files so the copy is independent
+        foreach (['cover_image', 'groom_photo', 'bride_photo', 'qris_image'] as $field) {
+            if ($inv->$field && Storage::disk('public')->exists($inv->$field)) {
+                $ext = pathinfo($inv->$field, PATHINFO_EXTENSION);
+                $newPath = 'invitations/' . uniqid() . '.' . $ext;
+                Storage::disk('public')->copy($inv->$field, $newPath);
+                $new->$field = $newPath;
+            }
+        }
+        if ($inv->music_url && Storage::disk('public')->exists($inv->music_url)) {
+            $ext = pathinfo($inv->music_url, PATHINFO_EXTENSION);
+            $newPath = 'invitations/music/' . uniqid() . '.' . $ext;
+            Storage::disk('public')->copy($inv->music_url, $newPath);
+            $new->music_url = $newPath;
+        }
+
+        $new->save();
+
+        // Duplicate gallery with independent file copies
+        foreach ($inv->galleries as $g) {
+            $newImagePath = $g->image_path;
+            if ($g->image_path && Storage::disk('public')->exists($g->image_path)) {
+                $ext = pathinfo($g->image_path, PATHINFO_EXTENSION);
+                $newImagePath = 'invitations/gallery/' . $new->id . '/' . uniqid() . '.' . $ext;
+                Storage::disk('public')->copy($g->image_path, $newImagePath);
+            }
+            $newThumbPath = $g->thumbnail_path;
+            if ($g->thumbnail_path && Storage::disk('public')->exists($g->thumbnail_path)) {
+                $ext = pathinfo($g->thumbnail_path, PATHINFO_EXTENSION);
+                $newThumbPath = 'invitations/gallery/' . $new->id . '/thumb_' . uniqid() . '.' . $ext;
+                Storage::disk('public')->copy($g->thumbnail_path, $newThumbPath);
+            }
+            $new->galleries()->create([
+                'image_path' => $newImagePath,
+                'thumbnail_path' => $newThumbPath,
+                'caption' => $g->caption,
+                'sort_order' => $g->sort_order,
+            ]);
+        }
+
         return $new;
     }
     public function delete(Invitation $inv): void
