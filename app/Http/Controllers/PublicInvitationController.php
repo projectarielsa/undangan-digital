@@ -13,7 +13,11 @@ class PublicInvitationController extends Controller
         $invitation->incrementView();
         $guestName = $request->query("to");
         $guest = null;
-        if ($guestName) { $guest = $invitation->guests()->where("name", urldecode($guestName))->first(); $guest?->markAsOpened(); }
+        if ($guestName) {
+            $decodedName = urldecode($guestName);
+            $guest = $invitation->guests()->whereRaw('LOWER(name) = ?', [strtolower($decodedName)])->first();
+            $guest?->markAsOpened();
+        }
         $bladeView = $invitation->template ? $invitation->template->blade_view : "templates.elegant-gold";
         return view($bladeView, compact("invitation","guest","guestName"));
     }
@@ -21,7 +25,7 @@ class PublicInvitationController extends Controller
     {
         $invitation = Invitation::where("slug", $slug)->firstOrFail();
         $v = $request->validate(["name"=>"required|string|max:255","rsvp_status"=>"required|in:attending,not_attending,maybe","number_of_guests"=>"nullable|integer|min:1|max:10","message"=>"nullable|string|max:500"]);
-        $guest = $invitation->guests()->where("name", $v["name"])->first();
+        $guest = $invitation->guests()->whereRaw('LOWER(name) = ?', [strtolower($v["name"])])->first();
         if ($guest) $guest->update(["rsvp_status"=>$v["rsvp_status"],"number_of_guests"=>$v["number_of_guests"]??1]);
         else $invitation->guests()->create($v);
         return back()->with("success", "Terima kasih!");

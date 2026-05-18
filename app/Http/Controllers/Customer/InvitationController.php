@@ -28,8 +28,25 @@ class InvitationController extends Controller
             "bank_account_number"=>"nullable|string|max:50","bank_account_name"=>"nullable|string|max:100",
             "qris_image"=>"nullable|image|max:2048",
         ]);
+
+        // Validate premium template access
+        $template = InvitationTemplate::findOrFail($v['template_id']);
+        if ($template->is_premium) {
+            $activePackage = $request->user()->activeSubscription()?->package;
+            if (!$activePackage || $activePackage->max_templates < 2) {
+                return back()->withErrors(['template_id' => 'Template premium memerlukan paket Premium atau Exclusive. Silakan upgrade paket Anda.'])->withInput();
+            }
+        }
+
         $v["title"] = $v["groom_name"] . " & " . $v["bride_name"];
         $v["music_autoplay"] = $request->has("music_autoplay");
+
+        // Auto-assign package from active subscription
+        $activeSub = $request->user()->activeSubscription();
+        if ($activeSub) {
+            $v['package_id'] = $activeSub->package_id;
+        }
+
         $inv = $this->service->create($request->user(), $v);
         return redirect()->route("customer.invitations.edit", $inv)->with("success", "Undangan berhasil dibuat!");
     }

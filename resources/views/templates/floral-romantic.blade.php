@@ -753,17 +753,17 @@
 
                 <div>
                     <label class="font-body text-sm font-semibold" style="color: var(--text); display: block; margin-bottom: 6px;">Konfirmasi</label>
-                    <select name="attendance" class="form-input" required>
+                    <select name="rsvp_status" class="form-input" required>
                         <option value="">-- Pilih --</option>
-                        <option value="hadir">Akan Hadir</option>
-                        <option value="tidak_hadir">Berhalangan Hadir</option>
-                        <option value="ragu">Masih Ragu</option>
+                        <option value="attending">Akan Hadir</option>
+                        <option value="not_attending">Berhalangan Hadir</option>
+                        <option value="maybe">Masih Ragu</option>
                     </select>
                 </div>
 
                 <div>
                     <label class="font-body text-sm font-semibold" style="color: var(--text); display: block; margin-bottom: 6px;">Jumlah Tamu</label>
-                    <input type="number" name="guests_count" min="1" max="10" value="1" class="form-input">
+                    <input type="number" name="number_of_guests" min="1" max="10" value="1" class="form-input">
                 </div>
 
                 <div class="pt-2">
