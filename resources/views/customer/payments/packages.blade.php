@@ -26,6 +26,9 @@
         </ul>
         <form method="POST" action="{{ route('customer.checkout', $package) }}">
             @csrf
+            @if(request('invitation_id'))
+            <input type="hidden" name="invitation_id" value="{{ request('invitation_id') }}">
+            @endif
             <button type="submit" class="w-full py-3 text-center font-semibold rounded-xl transition {{ $package->is_featured ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg shadow-amber-500/25' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200' }}">Pilih {{ $package->name }}</button>
         </form>
     </div>
