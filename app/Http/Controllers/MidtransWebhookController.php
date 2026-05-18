@@ -12,6 +12,21 @@ class MidtransWebhookController extends Controller
     {
         try {
             $n = $request->all();
+
+            // Verify Midtrans signature
+            $serverKey = config('services.midtrans.server_key');
+            $orderId = $n['order_id'] ?? '';
+            $statusCode = $n['status_code'] ?? '';
+            $grossAmount = $n['gross_amount'] ?? '';
+            $signatureKey = $n['signature_key'] ?? '';
+
+            $expectedSignature = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
+
+            if ($signatureKey !== $expectedSignature) {
+                Log::warning("Midtrans webhook: Invalid signature for order {$orderId}");
+                return response()->json(["status" => "error", "message" => "Invalid signature"], 403);
+            }
+
             $payment = $this->midtrans->handleNotification($n);
             if ($payment->isPaid()) $this->subs->activateFromPayment($payment);
             return response()->json(["status"=>"success"]);
