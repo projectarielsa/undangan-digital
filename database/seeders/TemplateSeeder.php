@@ -19,6 +19,11 @@ class TemplateSeeder extends Seeder
             ['name'=>'Vintage Rose','slug'=>'vintage-rose','description'=>'Template vintage dengan nuansa dusty rose antik','category'=>'vintage','color_primary'=>'#C4888B','color_secondary'=>'#A06568','color_accent'=>'#FAF3EB','font_heading'=>'EB Garamond','font_body'=>'Lora','blade_view'=>'templates.vintage-rose','is_premium'=>true,'is_active'=>true,'sort_order'=>9],
             ['name'=>'Tropical Paradise','slug'=>'tropical-paradise','description'=>'Template tropis dengan warna cerah dan daun palm','category'=>'tropical','color_primary'=>'#E8756D','color_secondary'=>'#2BA5A5','color_accent'=>'#FFF8F0','font_heading'=>'Pacifico','font_body'=>'Nunito','blade_view'=>'templates.tropical-paradise','is_premium'=>true,'is_active'=>true,'sort_order'=>10],
         ];
-        foreach ($templates as $t) InvitationTemplate::create($t);
+        foreach ($templates as $t) {
+            InvitationTemplate::updateOrCreate(
+                ['slug' => $t['slug']],
+                $t
+            );
+        }
     }
 }

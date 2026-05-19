@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invitation->title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@300;400;600;700&family=Josefin+Sans:wght@300;400;600&display=swap" rel="stylesheet">
@@ -136,6 +136,17 @@
         .organic-shape-alt {
             border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
             overflow: hidden;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .organic-shape, .organic-shape-alt { width: 180px !important; height: 180px !important; }
+            .countdown-card { padding: 14px 8px; }
+            .countdown-card .number { font-size: 1.5rem; }
+            section { padding-left: 16px; padding-right: 16px; }
+        }
+        @media (max-width: 380px) {
+            .organic-shape, .organic-shape-alt { width: 150px !important; height: 150px !important; }
         }
     </style>
 </head>
