@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invitation->title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,6 +265,17 @@
         .cover-anim-d3 { animation-delay: 0.6s; opacity: 0; }
         .cover-anim-d4 { animation-delay: 0.8s; opacity: 0; }
         .cover-anim-d5 { animation-delay: 1s; opacity: 0; }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .batik-cover-corner { width: 140px; height: 140px; }
+            .batik-corner { width: 100px; height: 100px; }
+            .couple-photo { width: 150px !important; height: 150px !important; }
+            .countdown-box { padding: 14px 8px; }
+            .event-card { padding: 24px 16px; }
+            .gallery-grid .gallery-item:first-child { aspect-ratio: 4/3; }
+            section { padding-left: 16px; padding-right: 16px; }
+        }
     </style>
 </head>
 <body x-data="invitationApp()" x-cloak>

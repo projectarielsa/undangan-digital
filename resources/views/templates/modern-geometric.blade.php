@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invitation->title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -240,6 +240,16 @@
         /* Copper text */
         .copper-text { color: var(--copper); }
         .navy-text { color: var(--navy); }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .geo-hex-frame { width: 140px; height: 160px; }
+            .geo-divider::before, .geo-divider::after { width: 40px; }
+            .countdown-box { padding: 14px 8px; }
+            .countdown-box p:first-child { font-size: 1.5rem; }
+            section { padding-left: 16px; padding-right: 16px; }
+            .gallery-geo-grid { gap: 8px; }
+        }
     </style>
 </head>
 

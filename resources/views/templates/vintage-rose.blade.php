@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invitation->title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -224,6 +224,17 @@
         .gallery-grid .gallery-item {
             aspect-ratio: 1;
             overflow: hidden;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .ornate-frame { padding: 24px; }
+            .ornate-divider { width: 180px; }
+            .vintage-photo-frame { width: 180px !important; height: 180px !important; }
+            .corner-ornament { width: 40px; height: 40px; }
+            .countdown-card { padding: 12px 6px; }
+            .gallery-grid { gap: 8px; }
+            section { padding-left: 16px; padding-right: 16px; }
         }
     </style>
 </head>

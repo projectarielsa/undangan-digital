@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $invitation->title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Nunito+Sans:wght@200;300;400;600&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
@@ -98,6 +98,13 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; opacity: 0.5; }
+
+        /* Mobile Responsive */
+        @media (max-width: 640px) {
+            .ornament { width: 140px; }
+            .corner-tl, .corner-tr, .corner-bl, .corner-br { width: 50px; height: 50px; }
+            section { padding-left: 16px; padding-right: 16px; }
+        }
     </style>
 </head>
 <body class="bg-[var(--cream)]" x-data="invitationApp()" x-cloak>
