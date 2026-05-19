@@ -21,7 +21,10 @@
                     <td class="px-6 py-4 text-gray-500">{{ $user->email }}</td>
                     <td class="px-6 py-4">{{ $user->invitations_count }}</td>
                     <td class="px-6 py-4"><span class="px-2 py-0.5 text-xs rounded-full {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">{{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</span></td>
-                    <td class="px-6 py-4"><form method="POST" action="{{ route('admin.users.toggle', $user) }}">@csrf<button class="text-sm text-amber-600 hover:underline">{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</button></form></td>
+                    <td class="px-6 py-4 flex items-center gap-3">
+                        <a href="{{ route('admin.users.show', $user) }}" class="text-sm text-blue-600 hover:underline">Detail</a>
+                        <form method="POST" action="{{ route('admin.users.toggle', $user) }}">@csrf<button class="text-sm text-amber-600 hover:underline">{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</button></form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
