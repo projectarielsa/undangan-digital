@@ -639,7 +639,7 @@
 
 
         <!-- =================== DIGITAL ENVELOPE =================== -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-20 px-6 bg-[var(--antique)]">
             <div class="max-w-sm mx-auto text-center">
                 <div class="reveal">
@@ -656,15 +656,27 @@
                     <div class="ornate-divider-sm mb-8"></div>
                 </div>
 
-                @if($invitation->bank_name)
-                <div class="vintage-card p-6 mb-4 reveal reveal-delay-1" x-data="{ copied: false }">
-                    <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2 font-display">{{ $invitation->bank_name }}</p>
-                    <p class="text-2xl font-bold text-[var(--brown)] tracking-wider mb-1 font-display">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $invitation->bank_account_name }}</p>
-                    <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 text-xs font-semibold transition-all font-display" style="background: var(--sepia); color: var(--dusty-rose); border: 1px solid var(--border); border-radius: 50px;" onmouseover="this.style.background='var(--dusty-rose)'; this.style.color='white';" onmouseout="this.style.background='var(--sepia)'; this.style.color='var(--dusty-rose)';">
-                        <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
-                    </button>
-                </div>
+                @if($invitation->bankAccounts->count() > 0)
+                    @foreach($invitation->bankAccounts as $bank)
+                    <div class="vintage-card p-6 mb-4 reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2 font-display">{{ $bank->bank_name }}</p>
+                        <p class="text-2xl font-bold text-[var(--brown)] tracking-wider mb-1 font-display">{{ $bank->account_number }}</p>
+                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $bank->account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 text-xs font-semibold transition-all font-display" style="background: var(--sepia); color: var(--dusty-rose); border: 1px solid var(--border); border-radius: 50px;" onmouseover="this.style.background='var(--dusty-rose)'; this.style.color='white';" onmouseout="this.style.background='var(--sepia)'; this.style.color='var(--dusty-rose)';">
+                            <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
+                    @endforeach
+                @elseif($invitation->bank_name)
+                    {{-- Fallback to old single bank field --}}
+                    <div class="vintage-card p-6 mb-4 reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2 font-display">{{ $invitation->bank_name }}</p>
+                        <p class="text-2xl font-bold text-[var(--brown)] tracking-wider mb-1 font-display">{{ $invitation->bank_account_number }}</p>
+                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $invitation->bank_account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 text-xs font-semibold transition-all font-display" style="background: var(--sepia); color: var(--dusty-rose); border: 1px solid var(--border); border-radius: 50px;" onmouseover="this.style.background='var(--dusty-rose)'; this.style.color='white';" onmouseout="this.style.background='var(--sepia)'; this.style.color='var(--dusty-rose)';">
+                            <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
                 @endif
 
                 @if($invitation->qris_image)

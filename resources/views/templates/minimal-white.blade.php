@@ -305,7 +305,7 @@
         </section>
 
         <!-- AMPLOP DIGITAL -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-24 px-6">
             <div class="max-w-xs mx-auto text-center reveal">
                 <p class="text-[9px] uppercase tracking-[5px] text-[var(--muted)] mb-4">Gift</p>
@@ -316,16 +316,29 @@
                 <p class="text-xs text-[var(--muted)] mb-10">Doa Anda sudah cukup. Jika berkenan memberi tanda kasih:</p>
                 @endif
 
-                @if($invitation->bank_name)
-                <div class="border border-[var(--border)] p-8 mb-6" x-data="{ copied: false }">
-                    <p class="text-[9px] uppercase tracking-[3px] text-[var(--muted)] mb-3">{{ $invitation->bank_name }}</p>
-                    <p class="text-xl font-display font-medium text-[var(--primary)] tracking-wider">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-xs text-[var(--muted)] mt-2">a.n. {{ $invitation->bank_account_name }}</p>
-                    <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
-                        class="mt-5 text-[9px] uppercase tracking-[2px] text-[var(--primary)] border border-[var(--primary)] px-5 py-2 hover:bg-[var(--primary)] hover:text-white transition-all cursor-pointer">
-                        <span x-text="copied ? 'Tersalin!' : 'Salin'"></span>
-                    </button>
-                </div>
+                @if($invitation->bankAccounts->count() > 0)
+                    @foreach($invitation->bankAccounts as $bank)
+                    <div class="border border-[var(--border)] p-8 mb-6" x-data="{ copied: false }">
+                        <p class="text-[9px] uppercase tracking-[3px] text-[var(--muted)] mb-3">{{ $bank->bank_name }}</p>
+                        <p class="text-xl font-display font-medium text-[var(--primary)] tracking-wider">{{ $bank->account_number }}</p>
+                        <p class="text-xs text-[var(--muted)] mt-2">a.n. {{ $bank->account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="mt-5 text-[9px] uppercase tracking-[2px] text-[var(--primary)] border border-[var(--primary)] px-5 py-2 hover:bg-[var(--primary)] hover:text-white transition-all cursor-pointer">
+                            <span x-text="copied ? 'Tersalin!' : 'Salin'"></span>
+                        </button>
+                    </div>
+                    @endforeach
+                @elseif($invitation->bank_name)
+                    {{-- Fallback to old single bank field --}}
+                    <div class="border border-[var(--border)] p-8 mb-6" x-data="{ copied: false }">
+                        <p class="text-[9px] uppercase tracking-[3px] text-[var(--muted)] mb-3">{{ $invitation->bank_name }}</p>
+                        <p class="text-xl font-display font-medium text-[var(--primary)] tracking-wider">{{ $invitation->bank_account_number }}</p>
+                        <p class="text-xs text-[var(--muted)] mt-2">a.n. {{ $invitation->bank_account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
+                            class="mt-5 text-[9px] uppercase tracking-[2px] text-[var(--primary)] border border-[var(--primary)] px-5 py-2 hover:bg-[var(--primary)] hover:text-white transition-all cursor-pointer">
+                            <span x-text="copied ? 'Tersalin!' : 'Salin'"></span>
+                        </button>
+                    </div>
                 @endif
 
                 @if($invitation->qris_image)

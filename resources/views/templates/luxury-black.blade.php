@@ -552,7 +552,7 @@
 
 
         <!-- AMPLOP DIGITAL -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-24 px-6 relative">
             <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 50%, rgba(184,134,11,0.04) 0%, transparent 50%);"></div>
 
@@ -570,15 +570,27 @@
                     @endif
                 </div>
 
-                @if($invitation->bank_name)
-                <div class="glass-card p-7 mb-5 reveal reveal-delay-1" x-data="{ copied: false }">
-                    <p class="text-[9px] uppercase tracking-[0.3em] text-[var(--text-muted)] mb-3">{{ $invitation->bank_name }}</p>
-                    <p class="text-2xl font-bold gold-text tracking-wider mb-2">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-[var(--text-muted)] font-light">a.n. {{ $invitation->bank_account_name }}</p>
-                    <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 rounded-full text-xs font-medium border border-[var(--border-gold)] text-[var(--gold-mid)] hover:bg-[var(--gold)] hover:text-black hover:border-[var(--gold)] transition-all duration-300">
-                        <span x-text="copied ? '&#10003; Tersalin!' : 'Salin Nomor'"></span>
-                    </button>
-                </div>
+                @if($invitation->bankAccounts->count() > 0)
+                    @foreach($invitation->bankAccounts as $bank)
+                    <div class="glass-card p-7 mb-5 reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-[9px] uppercase tracking-[0.3em] text-[var(--text-muted)] mb-3">{{ $bank->bank_name }}</p>
+                        <p class="text-2xl font-bold gold-text tracking-wider mb-2">{{ $bank->account_number }}</p>
+                        <p class="text-sm text-[var(--text-muted)] font-light">a.n. {{ $bank->account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 rounded-full text-xs font-medium border border-[var(--border-gold)] text-[var(--gold-mid)] hover:bg-[var(--gold)] hover:text-black hover:border-[var(--gold)] transition-all duration-300">
+                            <span x-text="copied ? '&#10003; Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
+                    @endforeach
+                @elseif($invitation->bank_name)
+                    {{-- Fallback to old single bank field --}}
+                    <div class="glass-card p-7 mb-5 reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-[9px] uppercase tracking-[0.3em] text-[var(--text-muted)] mb-3">{{ $invitation->bank_name }}</p>
+                        <p class="text-2xl font-bold gold-text tracking-wider mb-2">{{ $invitation->bank_account_number }}</p>
+                        <p class="text-sm text-[var(--text-muted)] font-light">a.n. {{ $invitation->bank_account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 rounded-full text-xs font-medium border border-[var(--border-gold)] text-[var(--gold-mid)] hover:bg-[var(--gold)] hover:text-black hover:border-[var(--gold)] transition-all duration-300">
+                            <span x-text="copied ? '&#10003; Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
                 @endif
 
                 @if($invitation->qris_image)
