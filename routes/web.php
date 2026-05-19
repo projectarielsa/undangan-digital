@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OtpVerificationController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Customer\DashboardController;
+use App\Http\Controllers\Customer\BankAccountController;
 use App\Http\Controllers\Customer\GalleryController;
 use App\Http\Controllers\Customer\GuestController;
 use App\Http\Controllers\Customer\InvitationController;
@@ -50,6 +51,8 @@ Route::middleware("auth")->group(function () {
         Route::post("/invitations/{invitation}/gallery", [GalleryController::class, "store"])->name("gallery.store");
         Route::put("/invitations/{invitation}/gallery/order", [GalleryController::class, "updateOrder"])->name("gallery.order");
         Route::delete("/invitations/{invitation}/gallery/{gallery}", [GalleryController::class, "destroy"])->name("gallery.destroy");
+        Route::post("/invitations/{invitation}/bank-accounts", [BankAccountController::class, "store"])->name("bank-accounts.store");
+        Route::delete("/invitations/{invitation}/bank-accounts/{bankAccount}", [BankAccountController::class, "destroy"])->name("bank-accounts.destroy");
         Route::get("/packages", [PaymentController::class, "packages"])->name("packages");
         Route::post("/checkout/{package}", [PaymentController::class, "checkout"])->name("checkout");
         Route::get("/payments/finish", [PaymentController::class, "finish"])->name("payments.finish");

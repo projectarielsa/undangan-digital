@@ -51,7 +51,7 @@ class InvitationController extends Controller
         return redirect()->route("customer.invitations.edit", $inv)->with("success", "Undangan berhasil dibuat!");
     }
     public function show(Invitation $invitation) { $this->authorize("view", $invitation); $invitation->load(["template","galleries","guests","guestbooks"]); return view("customer.invitations.show", ["invitation"=>$invitation,"rsvpStats"=>$invitation->getRsvpStats(),"limits"=>$this->service->getFeatureLimits($invitation)]); }
-    public function edit(Invitation $invitation) { $this->authorize("update", $invitation); $templates = InvitationTemplate::active()->orderBy("sort_order")->get(); return view("customer.invitations.edit", compact("invitation","templates")); }
+    public function edit(Invitation $invitation) { $this->authorize("update", $invitation); $invitation->load('bankAccounts'); $templates = InvitationTemplate::active()->orderBy("sort_order")->get(); return view("customer.invitations.edit", compact("invitation","templates")); }
     public function update(Request $request, Invitation $invitation)
     {
         $this->authorize("update", $invitation);

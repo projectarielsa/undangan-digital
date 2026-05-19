@@ -114,13 +114,54 @@
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Informasi transfer bank dan QRIS untuk hadiah digital</p>
             <div class="space-y-4">
                 <div><label class="block text-xs text-gray-500 mb-1">Informasi Hadiah (opsional)</label><textarea name="gift_info" rows="2" placeholder="Contoh: Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('gift_info', $invitation->gift_info) }}</textarea></div>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Bank</label><input type="text" name="bank_name" value="{{ old('bank_name', $invitation->bank_name) }}" placeholder="BCA / BNI / Mandiri" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">No. Rekening</label><input type="text" name="bank_account_number" value="{{ old('bank_account_number', $invitation->bank_account_number) }}" placeholder="1234567890" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Atas Nama</label><input type="text" name="bank_account_name" value="{{ old('bank_account_name', $invitation->bank_account_name) }}" placeholder="Nama pemilik rekening" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                </div>
                 <div><label class="block text-xs text-gray-500 mb-1">Upload QRIS (opsional)</label><input type="file" name="qris_image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">@if($invitation->qris_image)<p class="text-xs text-green-600 mt-1">✓ QRIS sudah diupload</p>@endif</div>
             </div>
+        </div>
+
+        <!-- 4b. Rekening Bank (Multiple) -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Rekening Bank</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Tambahkan hingga 5 rekening bank untuk amplop digital</p>
+
+            <!-- Existing Bank Accounts -->
+            @if($invitation->bankAccounts->count() > 0)
+            <div class="space-y-3 mb-6">
+                @foreach($invitation->bankAccounts as $bank)
+                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-100 dark:border-gray-600">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $bank->bank_name }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">{{ $bank->account_number }} — <span class="text-gray-500">a.n. {{ $bank->account_name }}</span></p>
+                    </div>
+                    <form method="POST" action="{{ route('customer.bank-accounts.destroy', [$invitation, $bank]) }}" onsubmit="return confirm('Hapus rekening ini?')">
+                        @csrf @method('DELETE')
+                        <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    </form>
+                </div>
+                @endforeach
+            </div>
+            @endif
+
+            <!-- Add New Bank Account Form -->
+            @if($invitation->bankAccounts->count() < 5)
+            </div></div>{{-- Close main form sections temporarily --}}
+
+            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 -mt-6 border-t-0 rounded-t-none">
+            <form method="POST" action="{{ route('customer.bank-accounts.store', $invitation) }}" class="space-y-4">
+                @csrf
+                <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Tambah Rekening Baru</p>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div><label class="block text-xs text-gray-500 mb-1">Nama Bank *</label><input type="text" name="bank_name" required placeholder="BCA / BNI / Mandiri / dll" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">No. Rekening *</label><input type="text" name="account_number" required placeholder="1234567890" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                    <div><label class="block text-xs text-gray-500 mb-1">Atas Nama *</label><input type="text" name="account_name" required placeholder="Nama pemilik" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                </div>
+                <button type="submit" class="px-6 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Rekening
+                </button>
+            </form>
+            @endif
         </div>
 
         <!-- Submit -->

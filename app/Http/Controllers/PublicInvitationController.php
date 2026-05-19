@@ -8,7 +8,7 @@ class PublicInvitationController extends Controller
 {
     public function show(string $slug, Request $request)
     {
-        $invitation = Invitation::where("slug", $slug)->with(["template","galleries","guestbooks" => fn($q) => $q->approved()->latest()->take(50)])->firstOrFail();
+        $invitation = Invitation::where("slug", $slug)->with(["template","galleries","bankAccounts","guestbooks" => fn($q) => $q->approved()->latest()->take(50)])->firstOrFail();
         if (!$invitation->isPublished()) abort(404);
         $invitation->incrementView();
         $guestName = $request->query("to");
