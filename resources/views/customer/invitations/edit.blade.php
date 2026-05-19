@@ -4,102 +4,214 @@
 
 @section('content')
 <div class="max-w-4xl">
-    <!-- Header Actions -->
+
+    {{-- Header Bar --}}
     <div class="flex items-center justify-between mb-6">
         <a href="{{ route('customer.invitations.index') }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>Kembali
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            Kembali
         </a>
         <div class="flex items-center gap-2 flex-wrap">
             @if($invitation->isDraft())
-            <form method="POST" action="{{ route('customer.invitations.publish', $invitation) }}">@csrf
+            <form method="POST" action="{{ route('customer.invitations.publish', $invitation) }}">
+                @csrf
                 <button class="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-xl hover:bg-green-700 transition">Publish</button>
             </form>
             @endif
             @if($invitation->isPublished())
-            <a href="{{ $invitation->getUrl() }}" target="_blank" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition">Preview</a>
-            <form method="POST" action="{{ route('customer.invitations.pause', $invitation) }}">@csrf
+            <form method="POST" action="{{ route('customer.invitations.pause', $invitation) }}">
+                @csrf
                 <button class="px-4 py-2 bg-yellow-600 text-white text-sm font-medium rounded-xl hover:bg-yellow-700 transition">Pause</button>
             </form>
+            <a href="{{ $invitation->getUrl() }}" target="_blank" class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition">Preview</a>
             @endif
-            <form method="POST" action="{{ route('customer.invitations.duplicate', $invitation) }}">@csrf
+            <form method="POST" action="{{ route('customer.invitations.duplicate', $invitation) }}">
+                @csrf
                 <button class="px-4 py-2 border border-gray-200 dark:border-gray-600 text-sm font-medium rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition">Duplikat</button>
             </form>
         </div>
     </div>
 
-    @if($errors->any())
-    <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
-        @foreach($errors->all() as $error)<p class="text-sm text-red-600 dark:text-red-400">{{ $error }}</p>@endforeach
+    {{-- Success Message --}}
+    @if(session('success'))
+    <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl">
+        <p class="text-sm text-green-600 dark:text-green-400">{{ session('success') }}</p>
     </div>
     @endif
 
-    <!-- Status Bar -->
+    {{-- Error Messages --}}
+    @if($errors->any())
+    <div class="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl">
+        @foreach($errors->all() as $error)
+        <p class="text-sm text-red-600 dark:text-red-400">{{ $error }}</p>
+        @endforeach
+    </div>
+    @endif
+
+    {{-- Status Bar --}}
     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-4 mb-6 flex items-center justify-between flex-wrap gap-2">
         <div class="flex items-center gap-3">
-            <span class="px-3 py-1 text-xs font-medium rounded-full {{ $invitation->status === 'published' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : ($invitation->status === 'paused' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600') }}">{{ ucfirst($invitation->status) }}</span>
-            <span class="text-sm text-gray-500 dark:text-gray-400">URL: <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">{{ url('/' . $invitation->slug) }}</code></span>
+            <span class="px-3 py-1 text-xs font-medium rounded-full {{ $invitation->status === 'published' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : ($invitation->status === 'paused' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400') }}">{{ ucfirst($invitation->status) }}</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">URL: <code class="bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded text-xs">{{ $invitation->slug }}</code></span>
         </div>
         <span class="text-sm text-gray-500 dark:text-gray-400">{{ number_format($invitation->view_count) }} views</span>
     </div>
 
-    <!-- ====== MAIN FORM ====== -->
-    <form method="POST" action="{{ route('customer.invitations.update', $invitation) }}" enctype="multipart/form-data" class="space-y-6">
-        @csrf @method('PUT')
 
-        <!-- 1. Informasi Mempelai -->
+    {{-- ====== MAIN FORM ====== --}}
+    <form method="POST" action="{{ route('customer.invitations.update', $invitation) }}" enctype="multipart/form-data" class="space-y-6">
+        @csrf
+        @method('PUT')
+
+        {{-- Section 1: Pilih Template --}}
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Pilih Template</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Pilih desain template untuk undangan Anda</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                @foreach($templates as $template)
+                <label class="cursor-pointer group">
+                    <input type="radio" name="template_id" value="{{ $template->id }}" class="peer hidden" {{ old('template_id', $invitation->template_id) == $template->id ? 'checked' : '' }}>
+                    <div class="p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-600 peer-checked:border-amber-500 peer-checked:bg-amber-50 dark:peer-checked:bg-amber-900/10 transition-all">
+                        <div class="aspect-[3/4] rounded-xl mb-3 flex items-center justify-center" style="background: linear-gradient(135deg, {{ $template->color_primary }}20, {{ $template->color_secondary }}20)">
+                            <span class="text-xs font-medium" style="color: {{ $template->color_primary }}">{{ $template->name }}</span>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $template->name }}</p>
+                        @if($template->is_premium)
+                        <span class="text-xs text-amber-600 font-medium">Premium</span>
+                        @else
+                        <span class="text-xs text-gray-500">Gratis</span>
+                        @endif
+                    </div>
+                </label>
+                @endforeach
+            </div>
+        </div>
+
+        {{-- Section 2: Informasi Mempelai --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Informasi Mempelai</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Data lengkap kedua mempelai</p>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="space-y-3">
+                {{-- Mempelai Pria --}}
+                <div class="space-y-4">
                     <h4 class="text-sm font-medium text-amber-700 dark:text-amber-400 uppercase tracking-wide">Mempelai Pria</h4>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Lengkap *</label><input type="text" name="groom_name" value="{{ old('groom_name', $invitation->groom_name) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Ayah</label><input type="text" name="groom_father" value="{{ old('groom_father', $invitation->groom_father) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Ibu</label><input type="text" name="groom_mother" value="{{ old('groom_mother', $invitation->groom_mother) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Instagram</label><input type="text" name="groom_instagram" value="{{ old('groom_instagram', $invitation->groom_instagram) }}" placeholder="@username" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Foto Mempelai Pria</label><input type="file" name="groom_photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-                    @if($invitation->groom_photo)<p class="text-xs text-green-600 mt-1">✓ Foto sudah diupload</p>@endif</div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Lengkap *</label>
+                        <input type="text" name="groom_name" value="{{ old('groom_name', $invitation->groom_name) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Ayah</label>
+                        <input type="text" name="groom_father" value="{{ old('groom_father', $invitation->groom_father) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Ibu</label>
+                        <input type="text" name="groom_mother" value="{{ old('groom_mother', $invitation->groom_mother) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Instagram</label>
+                        <input type="text" name="groom_instagram" value="{{ old('groom_instagram', $invitation->groom_instagram) }}" placeholder="@username" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Foto Mempelai Pria</label>
+                        <input type="file" name="groom_photo" accept="image/*" class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                        @if($invitation->groom_photo)<p class="text-xs text-green-600 mt-1">✓ Foto sudah diupload</p>@endif
+                    </div>
                 </div>
-                <div class="space-y-3">
+                {{-- Mempelai Wanita --}}
+                <div class="space-y-4">
                     <h4 class="text-sm font-medium text-amber-700 dark:text-amber-400 uppercase tracking-wide">Mempelai Wanita</h4>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Lengkap *</label><input type="text" name="bride_name" value="{{ old('bride_name', $invitation->bride_name) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Ayah</label><input type="text" name="bride_father" value="{{ old('bride_father', $invitation->bride_father) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Ibu</label><input type="text" name="bride_mother" value="{{ old('bride_mother', $invitation->bride_mother) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Instagram</label><input type="text" name="bride_instagram" value="{{ old('bride_instagram', $invitation->bride_instagram) }}" placeholder="@username" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Foto Mempelai Wanita</label><input type="file" name="bride_photo" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
-                    @if($invitation->bride_photo)<p class="text-xs text-green-600 mt-1">✓ Foto sudah diupload</p>@endif</div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Lengkap *</label>
+                        <input type="text" name="bride_name" value="{{ old('bride_name', $invitation->bride_name) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Ayah</label>
+                        <input type="text" name="bride_father" value="{{ old('bride_father', $invitation->bride_father) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Ibu</label>
+                        <input type="text" name="bride_mother" value="{{ old('bride_mother', $invitation->bride_mother) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Instagram</label>
+                        <input type="text" name="bride_instagram" value="{{ old('bride_instagram', $invitation->bride_instagram) }}" placeholder="@username" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Foto Mempelai Wanita</label>
+                        <input type="file" name="bride_photo" accept="image/*" class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                        @if($invitation->bride_photo)<p class="text-xs text-green-600 mt-1">✓ Foto sudah diupload</p>@endif
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Detail Acara -->
+
+        {{-- Section 3: Detail Acara --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Detail Acara</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Waktu dan tempat pernikahan</p>
             <div class="grid md:grid-cols-2 gap-4">
-                <div><label class="block text-xs text-gray-500 mb-1">Tanggal Acara *</label><input type="date" name="event_date" value="{{ old('event_date', $invitation->event_date->format('Y-m-d')) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Jam Mulai *</label><input type="time" name="event_time_start" value="{{ old('event_time_start', $invitation->event_time_start) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Jam Selesai</label><input type="time" name="event_time_end" value="{{ old('event_time_end', $invitation->event_time_end) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Tempat / Venue *</label><input type="text" name="event_venue" value="{{ old('event_venue', $invitation->event_venue) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                <div class="md:col-span-2"><label class="block text-xs text-gray-500 mb-1">Alamat Lengkap</label><textarea name="event_address" rows="2" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('event_address', $invitation->event_address) }}</textarea></div>
-                <div class="md:col-span-2"><label class="block text-xs text-gray-500 mb-1">Link Google Maps</label><input type="url" name="event_maps_url" value="{{ old('event_maps_url', $invitation->event_maps_url) }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Tanggal Acara *</label>
+                    <input type="date" name="event_date" value="{{ old('event_date', $invitation->event_date?->format('Y-m-d')) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Jam Mulai *</label>
+                    <input type="time" name="event_time_start" value="{{ old('event_time_start', $invitation->event_time_start) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Jam Selesai</label>
+                    <input type="time" name="event_time_end" value="{{ old('event_time_end', $invitation->event_time_end) }}" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Tempat / Venue *</label>
+                    <input type="text" name="event_venue" value="{{ old('event_venue', $invitation->event_venue) }}" required class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Alamat Lengkap</label>
+                    <textarea name="event_address" rows="2" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">{{ old('event_address', $invitation->event_address) }}</textarea>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Link Google Maps</label>
+                    <input type="url" name="event_maps_url" value="{{ old('event_maps_url', $invitation->event_maps_url) }}" placeholder="https://maps.google.com/..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
             </div>
         </div>
 
-        <!-- 3. Konten Undangan -->
+        {{-- Section 4: Konten & Pengaturan --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Konten Undangan</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Kata-kata pembuka, penutup, dan pengaturan</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Konten & Pengaturan</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Kata-kata, media, dan pengaturan undangan</p>
             <div class="space-y-4">
-                <div><label class="block text-xs text-gray-500 mb-1">Kata Pembuka</label><textarea name="opening_text" rows="3" placeholder="Contoh: Dengan memohon rahmat dan ridho Allah SWT, kami bermaksud menyelenggarakan..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('opening_text', $invitation->opening_text) }}</textarea></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Kata Penutup</label><textarea name="closing_text" rows="3" placeholder="Contoh: Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('closing_text', $invitation->closing_text) }}</textarea></div>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div><label class="block text-xs text-gray-500 mb-1">Dress Code</label><input type="text" name="dress_code" value="{{ old('dress_code', $invitation->dress_code) }}" placeholder="Contoh: Sage Green / Formal" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Custom URL Slug</label><input type="text" name="slug" value="{{ old('slug', $invitation->slug) }}" placeholder="ariel-rina" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Kata Pembuka</label>
+                    <textarea name="opening_text" rows="3" placeholder="Contoh: Dengan memohon rahmat dan ridho Allah SWT..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">{{ old('opening_text', $invitation->opening_text) }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Kata Penutup</label>
+                    <textarea name="closing_text" rows="3" placeholder="Contoh: Merupakan suatu kehormatan dan kebahagiaan bagi kami..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">{{ old('closing_text', $invitation->closing_text) }}</textarea>
                 </div>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div><label class="block text-xs text-gray-500 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">@if($invitation->cover_image)<p class="text-xs text-green-600 mt-1">✓ Cover sudah diupload</p>@endif</div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Background Music (MP3)</label><input type="file" name="music_file" accept=".mp3,.wav" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">@if($invitation->music_url)<p class="text-xs text-green-600 mt-1">✓ Musik sudah diupload</p>@endif</div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Dress Code</label>
+                        <input type="text" name="dress_code" value="{{ old('dress_code', $invitation->dress_code) }}" placeholder="Sage Green / Formal" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Custom URL Slug</label>
+                        <input type="text" name="slug" value="{{ old('slug', $invitation->slug) }}" placeholder="ariel-rina" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                    </div>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Cover Image</label>
+                        <input type="file" name="cover_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                        @if($invitation->cover_image)<p class="text-xs text-green-600 mt-1">✓ Cover sudah diupload</p>@endif
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Background Music (MP3)</label>
+                        <input type="file" name="music_file" accept=".mp3,.wav" class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                        @if($invitation->music_url)<p class="text-xs text-green-600 mt-1">✓ Musik sudah diupload</p>@endif
+                    </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <input type="checkbox" name="music_autoplay" value="1" {{ old('music_autoplay', $invitation->music_autoplay) ? 'checked' : '' }} class="rounded border-gray-300 text-amber-600 focus:ring-amber-500">
@@ -108,74 +220,93 @@
             </div>
         </div>
 
-        <!-- 4. Amplop Digital -->
+
+        {{-- Section 5: Amplop Digital --}}
         <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Amplop Digital</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Informasi transfer bank dan QRIS untuk hadiah digital</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Informasi hadiah dan QRIS untuk tamu</p>
             <div class="space-y-4">
-                <div><label class="block text-xs text-gray-500 mb-1">Informasi Hadiah (opsional)</label><textarea name="gift_info" rows="2" placeholder="Contoh: Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('gift_info', $invitation->gift_info) }}</textarea></div>
-                <div><label class="block text-xs text-gray-500 mb-1">Upload QRIS (opsional)</label><input type="file" name="qris_image" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">@if($invitation->qris_image)<p class="text-xs text-green-600 mt-1">✓ QRIS sudah diupload</p>@endif</div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Informasi Hadiah</label>
+                    <textarea name="gift_info" rows="2" placeholder="Contoh: Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih..." class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">{{ old('gift_info', $invitation->gift_info) }}</textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Upload QRIS (opsional)</label>
+                    <input type="file" name="qris_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                    @if($invitation->qris_image)<p class="text-xs text-green-600 mt-1">✓ QRIS sudah diupload</p>@endif
+                </div>
             </div>
         </div>
 
-        <!-- 4b. Rekening Bank (Multiple) -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Rekening Bank</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Tambahkan hingga 5 rekening bank untuk amplop digital</p>
-
-            <!-- Existing Bank Accounts -->
-            @if($invitation->bankAccounts->count() > 0)
-            <div class="space-y-3 mb-6">
-                @foreach($invitation->bankAccounts as $bank)
-                <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-100 dark:border-gray-600">
-                    <div>
-                        <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $bank->bank_name }}</p>
-                        <p class="text-sm text-gray-600 dark:text-gray-300">{{ $bank->account_number }} — <span class="text-gray-500">a.n. {{ $bank->account_name }}</span></p>
-                    </div>
-                    <form method="POST" action="{{ route('customer.bank-accounts.destroy', [$invitation, $bank]) }}" onsubmit="return confirm('Hapus rekening ini?')">
-                        @csrf @method('DELETE')
-                        <button class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                        </button>
-                    </form>
-                </div>
-                @endforeach
-            </div>
-            @endif
-
-            <!-- Add New Bank Account Form -->
-            @if($invitation->bankAccounts->count() < 5)
-            </div></div>{{-- Close main form sections temporarily --}}
-
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6 -mt-6 border-t-0 rounded-t-none">
-            <form method="POST" action="{{ route('customer.bank-accounts.store', $invitation) }}" class="space-y-4">
-                @csrf
-                <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Tambah Rekening Baru</p>
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div><label class="block text-xs text-gray-500 mb-1">Nama Bank *</label><input type="text" name="bank_name" required placeholder="BCA / BNI / Mandiri / dll" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">No. Rekening *</label><input type="text" name="account_number" required placeholder="1234567890" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                    <div><label class="block text-xs text-gray-500 mb-1">Atas Nama *</label><input type="text" name="account_name" required placeholder="Nama pemilik" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent"></div>
-                </div>
-                <button type="submit" class="px-6 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                    Tambah Rekening
-                </button>
-            </form>
-            @endif
+        {{-- Submit Button --}}
+        <div class="flex items-center gap-4">
+            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all">
+                Simpan Perubahan
+            </button>
         </div>
-
-        <!-- Submit -->
-        <button type="submit" class="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 transition-all">
-            Simpan Perubahan
-        </button>
     </form>
+    {{-- ====== END MAIN FORM ====== --}}
 
-    <!-- 5. Galeri Foto (Separate form) -->
-    <div class="mt-8 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
+    {{-- Section 6: Rekening Bank (Separate Forms) --}}
+    <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Rekening Bank</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Tambahkan hingga 5 rekening bank untuk amplop digital</p>
+
+        {{-- Existing Bank Accounts --}}
+        @if($invitation->bankAccounts->count() > 0)
+        <div class="space-y-3 mb-6">
+            @foreach($invitation->bankAccounts as $bank)
+            <div class="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-xl border border-gray-100 dark:border-gray-600">
+                <div>
+                    <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $bank->bank_name }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">{{ $bank->account_number }} — <span class="text-gray-500">a.n. {{ $bank->account_name }}</span></p>
+                </div>
+                <form method="POST" action="{{ route('customer.bank-accounts.destroy', [$invitation, $bank]) }}" onsubmit="return confirm('Hapus rekening ini?')">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                </form>
+            </div>
+            @endforeach
+        </div>
+        @endif
+
+        {{-- Add New Bank Account --}}
+        @if($invitation->bankAccounts->count() < 5)
+        <form method="POST" action="{{ route('customer.bank-accounts.store', $invitation) }}" class="space-y-4">
+            @csrf
+            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">Tambah Rekening Baru</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Nama Bank *</label>
+                    <input type="text" name="bank_name" required placeholder="BCA / BNI / Mandiri" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">No. Rekening *</label>
+                    <input type="text" name="account_number" required placeholder="1234567890" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1.5">Atas Nama *</label>
+                    <input type="text" name="account_name" required placeholder="Nama pemilik" class="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:border-transparent transition">
+                </div>
+            </div>
+            <button type="submit" class="px-6 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition flex items-center gap-2">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                Tambah Rekening
+            </button>
+        </form>
+        @endif
+    </div>
+
+
+    {{-- Section 7: Galeri Foto (Separate Form) --}}
+    <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
         <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-1">Galeri Foto</h3>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Upload foto-foto prewedding atau momen bersama (maks 5MB/foto)</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-5">Upload foto-foto prewedding atau momen bersama</p>
 
-        <!-- Upload Form -->
+        {{-- Upload Form --}}
         <form method="POST" action="{{ route('customer.gallery.store', $invitation) }}" enctype="multipart/form-data" class="mb-6">
             @csrf
             <div class="border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-xl p-6 text-center hover:border-amber-400 transition-colors">
@@ -189,16 +320,17 @@
             </button>
         </form>
 
-        <!-- Existing Gallery -->
+        {{-- Existing Gallery --}}
         @if($invitation->galleries->count() > 0)
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-2">
+        <div class="grid grid-cols-3 sm:grid-cols-4 gap-3">
             @foreach($invitation->galleries as $photo)
             <div class="relative group aspect-square rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700">
                 <img src="{{ $photo->getImageUrl() }}" alt="{{ $photo->caption }}" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <form method="POST" action="{{ route('customer.gallery.destroy', [$invitation, $photo]) }}" onsubmit="return confirm('Hapus foto ini?')">
-                        @csrf @method('DELETE')
-                        <button class="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                         </button>
                     </form>
@@ -215,11 +347,11 @@
         @endif
     </div>
 
-    <!-- 6. Kelola Tamu -->
+    {{-- Section 8: Kelola Tamu --}}
     <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 p-6">
         <div class="flex items-center justify-between">
             <div>
-                <h3 class="font-semibold text-gray-900 dark:text-white">Kelola Tamu & RSVP</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Kelola Tamu & RSVP</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Tambah tamu, import dari Excel, lihat RSVP, kirim undangan personal</p>
             </div>
             <a href="{{ route('customer.guests.index', $invitation) }}" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition flex items-center gap-2">
@@ -228,5 +360,6 @@
             </a>
         </div>
     </div>
+
 </div>
 @endsection
