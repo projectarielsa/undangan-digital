@@ -43,7 +43,7 @@ class UserController extends Controller
             'invitation_id' => null,
             'status' => 'active',
             'starts_at' => now(),
-            'expires_at' => now()->addDays($request->duration_days),
+            'expires_at' => now()->addDays((int) $request->duration_days),
         ]);
 
         return back()->with('success', "Berhasil! {$user->name} sekarang berlangganan paket {$package->name} selama {$request->duration_days} hari.");
