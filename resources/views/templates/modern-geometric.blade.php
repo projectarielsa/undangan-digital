@@ -682,7 +682,7 @@
 
 
         <!-- ===================== SECTION 10: DIGITAL ENVELOPE ===================== -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-28 px-6 relative overflow-hidden" style="background: var(--white);">
             <div class="absolute inset-0 pointer-events-none">
                 <div style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0.015; background: repeating-linear-gradient(45deg, transparent, transparent 60px, var(--copper) 60px, var(--copper) 61px);"></div>
@@ -703,15 +703,27 @@
                     @endif
                 </div>
 
-                @if($invitation->bank_name)
-                <div class="geo-card p-7 mb-6 text-center reveal reveal-delay-1" x-data="{ copied: false }">
-                    <p class="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3 font-medium">{{ $invitation->bank_name }}</p>
-                    <p class="text-2xl font-bold text-[var(--navy)] tracking-wider mb-2 font-display">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-[var(--muted)]">a.n. {{ $invitation->bank_account_name }}</p>
-                    <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider border-2 border-[var(--copper)] text-[var(--copper)] hover:bg-[var(--copper)] hover:text-white transition-all duration-300 rounded-sm">
-                        <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
-                    </button>
-                </div>
+                @if($invitation->bankAccounts->count() > 0)
+                    @foreach($invitation->bankAccounts as $bank)
+                    <div class="geo-card p-7 mb-6 text-center reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3 font-medium">{{ $bank->bank_name }}</p>
+                        <p class="text-2xl font-bold text-[var(--navy)] tracking-wider mb-2 font-display">{{ $bank->account_number }}</p>
+                        <p class="text-sm text-[var(--muted)]">a.n. {{ $bank->account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider border-2 border-[var(--copper)] text-[var(--copper)] hover:bg-[var(--copper)] hover:text-white transition-all duration-300 rounded-sm">
+                            <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
+                    @endforeach
+                @elseif($invitation->bank_name)
+                    {{-- Fallback to old single bank field --}}
+                    <div class="geo-card p-7 mb-6 text-center reveal reveal-delay-1" x-data="{ copied: false }">
+                        <p class="text-xs uppercase tracking-[0.3em] text-[var(--muted)] mb-3 font-medium">{{ $invitation->bank_name }}</p>
+                        <p class="text-2xl font-bold text-[var(--navy)] tracking-wider mb-2 font-display">{{ $invitation->bank_account_number }}</p>
+                        <p class="text-sm text-[var(--muted)]">a.n. {{ $invitation->bank_account_name }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-5 px-6 py-2.5 text-xs font-semibold uppercase tracking-wider border-2 border-[var(--copper)] text-[var(--copper)] hover:bg-[var(--copper)] hover:text-white transition-all duration-300 rounded-sm">
+                            <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
+                        </button>
+                    </div>
                 @endif
 
                 @if($invitation->qris_image)

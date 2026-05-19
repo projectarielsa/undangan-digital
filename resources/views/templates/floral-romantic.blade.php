@@ -827,7 +827,7 @@
     <!-- ═══════════════════════════════════════════════════════════════════
          SECTION 10: DIGITAL ENVELOPE / AMPLOP
     ═══════════════════════════════════════════════════════════════════ -->
-    @if($invitation->bank_account_number || $invitation->qris_image)
+    @if($invitation->bankAccounts->count() > 0 || $invitation->bank_account_number || $invitation->qris_image)
     <section class="section-wrapper" style="padding-top: 2rem;">
         <div class="text-center reveal">
             <p class="font-script" style="font-size: 2rem; color: var(--rose);">Amplop Digital</p>
@@ -854,21 +854,41 @@
             </p>
             @endif
 
-            @if($invitation->bank_account_number)
-            <div style="background: var(--blush); border-radius: 16px; padding: 20px; margin-top: 16px;">
-                <p class="font-body text-xs uppercase tracking-wider" style="color: var(--muted);">Transfer Bank</p>
-                <p class="font-body font-bold mt-2" style="color: var(--text); font-size: 1rem;">{{ $invitation->bank_name }}</p>
-                <div class="flex items-center justify-center gap-2 mt-2">
-                    <p class="font-body font-bold" style="color: var(--rose); font-size: 1.2rem; letter-spacing: 1px;" x-ref="bankNumber">{{ $invitation->bank_account_number }}</p>
-                    <button @click="navigator.clipboard.writeText($refs.bankNumber.textContent.trim())" type="button" style="background: none; border: none; cursor: pointer; color: var(--rose); padding: 4px;">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-                            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                        </svg>
-                    </button>
+            @if($invitation->bankAccounts->count() > 0)
+                @foreach($invitation->bankAccounts as $bank)
+                <div style="background: var(--blush); border-radius: 16px; padding: 20px; margin-top: 16px;" x-data="{ copied: false }">
+                    <p class="font-body text-xs uppercase tracking-wider" style="color: var(--muted);">Transfer Bank</p>
+                    <p class="font-body font-bold mt-2" style="color: var(--text); font-size: 1rem;">{{ $bank->bank_name }}</p>
+                    <div class="flex items-center justify-center gap-2 mt-2">
+                        <p class="font-body font-bold" style="color: var(--rose); font-size: 1.2rem; letter-spacing: 1px;">{{ $bank->account_number }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" type="button" style="background: none; border: none; cursor: pointer; color: var(--rose); padding: 4px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="font-body text-sm mt-1" style="color: var(--muted);">a.n. {{ $bank->account_name }}</p>
+                    <p class="font-body text-xs mt-2" style="color: var(--rose);" x-show="copied" x-cloak>Tersalin!</p>
                 </div>
-                <p class="font-body text-sm mt-1" style="color: var(--muted);">a.n. {{ $invitation->bank_account_name }}</p>
-            </div>
+                @endforeach
+            @elseif($invitation->bank_account_number)
+                {{-- Fallback to old single bank field --}}
+                <div style="background: var(--blush); border-radius: 16px; padding: 20px; margin-top: 16px;" x-data="{ copied: false }">
+                    <p class="font-body text-xs uppercase tracking-wider" style="color: var(--muted);">Transfer Bank</p>
+                    <p class="font-body font-bold mt-2" style="color: var(--text); font-size: 1rem;">{{ $invitation->bank_name }}</p>
+                    <div class="flex items-center justify-center gap-2 mt-2">
+                        <p class="font-body font-bold" style="color: var(--rose); font-size: 1.2rem; letter-spacing: 1px;">{{ $invitation->bank_account_number }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" type="button" style="background: none; border: none; cursor: pointer; color: var(--rose); padding: 4px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p class="font-body text-sm mt-1" style="color: var(--muted);">a.n. {{ $invitation->bank_account_name }}</p>
+                    <p class="font-body text-xs mt-2" style="color: var(--rose);" x-show="copied" x-cloak>Tersalin!</p>
+                </div>
             @endif
 
             @if($invitation->qris_image)

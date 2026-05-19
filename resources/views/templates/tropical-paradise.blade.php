@@ -657,7 +657,7 @@
 
 
         <!-- ===================== DIGITAL ENVELOPE ===================== -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-20 px-6 bg-white relative overflow-hidden">
             <!-- Decorative wave divider top -->
             <div class="absolute top-0 left-0 right-0 pointer-events-none wave-motion" style="opacity: 0.4;">
@@ -676,27 +676,51 @@
                 </div>
 
                 <div class="space-y-5">
-                    @if($invitation->bank_name)
-                    <div class="tropical-card p-6 sm:p-8 reveal reveal-delay-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, var(--coral-light), var(--sunset));">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    @if($invitation->bankAccounts->count() > 0)
+                        @foreach($invitation->bankAccounts as $bank)
+                        <div class="tropical-card p-6 sm:p-8 reveal reveal-delay-1">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, var(--coral-light), var(--sunset));">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-accent font-bold text-[var(--text)]">{{ $bank->bank_name }}</p>
+                                    <p class="text-xs text-[var(--muted)]">Transfer Bank</p>
+                                </div>
                             </div>
-                            <div>
-                                <p class="text-sm font-accent font-bold text-[var(--text)]">{{ $invitation->bank_name }}</p>
-                                <p class="text-xs text-[var(--muted)]">Transfer Bank</p>
+                            <div class="bg-[var(--sand)] rounded-xl p-4 flex items-center justify-between">
+                                <div>
+                                    <p class="text-lg font-bold text-[var(--text)] font-accent tracking-wider">{{ $bank->account_number }}</p>
+                                    <p class="text-xs text-[var(--muted)] mt-1">a.n. {{ $bank->account_name }}</p>
+                                </div>
+                                <button onclick="navigator.clipboard.writeText('{{ $bank->account_number }}')" class="p-2 rounded-xl bg-white border border-[var(--border)] hover:border-[var(--teal)] transition-colors" title="Salin">
+                                    <svg class="w-5 h-5 text-[var(--teal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </button>
                             </div>
                         </div>
-                        <div class="bg-[var(--sand)] rounded-xl p-4 flex items-center justify-between">
-                            <div>
-                                <p class="text-lg font-bold text-[var(--text)] font-accent tracking-wider">{{ $invitation->bank_account_number }}</p>
-                                <p class="text-xs text-[var(--muted)] mt-1">a.n. {{ $invitation->bank_account_name }}</p>
+                        @endforeach
+                    @elseif($invitation->bank_name)
+                        {{-- Fallback to old single bank field --}}
+                        <div class="tropical-card p-6 sm:p-8 reveal reveal-delay-1">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, var(--coral-light), var(--sunset));">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-accent font-bold text-[var(--text)]">{{ $invitation->bank_name }}</p>
+                                    <p class="text-xs text-[var(--muted)]">Transfer Bank</p>
+                                </div>
                             </div>
-                            <button onclick="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}')" class="p-2 rounded-xl bg-white border border-[var(--border)] hover:border-[var(--teal)] transition-colors" title="Salin">
-                                <svg class="w-5 h-5 text-[var(--teal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                            </button>
+                            <div class="bg-[var(--sand)] rounded-xl p-4 flex items-center justify-between">
+                                <div>
+                                    <p class="text-lg font-bold text-[var(--text)] font-accent tracking-wider">{{ $invitation->bank_account_number }}</p>
+                                    <p class="text-xs text-[var(--muted)] mt-1">a.n. {{ $invitation->bank_account_name }}</p>
+                                </div>
+                                <button onclick="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}')" class="p-2 rounded-xl bg-white border border-[var(--border)] hover:border-[var(--teal)] transition-colors" title="Salin">
+                                    <svg class="w-5 h-5 text-[var(--teal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                </button>
+                            </div>
                         </div>
-                    </div>
                     @endif
 
                     @if($invitation->qris_image)
