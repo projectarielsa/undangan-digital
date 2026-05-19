@@ -1,28 +1,77 @@
-<!-- FAQ -->
-<section id="faq" class="py-20 lg:py-32 bg-white dark:bg-gray-900">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+<!-- FAQ Section -->
+<section id="faq" class="py-24 lg:py-32 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
         <div class="text-center mb-16">
-            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-serif">Pertanyaan Umum</h2>
-            <p class="text-lg text-gray-600 dark:text-gray-300">Jawaban untuk pertanyaan yang sering ditanyakan</p>
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-6">
+                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-sm font-semibold text-amber-700 dark:text-amber-300">FAQ</span>
+            </div>
+            <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+                Pertanyaan yang <span class="bg-gradient-to-r from-amber-500 to-rose-500 bg-clip-text text-transparent">Sering Diajukan</span>
+            </h2>
+            <p class="text-xl text-gray-600 dark:text-gray-300">
+                Temukan jawaban untuk pertanyaan umum tentang layanan kami
+            </p>
         </div>
-        <div class="space-y-4" x-data="{ open: null }">
-            @php $faqs = [
-                ['q'=>'Apa itu undangan digital?','a'=>'Undangan digital adalah undangan pernikahan dalam bentuk website yang dapat diakses melalui smartphone atau komputer. Lebih modern, hemat biaya, dan ramah lingkungan.'],
-                ['q'=>'Berapa lama proses pembuatan?','a'=>'Hanya butuh 5-10 menit! Cukup pilih template, isi data, dan undangan Anda siap dibagikan.'],
-                ['q'=>'Apakah bisa diakses di semua device?','a'=>'Ya! Undangan kami responsive dan dapat diakses sempurna di smartphone, tablet, maupun komputer.'],
-                ['q'=>'Bagaimana cara membagikan?','a'=>'Setelah dipublikasikan, Anda mendapat link unik yang bisa dibagikan via WhatsApp, Instagram, atau media sosial lainnya.'],
-                ['q'=>'Apakah ada batasan jumlah tamu?','a'=>'Tergantung paket. Basic 100 tamu, Premium 500 tamu, dan Exclusive unlimited.'],
-                ['q'=>'Bisa mengubah setelah publish?','a'=>'Tentu! Anda bebas mengedit konten kapan saja selama masa aktif, perubahan langsung terlihat oleh tamu.'],
-            ]; @endphp
-            @foreach($faqs as $i => $faq)
-            <div class="border border-gray-200 dark:border-gray-700 rounded-2xl overflow-hidden">
-                <button @click="open = open === {{ $i }} ? null : {{ $i }}" class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+
+        <!-- FAQ Accordion -->
+        <div class="space-y-4" x-data="{ active: 1 }">
+            @php
+                $faqs = [
+                    ['q' => 'Bagaimana cara membuat undangan digital?', 'a' => 'Sangat mudah! Cukup daftar akun, pilih template yang Anda suka, isi informasi pernikahan Anda, dan undangan siap dibagikan. Prosesnya hanya memakan waktu sekitar 5-10 menit.'],
+                    ['q' => 'Apakah undangan bisa diedit setelah dibuat?', 'a' => 'Tentu saja! Anda dapat mengedit undangan kapan saja selama masa aktif paket Anda. Perubahan akan langsung terlihat di undangan yang sudah dibagikan.'],
+                    ['q' => 'Bagaimana cara membagikan undangan ke tamu?', 'a' => 'Setelah undangan selesai, Anda akan mendapatkan link unik yang bisa dibagikan via WhatsApp, Instagram, Email, atau media sosial lainnya. Anda juga bisa generate QR Code untuk undangan fisik.'],
+                    ['q' => 'Apakah ada batasan jumlah tamu?', 'a' => 'Tidak ada batasan jumlah tamu untuk paket berbayar. Anda bisa mengundang sebanyak mungkin tamu dan memantau RSVP mereka secara real-time melalui dashboard.'],
+                    ['q' => 'Bagaimana dengan keamanan data?', 'a' => 'Kami sangat menjaga keamanan data Anda. Semua data dienkripsi dan disimpan dengan aman. Kami tidak akan membagikan informasi pribadi Anda kepada pihak ketiga.'],
+                    ['q' => 'Apakah tersedia refund jika tidak puas?', 'a' => 'Ya, kami memberikan garansi 7 hari uang kembali. Jika Anda tidak puas dengan layanan kami dalam 7 hari pertama, kami akan mengembalikan pembayaran Anda secara penuh.'],
+                ];
+            @endphp
+
+            @foreach($faqs as $index => $faq)
+            <div class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300"
+                 :class="active === {{ $index + 1 }} && 'ring-2 ring-amber-500/50'">
+                <button 
+                    @click="active = active === {{ $index + 1 }} ? null : {{ $index + 1 }}"
+                    class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
                     <span class="font-semibold text-gray-900 dark:text-white pr-4">{{ $faq['q'] }}</span>
-                    <svg class="w-5 h-5 text-gray-400 flex-shrink-0 transition-transform" :class="open === {{ $i }} ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center transition-transform duration-300"
+                         :class="active === {{ $index + 1 }} && 'bg-amber-500 rotate-180'">
+                        <svg class="w-4 h-4 transition-colors" 
+                             :class="active === {{ $index + 1 }} ? 'text-white' : 'text-amber-600 dark:text-amber-400'"
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </div>
                 </button>
-                <div x-show="open === {{ $i }}" x-collapse class="px-6 pb-6"><p class="text-gray-600 dark:text-gray-300">{{ $faq['a'] }}</p></div>
+                <div 
+                    x-show="active === {{ $index + 1 }}"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 -translate-y-2"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 -translate-y-2"
+                    class="px-6 pb-6"
+                >
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $faq['a'] }}</p>
+                </div>
             </div>
             @endforeach
+        </div>
+
+        <!-- Contact CTA -->
+        <div class="mt-12 text-center">
+            <p class="text-gray-500 dark:text-gray-400 mb-4">Masih punya pertanyaan?</p>
+            <a href="mailto:support@undangandigital.com" class="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold hover:text-amber-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Hubungi Kami
+            </a>
         </div>
     </div>
 </section>
