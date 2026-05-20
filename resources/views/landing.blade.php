@@ -10,14 +10,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
             <a href="/" class="flex items-center gap-3 group">
-                <div class="relative">
-                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 via-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-all duration-300 group-hover:scale-110">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
-                        </svg>
-                    </div>
-                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                </div>
+                <img src="/image/logo.png" alt="Ellori" class="w-10 h-10 rounded-xl object-contain group-hover:scale-110 transition-all duration-300">
                 <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
             </a>
             

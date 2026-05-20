@@ -7,9 +7,7 @@
         <div class="flex flex-col h-full">
             <div class="flex items-center justify-between h-16 px-6 border-b border-gray-100 dark:border-gray-700">
                 <a href="/" class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
-                    </div>
+                    <img src="/image/logo.png" alt="Ellori" class="w-8 h-8 rounded-lg object-contain">
                     <span class="font-bold text-gray-900 dark:text-white text-sm">Ellori</span>
                 </a>
                 <button @click="sidebarOpen = false" class="lg:hidden text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
