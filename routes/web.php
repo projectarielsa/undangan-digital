@@ -139,6 +139,10 @@ Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])
     ->middleware('throttle:webhook')
     ->name("midtrans.webhook");
 
+// Template Demo (public)
+Route::get("/demo", [\App\Http\Controllers\TemplateDemoController::class, "index"])->name("demo.index");
+Route::get("/demo/{slug}", [\App\Http\Controllers\TemplateDemoController::class, "show"])->name("demo.show");
+
 // QR Check-in verification (public)
 Route::get("/checkin/verify/{code}", [QrVerifyController::class, "verify"])->name("checkin.verify");
 Route::post("/api/checkin/verify", [QrVerifyController::class, "apiVerify"])->name("api.checkin.verify");
