@@ -28,13 +28,14 @@ class InvitationService
         
         // Process bank_accounts array - filter out empty entries
         if (isset($data['bank_accounts'])) {
-            $data['bank_accounts'] = collect($data['bank_accounts'])
+            $accounts = collect($data['bank_accounts'])
                 ->filter(fn($account) => !empty($account['bank_name']) || !empty($account['account_number']))
                 ->values()
                 ->toArray();
-            // Also update legacy fields with first account for backward compatibility
-            if (!empty($data['bank_accounts'])) {
-                $first = $data['bank_accounts'][0];
+            
+            // Update legacy fields with first account for backward compatibility
+            if (!empty($accounts)) {
+                $first = $accounts[0];
                 $data['bank_name'] = $first['bank_name'] ?? null;
                 $data['bank_account_number'] = $first['account_number'] ?? null;
                 $data['bank_account_name'] = $first['account_name'] ?? null;
@@ -42,6 +43,13 @@ class InvitationService
                 $data['bank_name'] = null;
                 $data['bank_account_number'] = null;
                 $data['bank_account_name'] = null;
+            }
+            
+            // Only set bank_accounts if column exists (after migration)
+            if (\Schema::hasColumn('invitations', 'bank_accounts')) {
+                $data['bank_accounts'] = $accounts;
+            } else {
+                unset($data['bank_accounts']);
             }
         }
         
