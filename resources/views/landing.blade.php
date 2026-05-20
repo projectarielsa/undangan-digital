@@ -250,33 +250,6 @@
 </section>
 
 
-<!-- Stats Section -->
-<section class="py-16 relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-amber-500 to-rose-500"></div>
-    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNiIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMSkiIHN0cm9rZS13aWR0aD0iMiIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
-    
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="text-center" x-data="{ count: 0, target: 5000 }" x-intersect.once="let interval = setInterval(() => { if(count < target) count += 100; else clearInterval(interval); }, 20)">
-                <p class="text-4xl sm:text-5xl font-bold text-white mb-2"><span x-text="count.toLocaleString()">0</span>+</p>
-                <p class="text-white/80 text-sm">Undangan Dibuat</p>
-            </div>
-            <div class="text-center" x-data="{ count: 0, target: 10 }" x-intersect.once="let interval = setInterval(() => { if(count < target) count += 1; else clearInterval(interval); }, 100)">
-                <p class="text-4xl sm:text-5xl font-bold text-white mb-2"><span x-text="count">0</span>+</p>
-                <p class="text-white/80 text-sm">Template Premium</p>
-            </div>
-            <div class="text-center" x-data="{ count: 0, target: 99 }" x-intersect.once="let interval = setInterval(() => { if(count < target) count += 1; else clearInterval(interval); }, 30)">
-                <p class="text-4xl sm:text-5xl font-bold text-white mb-2"><span x-text="count">0</span>%</p>
-                <p class="text-white/80 text-sm">Kepuasan Pelanggan</p>
-            </div>
-            <div class="text-center" x-data="{ count: 0, target: 24 }" x-intersect.once="let interval = setInterval(() => { if(count < target) count += 1; else clearInterval(interval); }, 80)">
-                <p class="text-4xl sm:text-5xl font-bold text-white mb-2"><span x-text="count">0</span>/7</p>
-                <p class="text-white/80 text-sm">Support Online</p>
-            </div>
-        </div>
-    </div>
-</section>
-
 @include('components.landing.features')
 @include('components.landing.templates')
 @include('components.landing.pricing')
