@@ -15,7 +15,7 @@
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
                 Semua yang Anda Butuhkan untuk
-                <span class="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">Hari Spesial</span>
+                <span class="text-blue-600 dark:text-blue-400">Hari Spesial</span>
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Fitur lengkap untuk undangan pernikahan digital yang sempurna dan berkesan

@@ -13,7 +13,7 @@
                 <span class="text-sm font-semibold text-sky-700 dark:text-sky-300">4.9/5 Rating</span>
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Apa Kata <span class="bg-gradient-to-r from-sky-500 to-blue-500 bg-clip-text text-transparent">Mereka?</span>
+                Apa Kata <span class="text-blue-600 dark:text-blue-400">Mereka?</span>
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Ribuan pasangan telah mempercayakan momen spesial mereka kepada kami

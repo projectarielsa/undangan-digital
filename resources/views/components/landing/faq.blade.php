@@ -10,7 +10,7 @@
                 <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">FAQ</span>
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Pertanyaan yang <span class="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">Sering Diajukan</span>
+                Pertanyaan yang <span class="text-blue-600 dark:text-blue-400">Sering Diajukan</span>
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Temukan jawaban untuk pertanyaan umum tentang layanan kami

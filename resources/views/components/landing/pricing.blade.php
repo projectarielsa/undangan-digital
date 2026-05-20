@@ -15,7 +15,7 @@
                 <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">Harga Terjangkau</span>
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Pilih Paket <span class="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">Terbaik</span> untuk Anda
+                Pilih Paket <span class="text-blue-600 dark:text-blue-400">Terbaik</span> untuk Anda
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Investasi kecil untuk momen tak terlupakan. Semua paket sudah termasuk akses penuh ke semua fitur.

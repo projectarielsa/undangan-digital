@@ -18,7 +18,7 @@
                     </div>
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 </div>
-                <span class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Ellori</span>
+                <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
             </a>
             
             <div class="hidden md:flex items-center gap-1">
@@ -109,14 +109,14 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                     </span>
-                    <span class="text-sm font-semibold bg-gradient-to-r from-blue-600 to-sky-600 bg-clip-text text-transparent">Dipercaya Ribuan Pasangan Indonesia</span>
+                    <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">Dipercaya Ribuan Pasangan Indonesia</span>
                 </div>
                 
                 <!-- Heading -->
                 <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
                     <span class="text-gray-900 dark:text-white">Buat Undangan</span><br>
                     <span class="relative">
-                        <span class="bg-gradient-to-r from-blue-500 via-blue-600 to-sky-500 bg-clip-text text-transparent">Digital Premium</span>
+                        <span class="text-blue-600 dark:text-blue-400">Digital Premium</span>
                         <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 300 12" fill="none">
                             <path d="M2 10C50 4 100 4 150 7C200 10 250 6 298 3" stroke="url(#gradient)" stroke-width="3" stroke-linecap="round"/>
                             <defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#3B82F6"/><stop offset="100%" stop-color="#0EA5E9"/></linearGradient></defs>
