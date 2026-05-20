@@ -11,7 +11,7 @@ class PackageSeeder extends Seeder
             [
                 'name' => 'Basic', 'slug' => 'basic',
                 'description' => 'Cocok untuk undangan sederhana dan elegan',
-                'price' => 99000, 'discount_price' => null, 'duration_days' => 365,
+                'price' => 50000, 'discount_price' => null, 'duration_days' => 365,
                 'max_photos' => 5, 'max_guests' => 100, 'max_templates' => 1,
                 'has_rsvp' => false, 'has_music' => false, 'has_guestbook' => true,
                 'has_gallery' => true, 'has_countdown' => true, 'has_love_story' => false,
@@ -23,7 +23,7 @@ class PackageSeeder extends Seeder
             [
                 'name' => 'Premium', 'slug' => 'premium',
                 'description' => 'Paket terlaris dengan fitur lengkap',
-                'price' => 199000, 'discount_price' => 149000, 'duration_days' => 365,
+                'price' => 100000, 'discount_price' => null, 'duration_days' => 365,
                 'max_photos' => 30, 'max_guests' => 500, 'max_templates' => 5,
                 'has_rsvp' => true, 'has_music' => true, 'has_guestbook' => true,
                 'has_gallery' => true, 'has_countdown' => true, 'has_love_story' => true,
@@ -35,7 +35,7 @@ class PackageSeeder extends Seeder
             [
                 'name' => 'Exclusive', 'slug' => 'exclusive',
                 'description' => 'Semua fitur tanpa batas untuk pernikahan impian',
-                'price' => 399000, 'discount_price' => 299000, 'duration_days' => 365,
+                'price' => 150000, 'discount_price' => null, 'duration_days' => 365,
                 'max_photos' => 999, 'max_guests' => 9999, 'max_templates' => 999,
                 'has_rsvp' => true, 'has_music' => true, 'has_guestbook' => true,
                 'has_gallery' => true, 'has_countdown' => true, 'has_love_story' => true,
