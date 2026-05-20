@@ -8,7 +8,7 @@
         <h3 class="font-semibold text-gray-900 dark:text-white">Semua Undangan ({{ $invitations->total() }})</h3>
         <form method="GET" class="flex items-center gap-2">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari..." class="px-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 border rounded-xl">
-            <select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm bg-gray-50 dark:bg-gray-700 border rounded-xl"><option value="">Semua</option><option value="draft" {{ request('status')==='draft'?'selected':'' }}>Draft</option><option value="published" {{ request('status')==='published'?'selected':'' }}>Published</option><option value="paused" {{ request('status')==='paused'?'selected':'' }}>Paused</option></select>
+            <select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl"><option value="">Semua</option><option value="draft" {{ request('status')==='draft'?'selected':'' }}>Draft</option><option value="published" {{ request('status')==='published'?'selected':'' }}>Published</option><option value="paused" {{ request('status')==='paused'?'selected':'' }}>Paused</option></select>
         </form>
     </div>
     <div class="overflow-x-auto">

@@ -31,17 +31,17 @@
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="space-y-4">
                     <h4 class="font-medium text-gray-700 dark:text-gray-300">Mempelai Pria</h4>
-                    <input type="text" name="groom_name" value="{{ old('groom_name', $invitation->groom_name) }}" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="groom_father" value="{{ old('groom_father', $invitation->groom_father) }}" placeholder="Nama Ayah" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="groom_mother" value="{{ old('groom_mother', $invitation->groom_mother) }}" placeholder="Nama Ibu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="groom_instagram" value="{{ old('groom_instagram', $invitation->groom_instagram) }}" placeholder="@instagram" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="groom_name" value="{{ old('groom_name', $invitation->groom_name) }}" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="groom_father" value="{{ old('groom_father', $invitation->groom_father) }}" placeholder="Nama Ayah" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="groom_mother" value="{{ old('groom_mother', $invitation->groom_mother) }}" placeholder="Nama Ibu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="groom_instagram" value="{{ old('groom_instagram', $invitation->groom_instagram) }}" placeholder="@instagram" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
                 <div class="space-y-4">
                     <h4 class="font-medium text-gray-700 dark:text-gray-300">Mempelai Wanita</h4>
-                    <input type="text" name="bride_name" value="{{ old('bride_name', $invitation->bride_name) }}" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="bride_father" value="{{ old('bride_father', $invitation->bride_father) }}" placeholder="Nama Ayah" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="bride_mother" value="{{ old('bride_mother', $invitation->bride_mother) }}" placeholder="Nama Ibu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="bride_instagram" value="{{ old('bride_instagram', $invitation->bride_instagram) }}" placeholder="@instagram" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="bride_name" value="{{ old('bride_name', $invitation->bride_name) }}" required placeholder="Nama Lengkap" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="bride_father" value="{{ old('bride_father', $invitation->bride_father) }}" placeholder="Nama Ayah" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="bride_mother" value="{{ old('bride_mother', $invitation->bride_mother) }}" placeholder="Nama Ibu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="bride_instagram" value="{{ old('bride_instagram', $invitation->bride_instagram) }}" placeholder="@instagram" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
             </div>
         </div>
@@ -50,22 +50,22 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Detail Acara</h3>
             <div class="grid md:grid-cols-2 gap-4">
-                <div><label class="block text-sm text-gray-600 mb-1">Tanggal *</label><input type="date" name="event_date" value="{{ old('event_date', $invitation->event_date->format('Y-m-d')) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
-                <div><label class="block text-sm text-gray-600 mb-1">Jam Mulai *</label><input type="time" name="event_time_start" value="{{ old('event_time_start', $invitation->event_time_start) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
-                <div><label class="block text-sm text-gray-600 mb-1">Tempat *</label><input type="text" name="event_venue" value="{{ old('event_venue', $invitation->event_venue) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
-                <div><label class="block text-sm text-gray-600 mb-1">Google Maps</label><input type="url" name="event_maps_url" value="{{ old('event_maps_url', $invitation->event_maps_url) }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
-                <div class="md:col-span-2"><label class="block text-sm text-gray-600 mb-1">Alamat</label><textarea name="event_address" rows="2" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('event_address', $invitation->event_address) }}</textarea></div>
+                <div><label class="block text-sm text-gray-600 mb-1">Tanggal *</label><input type="date" name="event_date" value="{{ old('event_date', $invitation->event_date->format('Y-m-d')) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
+                <div><label class="block text-sm text-gray-600 mb-1">Jam Mulai *</label><input type="time" name="event_time_start" value="{{ old('event_time_start', $invitation->event_time_start) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
+                <div><label class="block text-sm text-gray-600 mb-1">Tempat *</label><input type="text" name="event_venue" value="{{ old('event_venue', $invitation->event_venue) }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
+                <div><label class="block text-sm text-gray-600 mb-1">Google Maps</label><input type="url" name="event_maps_url" value="{{ old('event_maps_url', $invitation->event_maps_url) }}" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"></div>
+                <div class="md:col-span-2"><label class="block text-sm text-gray-600 mb-1">Alamat</label><textarea name="event_address" rows="2" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('event_address', $invitation->event_address) }}</textarea></div>
             </div>
         </div>
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Konten & Media</h3>
             <div class="space-y-4">
-                <textarea name="opening_text" rows="3" placeholder="Kata Pembuka" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('opening_text', $invitation->opening_text) }}</textarea>
-                <textarea name="closing_text" rows="3" placeholder="Kata Penutup" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('closing_text', $invitation->closing_text) }}</textarea>
+                <textarea name="opening_text" rows="3" placeholder="Kata Pembuka" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('opening_text', $invitation->opening_text) }}</textarea>
+                <textarea name="closing_text" rows="3" placeholder="Kata Penutup" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('closing_text', $invitation->closing_text) }}</textarea>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <input type="text" name="dress_code" value="{{ old('dress_code', $invitation->dress_code) }}" placeholder="Dress Code" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <input type="text" name="slug" value="{{ old('slug', $invitation->slug) }}" placeholder="Custom Slug" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="dress_code" value="{{ old('dress_code', $invitation->dress_code) }}" placeholder="Dress Code" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    <input type="text" name="slug" value="{{ old('slug', $invitation->slug) }}" placeholder="Custom Slug" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                 </div>
                 <div class="grid md:grid-cols-2 gap-4">
                     <div><label class="block text-sm text-gray-600 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700">@if($invitation->cover_image)<p class="text-xs text-green-600 mt-1">Cover saat ini: tersimpan</p>@endif</div>
@@ -102,7 +102,7 @@
                         <div class="grid md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-sm text-gray-600 mb-1">Nama Bank</label>
-                                <select :name="'bank_accounts[' + index + '][bank_name]'" x-model="account.bank_name" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <select :name="'bank_accounts[' + index + '][bank_name]'" x-model="account.bank_name" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <option value="">Pilih Bank</option>
                                     <option value="BCA">BCA</option>
                                     <option value="BNI">BNI</option>
@@ -125,11 +125,11 @@
                             </div>
                             <div>
                                 <label class="block text-sm text-gray-600 mb-1">Nomor Rekening</label>
-                                <input type="text" :name="'bank_accounts[' + index + '][account_number]'" x-model="account.account_number" placeholder="1234567890" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input type="text" :name="'bank_accounts[' + index + '][account_number]'" x-model="account.account_number" placeholder="1234567890" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             </div>
                             <div>
                                 <label class="block text-sm text-gray-600 mb-1">Nama Pemilik</label>
-                                <input type="text" :name="'bank_accounts[' + index + '][account_name]'" x-model="account.account_name" placeholder="Nama sesuai rekening" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <input type="text" :name="'bank_accounts[' + index + '][account_name]'" x-model="account.account_name" placeholder="Nama sesuai rekening" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                 </div>
                 <div>
                     <label class="block text-sm text-gray-600 mb-1">Pesan untuk Gift (Opsional)</label>
-                    <textarea name="gift_info" rows="2" placeholder="Contoh: Doa restu Anda adalah hadiah terindah bagi kami..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('gift_info', $invitation->gift_info) }}</textarea>
+                    <textarea name="gift_info" rows="2" placeholder="Contoh: Doa restu Anda adalah hadiah terindah bagi kami..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('gift_info', $invitation->gift_info) }}</textarea>
                 </div>
             </div>
         </div>

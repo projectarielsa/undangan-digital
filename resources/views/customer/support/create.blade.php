@@ -16,7 +16,7 @@
             @csrf
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kategori *</label>
-                <select name="category" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500">
+                <select name="category" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
                     <option value="">Pilih Kategori</option>
                     <option value="technical" {{ old('category') == 'technical' ? 'selected' : '' }}>Teknis</option>
                     <option value="billing" {{ old('category') == 'billing' ? 'selected' : '' }}>Pembayaran</option>
@@ -28,13 +28,13 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Subjek *</label>
-                <input type="text" name="subject" value="{{ old('subject') }}" required placeholder="Judul masalah Anda" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500">
+                <input type="text" name="subject" value="{{ old('subject') }}" required placeholder="Judul masalah Anda" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
                 @error('subject')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Undangan Terkait (Opsional)</label>
-                <select name="invitation_id" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500">
+                <select name="invitation_id" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">
                     <option value="">Tidak terkait undangan tertentu</option>
                     @foreach($invitations as $inv)
                     <option value="{{ $inv->id }}" {{ old('invitation_id') == $inv->id ? 'selected' : '' }}>{{ $inv->title }}</option>
@@ -44,7 +44,7 @@
 
             <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pesan *</label>
-                <textarea name="message" rows="5" required placeholder="Jelaskan masalah Anda secara detail..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500">{{ old('message') }}</textarea>
+                <textarea name="message" rows="5" required placeholder="Jelaskan masalah Anda secara detail..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500">{{ old('message') }}</textarea>
                 @error('message')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
             </div>
 

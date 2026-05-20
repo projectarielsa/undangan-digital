@@ -10,7 +10,7 @@
 <div class="bg-white dark:bg-gray-800 rounded-2xl border">
     <div class="p-6 border-b flex items-center justify-between">
         <h3 class="font-semibold text-gray-900 dark:text-white">Semua Transaksi</h3>
-        <form method="GET"><select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm bg-gray-50 border rounded-xl"><option value="">Semua</option><option value="paid" {{ request('status')==='paid'?'selected':'' }}>Paid</option><option value="pending" {{ request('status')==='pending'?'selected':'' }}>Pending</option><option value="failed" {{ request('status')==='failed'?'selected':'' }}>Failed</option></select></form>
+        <form method="GET"><select name="status" onchange="this.form.submit()" class="px-3 py-2 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl"><option value="">Semua</option><option value="paid" {{ request('status')==='paid'?'selected':'' }}>Paid</option><option value="pending" {{ request('status')==='pending'?'selected':'' }}>Pending</option><option value="failed" {{ request('status')==='failed'?'selected':'' }}>Failed</option></select></form>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-sm">

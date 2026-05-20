@@ -55,7 +55,7 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-4">
                             <input type="file" name="attachment" class="text-sm text-gray-500">
-                            <select name="new_status" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                            <select name="new_status" class="px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white">
                                 <option value="">Status tetap</option>
                                 <option value="in_progress">Dalam Proses</option>
                                 <option value="waiting_customer">Menunggu Customer</option>
@@ -85,7 +85,7 @@
                 <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Update Status</h3>
                 <form method="POST" action="{{ route('admin.support.status', $ticket) }}">
                     @csrf @method('PUT')
-                    <select name="status" onchange="this.form.submit()" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                    <select name="status" onchange="this.form.submit()" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white">
                         <option value="open" {{ $ticket->status == 'open' ? 'selected' : '' }}>Baru</option>
                         <option value="in_progress" {{ $ticket->status == 'in_progress' ? 'selected' : '' }}>Dalam Proses</option>
                         <option value="waiting_customer" {{ $ticket->status == 'waiting_customer' ? 'selected' : '' }}>Menunggu Customer</option>
@@ -100,7 +100,7 @@
                 <h3 class="font-semibold text-gray-900 dark:text-white mb-3">Prioritas</h3>
                 <form method="POST" action="{{ route('admin.support.priority', $ticket) }}">
                     @csrf @method('PUT')
-                    <select name="priority" onchange="this.form.submit()" class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+                    <select name="priority" onchange="this.form.submit()" class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white">
                         <option value="low" {{ $ticket->priority == 'low' ? 'selected' : '' }}>Rendah</option>
                         <option value="medium" {{ $ticket->priority == 'medium' ? 'selected' : '' }}>Sedang</option>
                         <option value="high" {{ $ticket->priority == 'high' ? 'selected' : '' }}>Tinggi</option>

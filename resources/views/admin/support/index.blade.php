@@ -27,7 +27,7 @@
     <!-- Filters -->
     <div class="bg-white dark:bg-gray-800 rounded-xl border p-4 mb-6">
         <form method="GET" class="flex flex-wrap gap-4">
-            <select name="status" onchange="this.form.submit()" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+            <select name="status" onchange="this.form.submit()" class="px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white">
                 <option value="all">Semua Status</option>
                 <option value="open" {{ request('status') == 'open' ? 'selected' : '' }}>Baru</option>
                 <option value="in_progress" {{ request('status') == 'in_progress' ? 'selected' : '' }}>Dalam Proses</option>
@@ -35,7 +35,7 @@
                 <option value="resolved" {{ request('status') == 'resolved' ? 'selected' : '' }}>Selesai</option>
                 <option value="closed" {{ request('status') == 'closed' ? 'selected' : '' }}>Ditutup</option>
             </select>
-            <select name="priority" onchange="this.form.submit()" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm">
+            <select name="priority" onchange="this.form.submit()" class="px-3 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white">
                 <option value="all">Semua Prioritas</option>
                 <option value="urgent" {{ request('priority') == 'urgent' ? 'selected' : '' }}>Urgent</option>
                 <option value="high" {{ request('priority') == 'high' ? 'selected' : '' }}>Tinggi</option>
