@@ -22,14 +22,10 @@
             </p>
         </div>
         
-        <!-- Pricing Toggle -->
-        <div class="flex items-center justify-center gap-4 mb-12" x-data="{ annual: false }">
-            <span class="text-sm font-medium" :class="!annual ? 'text-gray-900 dark:text-white' : 'text-gray-400'">Bulanan</span>
-            <button @click="annual = !annual" class="relative w-14 h-7 bg-gray-200 dark:bg-gray-700 rounded-full transition-colors" :class="annual && 'bg-amber-500 dark:bg-amber-600'">
-                <div class="absolute top-0.5 left-0.5 w-6 h-6 bg-white rounded-full shadow transition-transform" :class="annual && 'translate-x-7'"></div>
-            </button>
-            <span class="text-sm font-medium" :class="annual ? 'text-gray-900 dark:text-white' : 'text-gray-400'">Tahunan</span>
-            <span class="ml-2 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 text-xs font-semibold rounded-full">Hemat 20%</span>
+        <!-- One-time payment info -->
+        <div class="flex items-center justify-center gap-2 mb-12">
+            <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Sekali bayar, aktif 1 tahun penuh. Tanpa biaya bulanan.</span>
         </div>
         
         <!-- Pricing Cards -->
