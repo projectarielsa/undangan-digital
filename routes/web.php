@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\InvitationController as AdminInvitation;
+use App\Http\Controllers\Admin\PackageController as AdminPackageController;
 use App\Http\Controllers\Admin\PaymentController as AdminPayment;
 use App\Http\Controllers\Admin\SupportTicketController as AdminSupportController;
 use App\Http\Controllers\Admin\TemplateController;
@@ -130,6 +131,9 @@ Route::middleware("auth")->group(function () {
         Route::get("/invitations/{invitation}", [AdminInvitation::class, "show"])->name("invitations.show");
         Route::delete("/invitations/{invitation}", [AdminInvitation::class, "destroy"])->name("invitations.destroy");
         Route::resource("templates", TemplateController::class);
+        Route::get("/packages", [AdminPackageController::class, "index"])->name("packages.index");
+        Route::get("/packages/{package}/edit", [AdminPackageController::class, "edit"])->name("packages.edit");
+        Route::put("/packages/{package}", [AdminPackageController::class, "update"])->name("packages.update");
         Route::get("/payments", [AdminPayment::class, "index"])->name("payments.index");
         Route::get("/payments/{payment}", [AdminPayment::class, "show"])->name("payments.show");
         
