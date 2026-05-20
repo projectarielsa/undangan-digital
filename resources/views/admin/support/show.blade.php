@@ -116,20 +116,23 @@
     </div>
 </div>
 
+@php
+$messagesJson = $ticket->messages->map(function($m) {
+    return [
+        'id' => $m->id,
+        'is_admin_reply' => $m->is_admin_reply,
+        'user_name' => $m->user->name,
+        'user_initial' => substr($m->user->name, 0, 1),
+        'message' => $m->message,
+        'attachment_url' => $m->attachment ? $m->attachment_url : null,
+        'created_at' => $m->created_at->format('d M Y H:i'),
+    ];
+});
+@endphp
 <script>
 function adminSupportChat() {
     return {
-        messages: @json($ticket->messages->map(function($m) {
-            return [
-                'id' => $m->id,
-                'is_admin_reply' => $m->is_admin_reply,
-                'user_name' => $m->user->name,
-                'user_initial' => substr($m->user->name, 0, 1),
-                'message' => $m->message,
-                'attachment_url' => $m->attachment ? $m->attachment_url : null,
-                'created_at' => $m->created_at->format('d M Y H:i'),
-            ];
-        })),
+        messages: @json($messagesJson),
         ticketStatus: '{{ $ticket->status }}',
         newMessageAlert: false,
         pollInterval: null,
