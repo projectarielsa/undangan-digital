@@ -295,9 +295,6 @@
             </div>
         </section>
         @endif
-            </div>
-        </section>
-        @endif
 
         <!-- Closing -->
         @if($invitation->closing_text)
