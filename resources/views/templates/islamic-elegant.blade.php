@@ -32,7 +32,12 @@
             <h1 class="text-5xl sm:text-6xl font-arabic font-bold text-[var(--color-primary)] mb-8">{{ $invitation->bride_name }}</h1>
             @if($guestName)
             <p class="text-xs uppercase tracking-[0.2em] text-gray-500 mb-2">Kepada Yth.</p>
-            <p class="text-lg font-medium text-[var(--color-primary)] mb-8">{{ urldecode($guestName) }}</p>
+            <p class="text-lg font-medium text-[var(--color-primary)] mb-4">{{ urldecode($guestName) }}</p>
+            @if($guest && $guest->invited_by)
+            <p class="text-sm text-[var(--color-primary)]/80 mb-8">Turut Mengundang: {{ $guest->invited_by }}</p>
+            @else
+            <div class="mb-8"></div>
+            @endif
             @endif
             <button @click="openInvitation()" class="px-10 py-3 bg-[var(--color-primary)] text-white rounded-lg hover:opacity-90 transition-all transform hover:scale-105 shadow-lg">
                 Buka Undangan

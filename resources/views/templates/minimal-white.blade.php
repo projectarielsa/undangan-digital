@@ -27,7 +27,12 @@
             <h1 class="text-5xl sm:text-6xl font-serif font-semibold text-[var(--color-primary)] mb-8">{{ $invitation->bride_name }}</h1>
             @if($guestName)
             <p class="text-xs uppercase tracking-[0.2em] text-gray-400 mb-2">Dear</p>
-            <p class="text-lg font-medium text-[var(--color-primary)] mb-8">{{ urldecode($guestName) }}</p>
+            <p class="text-lg font-medium text-[var(--color-primary)] mb-4">{{ urldecode($guestName) }}</p>
+            @if($guest && $guest->invited_by)
+            <p class="text-sm text-gray-400 mb-8">Invited by: {{ $guest->invited_by }}</p>
+            @else
+            <div class="mb-8"></div>
+            @endif
             @endif
             <div class="line-decoration mx-auto mb-8"></div>
             <button @click="openInvitation()" class="px-10 py-3 border border-[var(--color-primary)] text-[var(--color-primary)] text-sm uppercase tracking-[0.2em] hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300">
