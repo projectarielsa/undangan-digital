@@ -152,4 +152,51 @@ class QrCheckinController extends Controller
 
         return back()->with('success', "Check-in {$guest->name} dibatalkan.");
     }
+
+    /**
+     * Welcome display page for showing on separate monitor
+     */
+    public function welcomeDisplay(Request $request, Invitation $invitation)
+    {
+        $this->authorize('view', $invitation);
+
+        if (!$invitation->hasQrCheckinFeature()) {
+            return redirect()->route('customer.packages')
+                ->with('error', 'Fitur QR Check-in hanya tersedia untuk paket Exclusive.');
+        }
+
+        return view('customer.invitations.qr-welcome-display', compact('invitation'));
+    }
+
+    /**
+     * API endpoint to get latest check-in for welcome display
+     */
+    public function latestCheckin(Request $request, Invitation $invitation)
+    {
+        $this->authorize('view', $invitation);
+
+        // Get the most recent check-in within the last minute
+        $latestGuest = $invitation->guests()
+            ->where('is_checked_in', true)
+            ->where('checked_in_at', '>=', now()->subMinute())
+            ->orderByDesc('checked_in_at')
+            ->first();
+
+        if ($latestGuest) {
+            return response()->json([
+                'has_recent' => true,
+                'guest' => [
+                    'id' => $latestGuest->id,
+                    'name' => $latestGuest->name,
+                    'number_of_guests' => $latestGuest->number_of_guests,
+                    'checked_in_at' => $latestGuest->checked_in_at->format('H:i'),
+                ],
+            ]);
+        }
+
+        return response()->json([
+            'has_recent' => false,
+            'guest' => null,
+        ]);
+    }
 }

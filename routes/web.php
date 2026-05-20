@@ -92,6 +92,8 @@ Route::middleware("auth")->group(function () {
         Route::post("/invitations/{invitation}/qr-checkin/{guest}/generate", [QrCheckinController::class, "generateSingle"])->name("invitations.qr-checkin.generate");
         Route::get("/invitations/{invitation}/qr-checkin/{guest}/print", [QrCheckinController::class, "showQrCode"])->name("invitations.qr-checkin.print");
         Route::get("/invitations/{invitation}/qr-checkin/scanner", [QrCheckinController::class, "scanner"])->name("invitations.qr-checkin.scanner");
+        Route::get("/invitations/{invitation}/qr-checkin/welcome-display", [QrCheckinController::class, "welcomeDisplay"])->name("invitations.qr-checkin.welcome-display");
+        Route::get("/invitations/{invitation}/qr-checkin/latest", [QrCheckinController::class, "latestCheckin"])->name("invitations.qr-checkin.latest");
         Route::post("/invitations/{invitation}/qr-checkin/{guest}/manual", [QrCheckinController::class, "manualCheckin"])->name("invitations.qr-checkin.manual");
         Route::post("/invitations/{invitation}/qr-checkin/{guest}/undo", [QrCheckinController::class, "undoCheckin"])->name("invitations.qr-checkin.undo");
         
