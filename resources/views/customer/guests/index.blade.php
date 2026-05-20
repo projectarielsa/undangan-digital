@@ -110,11 +110,11 @@ const eventTimeEnd = "{{ $invitation->event_time_end ? \Carbon\Carbon::parse($in
 
 function generateWaText(guestName) {
     const timeRange = eventTimeEnd ? `${eventTimeStart} - ${eventTimeEnd} WIB` : `${eventTimeStart} WIB`;
-    const decodedName = decodeURIComponent(guestName);
+    const decodedName = decodeURIComponent(guestName.replace(/\+/g, ' '));
     const guestLink = `${invitationUrl}?to=${decodedName.replace(/ /g, '%20')}`;
     
     return `Yth. Bapak/Ibu/Saudara/i
-*${decodeURIComponent(guestName)}*
+*${decodedName}*
 Di Tempat
 ---------------------------
 _Assalamualaikum Wr. Wb._
