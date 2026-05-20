@@ -109,7 +109,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                     </span>
-                    <span class="text-sm font-semibold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">Platform Undangan #1 di Indonesia</span>
+                    <span class="text-sm font-semibold bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">Dipercaya Ribuan Pasangan Indonesia</span>
                 </div>
                 
                 <!-- Heading -->

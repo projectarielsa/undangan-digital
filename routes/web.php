@@ -42,6 +42,12 @@ Route::get('/ping', [HealthCheckController::class, 'ping'])->name('ping');
 |--------------------------------------------------------------------------
 */
 Route::get("/", [LandingPageController::class, "index"])->name("home");
+Route::get("/privacy-policy", function () {
+    return view("pages.privacy-policy");
+})->name("privacy");
+Route::get("/terms-of-service", function () {
+    return view("pages.terms-of-service");
+})->name("terms");
 Route::middleware("guest")->group(function () {
     Route::get("/login", [LoginController::class, "showLoginForm"])->name("login");
     Route::post("/login", [LoginController::class, "login"]);
