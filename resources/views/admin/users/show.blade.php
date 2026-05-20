@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-4xl space-y-6">
     <!-- Back Button -->
-    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-amber-600">
+    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-blue-600">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Kembali ke Daftar User
     </a>
@@ -49,7 +49,7 @@
                 @csrf
                 <div class="flex-1 min-w-[200px]">
                     <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Paket</label>
-                    <select name="package_id" required class="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm">
+                    <select name="package_id" required class="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
                         <option value="">Pilih Paket</option>
                         @foreach($packages as $package)
                         <option value="{{ $package->id }}">{{ $package->name }} - Rp {{ number_format($package->getEffectivePrice(), 0, ',', '.') }}</option>
@@ -58,9 +58,9 @@
                 </div>
                 <div class="w-32">
                     <label class="block text-sm text-gray-600 dark:text-gray-400 mb-1">Durasi (hari)</label>
-                    <input type="number" name="duration_days" value="30" min="1" max="365" required class="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-500 text-sm">
+                    <input type="number" name="duration_days" value="30" min="1" max="365" required class="w-full px-3 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm">
                 </div>
-                <button type="submit" class="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-lg hover:bg-amber-700 transition">
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition">
                     Tambah Langganan
                 </button>
             </form>
@@ -109,7 +109,7 @@
                                 <form method="POST" action="{{ route('admin.subscriptions.extend', $subscription) }}" class="flex items-center gap-1">
                                     @csrf
                                     <input type="number" name="days" value="30" min="1" max="365" class="w-16 px-2 py-1 text-xs border rounded">
-                                    <button type="submit" class="text-xs text-amber-600 hover:underline">+Hari</button>
+                                    <button type="submit" class="text-xs text-blue-600 hover:underline">+Hari</button>
                                 </form>
                                 <!-- Cancel -->
                                 <form method="POST" action="{{ route('admin.subscriptions.cancel', $subscription) }}" onsubmit="return confirm('Batalkan langganan ini?')">

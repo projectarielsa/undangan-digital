@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-6xl">
     <div class="flex items-center justify-between mb-6">
-        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1">
+        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Kembali ke Edit
         </a>
@@ -40,8 +40,8 @@
 
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-5">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center">
-                    <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
                 <div>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ number_format($stats['summary']['today_views']) }}</p>
@@ -130,7 +130,7 @@
                         <span class="font-medium text-gray-900 dark:text-white">{{ number_format($count) }}</span>
                     </div>
                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div class="bg-amber-500 h-2 rounded-full" style="width: {{ ($count / $totalBrowsers) * 100 }}%"></div>
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: {{ ($count / $totalBrowsers) * 100 }}%"></div>
                     </div>
                 </div>
                 @empty

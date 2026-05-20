@@ -9,8 +9,8 @@
 </div>
 <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
     @foreach($packages as $package)
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 {{ $package->is_featured ? 'border-amber-500 shadow-xl' : 'border-gray-100 dark:border-gray-700' }} relative">
-        @if($package->is_featured)<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-amber-500 text-white text-xs font-bold rounded-full">POPULER</div>@endif
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border-2 {{ $package->is_featured ? 'border-blue-500 shadow-xl' : 'border-gray-100 dark:border-gray-700' }} relative">
+        @if($package->is_featured)<div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-xs font-bold rounded-full">POPULER</div>@endif
         <div class="text-center mb-6">
             <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ $package->name }}</h3>
             <p class="text-sm text-gray-500 mt-1">{{ $package->description }}</p>
@@ -26,7 +26,7 @@
         </ul>
         <form method="POST" action="{{ route('customer.checkout', $package) }}">
             @csrf
-            <button type="submit" class="w-full py-3 text-center font-semibold rounded-xl transition {{ $package->is_featured ? 'bg-gradient-to-r from-amber-600 to-amber-700 text-white shadow-lg shadow-amber-500/25' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200' }}">Pilih {{ $package->name }}</button>
+            <button type="submit" class="w-full py-3 text-center font-semibold rounded-xl transition {{ $package->is_featured ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg shadow-blue-500/25' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200' }}">Pilih {{ $package->name }}</button>
         </form>
     </div>
     @endforeach

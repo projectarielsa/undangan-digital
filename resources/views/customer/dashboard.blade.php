@@ -7,16 +7,16 @@
 @section('content')
 <div class="space-y-8">
     <!-- Welcome Banner -->
-    <div class="relative overflow-hidden bg-gradient-to-r from-amber-500 via-amber-600 to-rose-500 rounded-3xl p-8 text-white">
+    <div class="relative overflow-hidden bg-gradient-to-r from-blue-500 via-blue-600 to-rose-500 rounded-3xl p-8 text-white">
         <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
         <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
-                <p class="text-amber-100 text-sm mb-2">Selamat datang kembali,</p>
+                <p class="text-blue-100 text-sm mb-2">Selamat datang kembali,</p>
                 <h2 class="text-2xl md:text-3xl font-bold mb-2">{{ auth()->user()->name }}!</h2>
-                <p class="text-amber-100 max-w-md">Kelola undangan digital Anda dan pantau statistik pengunjung dengan mudah.</p>
+                <p class="text-blue-100 max-w-md">Kelola undangan digital Anda dan pantau statistik pengunjung dengan mudah.</p>
             </div>
-            <a href="{{ route('customer.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-amber-600 font-semibold rounded-xl hover:bg-amber-50 transition-colors shadow-lg shadow-black/10">
+            <a href="{{ route('customer.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg shadow-black/10">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -28,14 +28,14 @@
     <!-- Stats Grid -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         <!-- Total Undangan -->
-        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-amber-500/5 hover:border-amber-200 dark:hover:border-amber-800 transition-all duration-300 hover:-translate-y-1">
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-blue-500/5 hover:border-blue-200 dark:hover:border-blue-800 transition-all duration-300 hover:-translate-y-1">
             <div class="flex items-start justify-between mb-4">
-                <div class="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/50 dark:to-amber-800/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                     </svg>
                 </div>
-                <span class="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-lg">Total</span>
+                <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-lg">Total</span>
             </div>
             <p class="text-3xl font-bold text-gray-900 dark:text-white mb-1">{{ $stats['total_invitations'] }}</p>
             <p class="text-sm text-gray-500 dark:text-gray-400">Undangan</p>
@@ -95,12 +95,12 @@
     <!-- Subscription Card -->
     @if($activeSubscription)
     <div class="relative overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-3xl p-8 text-white">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-48 h-48 bg-rose-500/10 rounded-full blur-3xl"></div>
         <div class="relative z-10">
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 bg-gradient-to-br from-amber-400 to-amber-600 rounded-2xl flex items-center justify-center shadow-lg shadow-amber-500/30">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
                         <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
                         </svg>
@@ -133,7 +133,7 @@
                     <span>{{ $totalDays - $usedDays }} hari tersisa</span>
                 </div>
                 <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-amber-400 to-rose-500 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
+                    <div class="h-full bg-gradient-to-r from-blue-400 to-rose-500 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
                 </div>
             </div>
         </div>
@@ -152,7 +152,7 @@
                     <p class="text-gray-500 dark:text-gray-400">Pilih paket untuk mengaktifkan semua fitur premium</p>
                 </div>
             </div>
-            <a href="{{ route('customer.packages') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-amber-500/25 transition-all">
+            <a href="{{ route('customer.packages') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-rose-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
@@ -170,7 +170,7 @@
                 <h3 class="text-lg font-bold text-gray-900 dark:text-white">Undangan Terbaru</h3>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Kelola dan pantau undangan Anda</p>
             </div>
-            <a href="{{ route('customer.invitations.create') }}" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-sm font-medium rounded-xl transition-all shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40">
+            <a href="{{ route('customer.invitations.create') }}" class="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-sm font-medium rounded-xl transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -187,7 +187,7 @@
             </div>
             <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Belum Ada Undangan</h4>
             <p class="text-gray-500 dark:text-gray-400 mb-6 max-w-sm mx-auto">Mulai buat undangan digital pertama Anda dan bagikan momen spesial kepada orang-orang tersayang</p>
-            <a href="{{ route('customer.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-amber-500/25 transition-all">
+            <a href="{{ route('customer.invitations.create') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-rose-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-blue-500/25 transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
@@ -200,7 +200,7 @@
             <div class="group p-5 sm:p-6 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                 <!-- Preview Thumbnail -->
                 <div class="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden" style="background: linear-gradient(135deg, {{ $invitation->template->color_primary ?? '#F59E0B' }}30, {{ $invitation->template->color_secondary ?? '#3D3D3D' }}20)">
-                    <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </div>
@@ -248,7 +248,7 @@
                 
                 <!-- Actions -->
                 <div class="flex items-center gap-2">
-                    <a href="{{ route('customer.invitations.edit', $invitation) }}" class="p-2.5 text-gray-400 hover:text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-xl transition-colors" title="Edit">
+                    <a href="{{ route('customer.invitations.edit', $invitation) }}" class="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors" title="Edit">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                         </svg>
@@ -268,7 +268,7 @@
         <!-- View All Link -->
         @if($invitations->count() >= 5)
         <div class="p-4 bg-gray-50 dark:bg-gray-700/50 text-center">
-            <a href="{{ route('customer.invitations.index') }}" class="text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-amber-400 dark:hover:text-amber-300">
+            <a href="{{ route('customer.invitations.index') }}" class="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
                 Lihat Semua Undangan &rarr;
             </a>
         </div>

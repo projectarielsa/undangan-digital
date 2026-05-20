@@ -17,7 +17,7 @@
         <p class="text-gray-500 mb-6">Selamat datang di acara pernikahan</p>
         
         <div class="bg-gray-50 rounded-2xl p-6 mb-6">
-            <p class="text-3xl font-bold text-amber-600 mb-2">{{ $guest->name }}</p>
+            <p class="text-3xl font-bold text-blue-600 mb-2">{{ $guest->name }}</p>
             <p class="text-gray-600">{{ $guest->number_of_guests }} Orang</p>
             <p class="text-sm text-gray-400 mt-2">Check-in: {{ $guest->checked_in_at->format('H:i') }}</p>
         </div>

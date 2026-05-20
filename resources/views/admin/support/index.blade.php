@@ -76,7 +76,7 @@
                     </td>
                     <td class="px-4 py-3 text-gray-500">{{ $ticket->created_at->format('d M Y') }}</td>
                     <td class="px-4 py-3">
-                        <a href="{{ route('admin.support.show', $ticket) }}" class="text-amber-600 hover:text-amber-700 font-medium">Lihat</a>
+                        <a href="{{ route('admin.support.show', $ticket) }}" class="text-blue-600 hover:text-blue-700 font-medium">Lihat</a>
                     </td>
                 </tr>
                 @empty

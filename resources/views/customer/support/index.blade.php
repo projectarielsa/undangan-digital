@@ -10,7 +10,7 @@
             <p class="text-gray-500 text-sm">Bantuan prioritas untuk pengguna Exclusive</p>
         </div>
         @if($hasPrioritySupport)
-        <a href="{{ route('customer.support.create') }}" class="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition flex items-center gap-2">
+        <a href="{{ route('customer.support.create') }}" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition flex items-center gap-2">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
             Buat Tiket Baru
         </a>
@@ -18,15 +18,15 @@
     </div>
 
     @if(!$hasPrioritySupport)
-    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 mb-6">
+    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6 mb-6">
         <div class="flex items-start gap-4">
-            <div class="w-10 h-10 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </div>
             <div>
-                <h3 class="font-semibold text-amber-800 dark:text-amber-300">Fitur Exclusive</h3>
-                <p class="text-amber-700 dark:text-amber-400 text-sm mt-1">Priority Support hanya tersedia untuk paket Exclusive. Upgrade paket Anda untuk mendapatkan dukungan prioritas.</p>
-                <a href="{{ route('customer.packages') }}" class="inline-block mt-3 text-sm font-medium text-amber-700 hover:text-amber-800 underline">Lihat Paket →</a>
+                <h3 class="font-semibold text-blue-800 dark:text-blue-300">Fitur Exclusive</h3>
+                <p class="text-blue-700 dark:text-blue-400 text-sm mt-1">Priority Support hanya tersedia untuk paket Exclusive. Upgrade paket Anda untuk mendapatkan dukungan prioritas.</p>
+                <a href="{{ route('customer.packages') }}" class="inline-block mt-3 text-sm font-medium text-blue-700 hover:text-blue-800 underline">Lihat Paket →</a>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
             <svg class="w-12 h-12 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
             <p>Belum ada tiket support</p>
             @if($hasPrioritySupport)
-            <a href="{{ route('customer.support.create') }}" class="inline-block mt-3 text-amber-600 hover:text-amber-700 font-medium">Buat tiket pertama →</a>
+            <a href="{{ route('customer.support.create') }}" class="inline-block mt-3 text-blue-600 hover:text-blue-700 font-medium">Buat tiket pertama →</a>
             @endif
         </div>
         @endforelse

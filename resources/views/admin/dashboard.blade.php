@@ -45,16 +45,16 @@
         </div>
 
         <!-- Total Invitations -->
-        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
+        <div class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
             <div class="relative">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/50 dark:to-amber-800/50 rounded-2xl flex items-center justify-center">
-                        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 rounded-2xl flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                         </svg>
                     </div>
-                    <span class="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded-lg">Total</span>
+                    <span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded-lg">Total</span>
                 </div>
                 <p class="text-3xl font-bold text-gray-900 dark:text-white mb-1">{{ number_format($stats['total_invitations']) }}</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400">Total Undangan</p>
@@ -80,7 +80,7 @@
 
 
         <!-- Total Revenue -->
-        <div class="group relative bg-gradient-to-br from-amber-500 via-amber-600 to-rose-500 rounded-2xl p-6 text-white overflow-hidden hover:shadow-xl hover:shadow-amber-500/20 transition-all duration-300 hover:-translate-y-1">
+        <div class="group relative bg-gradient-to-br from-blue-500 via-blue-600 to-rose-500 rounded-2xl p-6 text-white overflow-hidden hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1">
             <div class="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"></div>
             <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2"></div>
             <div class="relative">
@@ -149,13 +149,13 @@
                     <h3 class="font-bold text-gray-900 dark:text-white">Pembayaran Terbaru</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400">Transaksi yang berhasil</p>
                 </div>
-                <a href="{{ route('admin.payments.index') }}" class="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 font-medium">Lihat Semua</a>
+                <a href="{{ route('admin.payments.index') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium">Lihat Semua</a>
             </div>
             <div class="divide-y divide-gray-100 dark:divide-gray-700">
                 @forelse($recentPayments as $payment)
                 <div class="p-4 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/50 dark:to-amber-800/50 flex items-center justify-center flex-shrink-0">
-                        <span class="text-amber-700 dark:text-amber-300 font-semibold text-sm">{{ strtoupper(substr($payment->user->name, 0, 1)) }}</span>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50 flex items-center justify-center flex-shrink-0">
+                        <span class="text-blue-700 dark:text-blue-300 font-semibold text-sm">{{ strtoupper(substr($payment->user->name, 0, 1)) }}</span>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="font-medium text-gray-900 dark:text-white text-sm truncate">{{ $payment->user->name }}</p>
@@ -184,7 +184,7 @@
                     <h3 class="font-bold text-gray-900 dark:text-white">User Terbaru</h3>
                     <p class="text-sm text-gray-500 dark:text-gray-400">Pendaftar baru di platform</p>
                 </div>
-                <a href="{{ route('admin.users.index') }}" class="text-sm text-amber-600 dark:text-amber-400 hover:text-amber-700 font-medium">Lihat Semua</a>
+                <a href="{{ route('admin.users.index') }}" class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium">Lihat Semua</a>
             </div>
             <div class="divide-y divide-gray-100 dark:divide-gray-700">
                 @forelse($recentUsers as $user)
@@ -221,9 +221,9 @@
     <div class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl p-6 border border-gray-200 dark:border-gray-700">
         <h3 class="font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <a href="{{ route('admin.templates.create') }}" class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-lg transition-all group">
-                <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <a href="{{ route('admin.templates.create') }}" class="flex items-center gap-3 p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-lg transition-all group">
+                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
                 </div>

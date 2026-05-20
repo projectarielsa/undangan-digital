@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="grid grid-cols-2 gap-4 mb-8">
-    <div class="bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl p-6 text-white"><p class="text-amber-100 text-sm">Total Revenue</p><p class="text-3xl font-bold">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p></div>
+    <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white"><p class="text-blue-100 text-sm">Total Revenue</p><p class="text-3xl font-bold">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</p></div>
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 border"><p class="text-gray-500 text-sm">Bulan Ini</p><p class="text-3xl font-bold text-gray-900 dark:text-white">Rp {{ number_format($monthlyRevenue, 0, ',', '.') }}</p></div>
 </div>
 <div class="bg-white dark:bg-gray-800 rounded-2xl border">

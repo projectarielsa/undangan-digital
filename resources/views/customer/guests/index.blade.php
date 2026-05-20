@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-4xl">
-    <div class="mb-6"><a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>Kembali ke Undangan</a></div>
+    <div class="mb-6"><a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>Kembali ke Undangan</a></div>
 
     <!-- RSVP Stats -->
     <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-8">
@@ -20,10 +20,10 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Tambah Tamu</h3>
         <form method="POST" action="{{ route('customer.guests.store', $invitation) }}" class="flex flex-wrap gap-3">
             @csrf
-            <input type="text" name="name" required placeholder="Nama tamu" class="flex-1 min-w-[200px] px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
-            <input type="text" name="phone" placeholder="No. HP (08xxx)" class="w-48 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
-            <input type="text" name="invited_by" placeholder="Turut Mengundang (opsional)" class="w-56 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
-            <button type="submit" class="px-5 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition">Tambah</button>
+            <input type="text" name="name" required placeholder="Nama tamu" class="flex-1 min-w-[200px] px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-blue-500">
+            <input type="text" name="phone" placeholder="No. HP (08xxx)" class="w-48 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-blue-500">
+            <input type="text" name="invited_by" placeholder="Turut Mengundang (opsional)" class="w-56 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition">Tambah</button>
         </form>
         <p class="text-xs text-gray-400 mt-2">Contoh "Turut Mengundang": Bapak Ahmad, Ibu Siti, Keluarga Besar Surya</p>
     </div>
@@ -33,7 +33,7 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Import dari CSV/Excel</h3>
         <form method="POST" action="{{ route('customer.guests.import', $invitation) }}" enctype="multipart/form-data" class="flex items-center gap-3">
             @csrf
-            <input type="file" name="file" accept=".csv,.xlsx,.xls" required class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">
+            <input type="file" name="file" accept=".csv,.xlsx,.xls" required class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700">
             <button type="submit" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Import</button>
         </form>
         <p class="text-xs text-gray-400 mt-2">Format: Nama, No HP, Turut Mengundang (satu baris per tamu)</p>
@@ -70,13 +70,13 @@
                     <p class="font-medium text-gray-900 dark:text-white">{{ $guest->name }}</p>
                     <p class="text-xs text-gray-500">{{ $guest->phone }}</p>
                     @if($guest->invited_by)
-                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-0.5">Turut Mengundang: {{ $guest->invited_by }}</p>
+                    <p class="text-xs text-blue-600 dark:text-blue-400 mt-0.5">Turut Mengundang: {{ $guest->invited_by }}</p>
                     @endif
                 </div>
                 <div class="flex items-center gap-1">
                     <span class="px-2 py-0.5 text-xs font-medium rounded-full {{ $guest->rsvp_status === 'attending' ? 'bg-green-100 text-green-700' : ($guest->rsvp_status === 'not_attending' ? 'bg-red-100 text-red-700' : ($guest->rsvp_status === 'maybe' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600')) }}">{{ ucfirst(str_replace('_', ' ', $guest->rsvp_status)) }}</span>
                     <!-- Copy Link -->
-                    <button onclick="copyGuestLink('{{ urlencode($guest->name) }}')" class="p-1.5 text-gray-400 hover:text-amber-600 transition" title="Copy Link">
+                    <button onclick="copyGuestLink('{{ urlencode($guest->name) }}')" class="p-1.5 text-gray-400 hover:text-blue-600 transition" title="Copy Link">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
                     </button>
                     <!-- Share WA -->

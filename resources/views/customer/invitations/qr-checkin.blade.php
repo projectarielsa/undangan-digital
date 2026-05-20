@@ -5,13 +5,13 @@
 @section('content')
 <div class="max-w-6xl">
     <div class="flex items-center justify-between mb-6">
-        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1">
+        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Kembali ke Edit
         </a>
         <div class="flex items-center gap-2">
             <span class="px-3 py-1 text-xs font-medium rounded-full bg-indigo-100 text-indigo-700">Exclusive Feature</span>
-            <a href="{{ route('customer.invitations.qr-checkin.scanner', $invitation) }}" class="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition flex items-center gap-2">
+            <a href="{{ route('customer.invitations.qr-checkin.scanner', $invitation) }}" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                 Buka Scanner
             </a>
@@ -29,7 +29,7 @@
             <p class="text-sm text-gray-500">Konfirmasi Hadir</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-5">
-            <p class="text-3xl font-bold text-amber-600">{{ $stats['checked_in'] }}</p>
+            <p class="text-3xl font-bold text-blue-600">{{ $stats['checked_in'] }}</p>
             <p class="text-sm text-gray-500">Sudah Check-in</p>
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-5">
@@ -45,7 +45,7 @@
                 <h3 class="font-semibold text-gray-900 dark:text-white">Daftar Tamu</h3>
                 <form method="POST" action="{{ route('customer.invitations.qr-checkin.generate-all', $invitation) }}">
                     @csrf
-                    <button type="submit" class="text-sm text-amber-600 hover:text-amber-700 font-medium">Generate Semua QR</button>
+                    <button type="submit" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Generate Semua QR</button>
                 </form>
             </div>
             
@@ -74,7 +74,7 @@
                     
                     <div class="flex items-center gap-2">
                         @if($guest->qr_code)
-                        <a href="{{ route('customer.invitations.qr-checkin.print', [$invitation, $guest]) }}" target="_blank" class="p-2 text-gray-500 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition" title="Lihat QR Code">
+                        <a href="{{ route('customer.invitations.qr-checkin.print', [$invitation, $guest]) }}" target="_blank" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Lihat QR Code">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
                         </a>
                         @else
@@ -105,7 +105,7 @@
                 </div>
                 @empty
                 <div class="p-8 text-center text-gray-500">
-                    <p>Belum ada tamu. <a href="{{ route('customer.guests.index', $invitation) }}" class="text-amber-600 hover:underline">Tambah tamu</a></p>
+                    <p>Belum ada tamu. <a href="{{ route('customer.guests.index', $invitation) }}" class="text-blue-600 hover:underline">Tambah tamu</a></p>
                 </div>
                 @endforelse
             </div>

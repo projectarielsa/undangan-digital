@@ -15,21 +15,21 @@
         @csrf
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Nama Lengkap</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Masukkan nama lengkap">
+            <input id="name" type="text" name="name" value="{{ old('name') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Masukkan nama lengkap">
         </div>
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="email@contoh.com">
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@contoh.com">
         </div>
         <div>
             <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Password</label>
-            <input id="password" type="password" name="password" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Minimal 8 karakter">
+            <input id="password" type="password" name="password" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Minimal 8 karakter">
         </div>
         <div>
             <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Konfirmasi Password</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="Ulangi password">
+            <input id="password_confirmation" type="password" name="password_confirmation" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Ulangi password">
         </div>
-        <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold rounded-2xl shadow-lg shadow-amber-500/25 transition-all duration-200 transform hover:scale-[1.02]">Daftar Sekarang</button>
+        <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-2xl shadow-lg shadow-blue-500/25 transition-all duration-200 transform hover:scale-[1.02]">Daftar Sekarang</button>
     </form>
 
     <div class="relative my-6">
@@ -42,6 +42,6 @@
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Daftar dengan Google</span>
     </a>
 
-    <p class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">Sudah punya akun? <a href="{{ route('login') }}" class="text-amber-600 hover:text-amber-700 font-semibold">Masuk</a></p>
+    <p class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">Sudah punya akun? <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-semibold">Masuk</a></p>
 </div>
 @endsection

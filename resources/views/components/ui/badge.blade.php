@@ -8,7 +8,7 @@
 @php
     $types = [
         'default' => 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400',
-        'primary' => 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',
+        'primary' => 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400',
         'success' => 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400',
         'warning' => 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400',
         'danger' => 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400',
@@ -18,7 +18,7 @@
     
     $dotColors = [
         'default' => 'bg-gray-400',
-        'primary' => 'bg-amber-500',
+        'primary' => 'bg-blue-500',
         'success' => 'bg-green-500',
         'warning' => 'bg-yellow-500',
         'danger' => 'bg-red-500',

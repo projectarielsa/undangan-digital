@@ -7,18 +7,18 @@
         <div class="flex flex-col h-full">
             <div class="flex items-center justify-between h-16 px-6 border-b border-gray-100 dark:border-gray-700">
                 <a href="/" class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-gradient-to-br from-amber-500 to-amber-700 rounded-lg flex items-center justify-center">
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
                     </div>
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Undangan Digital</span>
+                    <span class="font-bold text-gray-900 dark:text-white text-sm">Ellori</span>
                 </a>
                 <button @click="sidebarOpen = false" class="lg:hidden text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">@yield('sidebar-nav')</nav>
             <div class="p-4 border-t border-gray-100 dark:border-gray-700">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center">
-                        <span class="text-amber-700 dark:text-amber-300 font-semibold text-sm">{{ substr(auth()->user()->name, 0, 1) }}</span>
+                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                        <span class="text-blue-700 dark:text-blue-300 font-semibold text-sm">{{ substr(auth()->user()->name, 0, 1) }}</span>
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ auth()->user()->name }}</p>

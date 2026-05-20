@@ -13,8 +13,8 @@
     <div class="p-6 border-b flex items-center justify-between">
         <h3 class="font-semibold text-gray-900 dark:text-white">Users ({{ $users->total() }})</h3>
         <form method="GET" class="flex items-center gap-2">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari user..." class="px-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500">
-            <button type="submit" class="px-4 py-2 bg-amber-600 text-white text-sm rounded-xl hover:bg-amber-700">Cari</button>
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari user..." class="px-4 py-2 text-sm bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500">
+            <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm rounded-xl hover:bg-blue-700">Cari</button>
         </form>
     </div>
     <div class="overflow-x-auto">
@@ -29,14 +29,14 @@
                     <td class="px-6 py-4">{{ $user->invitations_count }}</td>
                     <td class="px-6 py-4">
                         @if($activeSub)
-                        <span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700">{{ $activeSub->package?->name ?? 'Premium' }}</span>
+                        <span class="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-700">{{ $activeSub->package?->name ?? 'Premium' }}</span>
                         @else
                         <span class="px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-500">Free</span>
                         @endif
                     </td>
                     <td class="px-6 py-4"><span class="px-2 py-0.5 text-xs rounded-full {{ $user->is_active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">{{ $user->is_active ? 'Aktif' : 'Nonaktif' }}</span></td>
                     <td class="px-6 py-4 flex items-center gap-2">
-                        <a href="{{ route('admin.users.show', $user) }}" class="text-sm text-amber-600 hover:underline">Detail</a>
+                        <a href="{{ route('admin.users.show', $user) }}" class="text-sm text-blue-600 hover:underline">Detail</a>
                         <form method="POST" action="{{ route('admin.users.toggle', $user) }}">@csrf<button class="text-sm text-gray-500 hover:underline">{{ $user->is_active ? 'Nonaktifkan' : 'Aktifkan' }}</button></form>
                     </td>
                 </tr>

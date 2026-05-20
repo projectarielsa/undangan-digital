@@ -11,13 +11,13 @@
 
 @php
     $variants = [
-        'primary' => 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/25 hover:shadow-amber-500/40 hover:from-amber-600 hover:to-amber-700',
+        'primary' => 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:from-blue-600 hover:to-blue-700',
         'secondary' => 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600',
-        'outline' => 'border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/20',
+        'outline' => 'border-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20',
         'ghost' => 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800',
         'danger' => 'bg-gradient-to-r from-red-500 to-red-600 text-white shadow-lg shadow-red-500/25 hover:shadow-red-500/40 hover:from-red-600 hover:to-red-700',
         'success' => 'bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/25 hover:shadow-green-500/40 hover:from-green-600 hover:to-emerald-700',
-        'gradient' => 'bg-gradient-to-r from-amber-500 via-rose-500 to-purple-500 text-white shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40',
+        'gradient' => 'bg-gradient-to-r from-blue-500 via-rose-500 to-purple-500 text-white shadow-lg shadow-rose-500/25 hover:shadow-rose-500/40',
     ];
     
     $sizes = [

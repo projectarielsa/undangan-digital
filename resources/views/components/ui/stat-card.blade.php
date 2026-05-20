@@ -11,11 +11,11 @@
 @php
     $colorClasses = [
         'amber' => [
-            'bg' => 'bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-900/50 dark:to-amber-800/50',
-            'text' => 'text-amber-600 dark:text-amber-400',
-            'shadow' => 'hover:shadow-amber-500/5',
-            'border' => 'hover:border-amber-200 dark:hover:border-amber-800',
-            'badge' => 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
+            'bg' => 'bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/50 dark:to-blue-800/50',
+            'text' => 'text-blue-600 dark:text-blue-400',
+            'shadow' => 'hover:shadow-blue-500/5',
+            'border' => 'hover:border-blue-200 dark:hover:border-blue-800',
+            'badge' => 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
         ],
         'green' => [
             'bg' => 'bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/50 dark:to-green-800/50',

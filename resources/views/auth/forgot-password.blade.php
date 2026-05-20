@@ -16,10 +16,10 @@
         @csrf
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all" placeholder="email@contoh.com">
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@contoh.com">
         </div>
-        <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-semibold rounded-2xl shadow-lg shadow-amber-500/25 transition-all duration-200 transform hover:scale-[1.02]">Kirim Link Reset</button>
+        <button type="submit" class="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold rounded-2xl shadow-lg shadow-blue-500/25 transition-all duration-200 transform hover:scale-[1.02]">Kirim Link Reset</button>
     </form>
-    <p class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"><a href="{{ route('login') }}" class="text-amber-600 hover:text-amber-700 font-semibold">&larr; Kembali ke login</a></p>
+    <p class="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"><a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-700 font-semibold">&larr; Kembali ke login</a></p>
 </div>
 @endsection

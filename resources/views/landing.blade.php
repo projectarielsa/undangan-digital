@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Undangan Digital Premium - Buat Undangan Pernikahan Online')
+@section('title', 'Ellori - Buat Undangan Pernikahan Online')
 
 @section('body')
 <div x-data="{ scrollY: 0 }" @scroll.window="scrollY = window.scrollY">

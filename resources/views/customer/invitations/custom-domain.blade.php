@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-3xl">
     <div class="flex items-center justify-between mb-6">
-        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1">
+        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Kembali ke Edit
         </a>
@@ -47,7 +47,7 @@
                 @if(!$customDomain->isActive())
                 <form method="POST" action="{{ route('customer.invitations.custom-domain.verify', $invitation) }}">
                     @csrf
-                    <button type="submit" class="px-4 py-2 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition">Verifikasi</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-xl hover:bg-blue-700 transition">Verifikasi</button>
                 </form>
                 @endif
                 <form method="POST" action="{{ route('customer.invitations.custom-domain.destroy', $invitation) }}" onsubmit="return confirm('Hapus domain ini?')">
@@ -72,11 +72,11 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Domain</label>
-                <input type="text" name="domain" value="{{ old('domain') }}" required placeholder="undangan.namadomain.com" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent font-mono">
+                <input type="text" name="domain" value="{{ old('domain') }}" required placeholder="undangan.namadomain.com" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono">
                 @error('domain')<p class="text-red-500 text-sm mt-1">{{ $message }}</p>@enderror
                 <p class="text-xs text-gray-500 mt-2">Gunakan subdomain seperti undangan.namadomain.com atau domain khusus seperti wedding.com</p>
             </div>
-            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl">Tambah Domain</button>
+            <button type="submit" class="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl">Tambah Domain</button>
         </form>
     </div>
     @endif
@@ -86,15 +86,15 @@
         <h3 class="font-semibold text-gray-900 dark:text-white mb-4">Cara Kerja</h3>
         <div class="space-y-4">
             <div class="flex gap-4">
-                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-amber-700">1</span></div>
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-blue-700">1</span></div>
                 <div><p class="font-medium text-gray-900 dark:text-white">Tambahkan domain</p><p class="text-sm text-gray-500">Masukkan domain atau subdomain yang ingin Anda gunakan.</p></div>
             </div>
             <div class="flex gap-4">
-                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-amber-700">2</span></div>
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-blue-700">2</span></div>
                 <div><p class="font-medium text-gray-900 dark:text-white">Setup DNS</p><p class="text-sm text-gray-500">Tambahkan CNAME record di provider domain Anda sesuai instruksi.</p></div>
             </div>
             <div class="flex gap-4">
-                <div class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-amber-700">3</span></div>
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0"><span class="font-bold text-blue-700">3</span></div>
                 <div><p class="font-medium text-gray-900 dark:text-white">Verifikasi</p><p class="text-sm text-gray-500">Klik tombol verifikasi setelah DNS selesai propagasi (biasanya 24-48 jam).</p></div>
             </div>
         </div>

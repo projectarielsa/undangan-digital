@@ -5,11 +5,11 @@
 @section('content')
 <div class="max-w-4xl">
     <div class="flex items-center justify-between mb-6">
-        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-amber-600 flex items-center gap-1">
+        <a href="{{ route('customer.invitations.edit', $invitation) }}" class="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             Kembali ke Edit
         </a>
-        <span class="px-3 py-1 text-xs font-medium rounded-full bg-amber-100 text-amber-700">Premium Feature</span>
+        <span class="px-3 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700">Premium Feature</span>
     </div>
 
     <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6 mb-6">
@@ -33,7 +33,7 @@
         <div class="space-y-4" id="story-container">
             <template x-for="(story, index) in stories" :key="index">
                 <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6 relative">
-                    <div class="absolute -left-3 top-6 w-6 h-6 bg-amber-500 rounded-full flex items-center justify-center text-white text-xs font-bold" x-text="index + 1"></div>
+                    <div class="absolute -left-3 top-6 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center text-white text-xs font-bold" x-text="index + 1"></div>
                     
                     <button type="button" @click="removeStory(index)" class="absolute top-4 right-4 p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition" title="Hapus">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,17 +44,17 @@
                     <div class="grid md:grid-cols-3 gap-4 pr-8">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal/Waktu</label>
-                            <input type="text" :name="`love_story[${index}][date]`" x-model="story.date" placeholder="Contoh: Januari 2020" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            <input type="text" :name="`love_story[${index}][date]`" x-model="story.date" placeholder="Contoh: Januari 2020" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Judul Momen *</label>
-                            <input type="text" :name="`love_story[${index}][title]`" x-model="story.title" required placeholder="Contoh: Pertama Kali Bertemu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            <input type="text" :name="`love_story[${index}][title]`" x-model="story.title" required placeholder="Contoh: Pertama Kali Bertemu" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                     </div>
 
                     <div class="mt-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Cerita *</label>
-                        <textarea :name="`love_story[${index}][description]`" x-model="story.description" required rows="3" placeholder="Ceritakan momen spesial ini..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent"></textarea>
+                        <textarea :name="`love_story[${index}][description]`" x-model="story.description" required rows="3" placeholder="Ceritakan momen spesial ini..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
                     </div>
 
                     <div class="mt-4">
@@ -65,7 +65,7 @@
                                     <img :src="story.image.startsWith('data:') ? story.image : `/storage/${story.image}`" class="w-full h-full object-cover">
                                 </div>
                             </template>
-                            <input type="file" :name="`love_story[${index}][image]`" accept="image/*" @change="previewImage($event, index)" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100">
+                            <input type="file" :name="`love_story[${index}][image]`" accept="image/*" @change="previewImage($event, index)" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
         </div>
 
         <div class="mt-4">
-            <button type="button" @click="addStory()" x-show="stories.length < 10" class="w-full py-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl text-gray-500 hover:text-amber-600 hover:border-amber-400 transition flex items-center justify-center gap-2">
+            <button type="button" @click="addStory()" x-show="stories.length < 10" class="w-full py-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl text-gray-500 hover:text-blue-600 hover:border-blue-400 transition flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                 </svg>
@@ -82,7 +82,7 @@
         </div>
 
         <div class="mt-6 flex items-center gap-4">
-            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl">
+            <button type="submit" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl">
                 Simpan Love Story
             </button>
             <a href="{{ route('customer.invitations.edit', $invitation) }}" class="px-6 py-3 text-gray-600 hover:text-gray-800 font-medium">Batal</a>
