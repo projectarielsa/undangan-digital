@@ -26,8 +26,8 @@ class TemplateDemoController extends Controller
         $invitation->bride_mother = 'Rina Kusuma';
         $invitation->groom_instagram = '@andipratama';
         $invitation->bride_instagram = '@putriayu';
-        $invitation->groom_photo = null;
-        $invitation->bride_photo = null;
+        $invitation->groom_photo = null; // Uses template default (icon silhouette)
+        $invitation->bride_photo = null; // Uses template default (icon silhouette)
         $invitation->event_date = Carbon::now()->addMonths(3);
         $invitation->event_time_start = '10:00';
         $invitation->event_time_end = '14:00';
@@ -64,8 +64,18 @@ class TemplateDemoController extends Controller
         $invitation->settings = null;
         $invitation->reception_date = null;
 
-        // Create empty collections for relationships
-        $invitation->galleries = collect([]);
+        // Create gallery collection with demo photos
+        $invitation->galleries = collect([
+            (object)['image_path' => null, 'caption' => 'Our Moment 1', 'sort_order' => 1, '_url' => asset('image/demo/demo-1.jpg')],
+            (object)['image_path' => null, 'caption' => 'Our Moment 2', 'sort_order' => 2, '_url' => asset('image/demo/demo-2.jpg')],
+            (object)['image_path' => null, 'caption' => 'Our Moment 3', 'sort_order' => 3, '_url' => asset('image/demo/demo-3.jpg')],
+            (object)['image_path' => null, 'caption' => 'Our Moment 4', 'sort_order' => 4, '_url' => asset('image/demo/demo-4.jpg')],
+            (object)['image_path' => null, 'caption' => 'Our Moment 5', 'sort_order' => 5, '_url' => asset('image/demo/demo-5.jpg')],
+            (object)['image_path' => null, 'caption' => 'Our Moment 6', 'sort_order' => 6, '_url' => asset('image/demo/demo-6.jpg')],
+        ])->map(function ($item) {
+            $item->getImageUrl = fn() => $item->_url;
+            return new DemoGallery($item->_url, $item->caption);
+        });
         $invitation->guestbooks = collect([
             (object)['name' => 'Budi Santoso', 'message' => 'Selamat menempuh hidup baru! Semoga menjadi keluarga yang sakinah mawaddah warahmah.', 'created_at' => Carbon::now()->subHours(2)],
             (object)['name' => 'Siti Nurhaliza', 'message' => 'Barakallah! Semoga cinta kalian abadi hingga Jannah. Happy Wedding!', 'created_at' => Carbon::now()->subHours(5)],
@@ -145,5 +155,30 @@ class DemoInvitation
     public function getRsvpStats(): array
     {
         return ['total' => 50, 'attending' => 35, 'not_attending' => 5, 'maybe' => 10, 'pending' => 0, 'expected_guests' => 70];
+    }
+}
+
+/**
+ * Fake Gallery item for demo
+ */
+class DemoGallery
+{
+    public $caption;
+    private $url;
+
+    public function __construct(string $url, ?string $caption = null)
+    {
+        $this->url = $url;
+        $this->caption = $caption;
+    }
+
+    public function getImageUrl(): string
+    {
+        return $this->url;
+    }
+
+    public function getThumbnailUrl(): string
+    {
+        return $this->url;
     }
 }
