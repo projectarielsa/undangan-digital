@@ -24,6 +24,9 @@ class StoreInvitationRequest extends FormRequest
             // Template
             'template_id' => ['required', 'exists:invitation_templates,id'],
 
+            // Title (auto-generated from names)
+            'title' => ['nullable', 'string', 'max:255'],
+
             // Couple Information
             'groom_name' => ['required', 'string', 'max:255'],
             'bride_name' => ['required', 'string', 'max:255'],
