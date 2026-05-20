@@ -18,6 +18,6 @@ class TemplateSeeder extends Seeder
             ['name'=>'Art Watercolor','slug'=>'art-watercolor','description'=>'Template artistik dengan nuansa watercolor dan ornamen cat air yang elegan','category'=>'art','color_primary'=>'#7B8E6B','color_secondary'=>'#3D3D3D','color_accent'=>'#F5EFE6','font_heading'=>'Cormorant Garamond','font_body'=>'Josefin Sans','blade_view'=>'templates.art-watercolor','is_premium'=>true,'is_active'=>true,'sort_order'=>8],
             ['name'=>'Art 05 - Prewed Cover','slug'=>'art-05','description'=>'Template artistik dengan halaman buka undangan full screen foto prewed sebagai background','category'=>'art','color_primary'=>'#D4A574','color_secondary'=>'#2C2C2C','color_accent'=>'#F8F5F0','font_heading'=>'Cormorant Garamond','font_body'=>'Montserrat','blade_view'=>'templates.art-05','is_premium'=>true,'is_active'=>true,'sort_order'=>9],
         ];
-        foreach ($templates as $t) InvitationTemplate::create($t);
+        foreach ($templates as $t) InvitationTemplate::updateOrCreate(['slug' => $t['slug']], $t);
     }
 }
