@@ -110,7 +110,8 @@ const eventTimeEnd = "{{ $invitation->event_time_end ? \Carbon\Carbon::parse($in
 
 function generateWaText(guestName) {
     const timeRange = eventTimeEnd ? `${eventTimeStart} - ${eventTimeEnd} WIB` : `${eventTimeStart} WIB`;
-    const guestLink = `${invitationUrl}?to=${guestName}`;
+    const decodedName = decodeURIComponent(guestName);
+    const guestLink = `${invitationUrl}?to=${decodedName.replace(/ /g, '%20')}`;
     
     return `Yth. Bapak/Ibu/Saudara/i
 *${decodeURIComponent(guestName)}*
@@ -154,20 +155,20 @@ function showToast(message) {
 }
 
 function copyGuestLink(guestName) {
-    const link = `${invitationUrl}?to=${guestName}`;
+    const link = `${invitationUrl}?to=${decodeURIComponent(guestName).replace(/ /g, '%20')}`;
     navigator.clipboard.writeText(link).then(() => showToast('Link berhasil disalin! 📋'));
 }
 
 function copyAllLinks() {
     const guests = @json($guests->pluck('name'));
-    const links = guests.map(name => `${name}: ${invitationUrl}?to=${encodeURIComponent(name)}`).join('\n');
+    const links = guests.map(name => `${name}: ${invitationUrl}?to=${name.replace(/ /g, '%20')}`).join('\n');
     navigator.clipboard.writeText(links).then(() => showToast(`${guests.length} link berhasil disalin! 📋`));
 }
 
 function copyAllWaMessages() {
     const guests = @json($guests->pluck('name'));
     const messages = guests.map(name => {
-        return `--- ${name} ---\n` + generateWaText(encodeURIComponent(name)) + '\n';
+        return `--- ${name} ---\n` + generateWaText(name.replace(/ /g, '%20')) + '\n';
     }).join('\n\n');
     navigator.clipboard.writeText(messages).then(() => showToast(`${guests.length} pesan WA berhasil disalin! 📱`));
 }
