@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Syarat & Ketentuan - UndanganDigital')
+@section('title', 'Syarat & Ketentuan - Ellori')
 
 @section('body')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -13,7 +13,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold text-gray-900 dark:text-white">UndanganDigital</span>
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
                 </a>
                 <a href="{{ route('home') }}" class="text-gray-600 dark:text-gray-300 hover:text-amber-600 transition-colors">
                     &larr; Kembali ke Beranda
@@ -32,13 +32,13 @@
 
             <div class="prose prose-gray dark:prose-invert max-w-none">
                 <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Selamat datang di UndanganDigital. Dengan mengakses atau menggunakan layanan kami, Anda menyetujui 
+                    Selamat datang di Ellori. Dengan mengakses atau menggunakan layanan kami, Anda menyetujui 
                     untuk terikat dengan Syarat & Ketentuan ini. Harap baca dengan seksama sebelum menggunakan layanan kami.
                 </p>
 
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">1. Definisi</h2>
                 <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
-                    <li><strong>"Layanan"</strong> mengacu pada platform undangan digital UndanganDigital.</li>
+                    <li><strong>"Layanan"</strong> mengacu pada platform undangan digital Ellori.</li>
                     <li><strong>"Pengguna"</strong> adalah individu yang mendaftar dan menggunakan layanan kami.</li>
                     <li><strong>"Konten"</strong> mencakup teks, gambar, musik, dan media lain yang diunggah pengguna.</li>
                     <li><strong>"Undangan"</strong> adalah produk digital yang dibuat menggunakan layanan kami.</li>
@@ -57,7 +57,7 @@
                 </ul>
 
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">3. Layanan dan Paket</h2>
-                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">UndanganDigital menyediakan berbagai paket layanan:</p>
+                <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-4">Ellori menyediakan berbagai paket layanan:</p>
                 <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
                     <li><strong>Paket Gratis:</strong> Fitur dasar dengan batasan tertentu.</li>
                     <li><strong>Paket Berbayar:</strong> Fitur premium dengan berbagai tingkatan sesuai kebutuhan.</li>
@@ -101,7 +101,7 @@
 
                 <h2 class="text-xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">7. Hak Kekayaan Intelektual</h2>
                 <ul class="list-disc pl-6 space-y-2 text-gray-600 dark:text-gray-300">
-                    <li>Semua hak atas platform, desain, dan template UndanganDigital adalah milik kami.</li>
+                    <li>Semua hak atas platform, desain, dan template Ellori adalah milik kami.</li>
                     <li>Anda diberikan lisensi terbatas untuk menggunakan template sesuai dengan paket yang dipilih.</li>
                     <li>Anda tidak boleh menyalin, memodifikasi, atau mendistribusikan template kami untuk tujuan komersial.</li>
                     <li>Konten yang Anda buat tetap menjadi milik Anda.</li>
@@ -154,7 +154,7 @@
                     Jika Anda memiliki pertanyaan tentang Syarat & Ketentuan ini, silakan hubungi kami:
                 </p>
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 mt-4">
-                    <p class="text-gray-700 dark:text-gray-300"><strong>Email:</strong> support@undangandigital.com</p>
+                    <p class="text-gray-700 dark:text-gray-300"><strong>Email:</strong> support@ellori.com</p>
                     <p class="text-gray-700 dark:text-gray-300 mt-2"><strong>Alamat:</strong> Indonesia</p>
                 </div>
             </div>
@@ -168,7 +168,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-gray-500 dark:text-gray-400 text-sm">
-                    &copy; {{ date('Y') }} UndanganDigital. All rights reserved.
+                    &copy; {{ date('Y') }} Ellori. All rights reserved.
                 </p>
                 <div class="flex items-center gap-6 text-sm">
                     <a href="{{ route('privacy') }}" class="text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Kebijakan Privasi</a>

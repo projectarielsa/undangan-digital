@@ -311,7 +311,7 @@
 
         <!-- Footer -->
         <footer class="py-10 px-6 bg-[var(--color-secondary)] text-center">
-            <p class="text-xs text-gray-400">Powered by <a href="{{ url('/') }}" class="text-pink-400 hover:underline">UndanganDigital</a></p>
+            <p class="text-xs text-gray-400">Powered by <a href="{{ url('/') }}" class="text-pink-400 hover:underline">Ellori</a></p>
         </footer>
     </div>
 

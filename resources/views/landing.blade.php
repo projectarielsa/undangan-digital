@@ -18,7 +18,7 @@
                     </div>
                     <div class="absolute -inset-1 bg-gradient-to-r from-amber-400 to-amber-600 rounded-xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
                 </div>
-                <span class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">UndanganDigital</span>
+                <span class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Ellori</span>
             </a>
             
             <div class="hidden md:flex items-center gap-1">

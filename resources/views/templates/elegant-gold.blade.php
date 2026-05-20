@@ -255,7 +255,7 @@
 
         <!-- Footer -->
         <footer class="py-8 px-6 bg-[#faf8f5] text-center">
-            <p class="text-xs text-gray-400">Powered by <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">UndanganDigital</a></p>
+            <p class="text-xs text-gray-400">Powered by <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">Ellori</a></p>
         </footer>
     </div>
 

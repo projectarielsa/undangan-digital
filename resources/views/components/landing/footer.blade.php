@@ -11,7 +11,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold">UndanganDigital</span>
+                    <span class="text-xl font-bold">Ellori</span>
                 </a>
                 <p class="text-gray-400 mb-6 leading-relaxed">
                     Platform undangan pernikahan digital #1 di Indonesia. Buat undangan indah dalam hitungan menit.
@@ -75,7 +75,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-gray-400 text-sm">
-                    &copy; {{ date('Y') }} UndanganDigital. All rights reserved.
+                    &copy; {{ date('Y') }} Ellori. All rights reserved.
                 </p>
                 <div class="flex items-center gap-6 text-sm text-gray-400">
                     <a href="{{ route('privacy') }}" class="hover:text-amber-400 transition-colors">Kebijakan Privasi</a>

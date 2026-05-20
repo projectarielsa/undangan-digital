@@ -546,7 +546,7 @@
         <footer class="py-8 px-6 bg-[var(--color-accent)] text-center border-t border-[var(--color-primary)]/10">
             <p class="text-xs text-gray-400">
                 Made with <span class="text-red-400">❤</span> by 
-                <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">UndanganDigital</a>
+                <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">Ellori</a>
             </p>
         </footer>
     </div>

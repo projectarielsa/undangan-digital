@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Kebijakan Privasi - UndanganDigital')
+@section('title', 'Kebijakan Privasi - Ellori')
 
 @section('body')
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -13,7 +13,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                         </svg>
                     </div>
-                    <span class="text-xl font-bold text-gray-900 dark:text-white">UndanganDigital</span>
+                    <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
                 </a>
                 <a href="{{ route('home') }}" class="text-gray-600 dark:text-gray-300 hover:text-amber-600 transition-colors">
                     &larr; Kembali ke Beranda
@@ -30,7 +30,7 @@
 
             <div class="prose prose-gray dark:prose-invert max-w-none">
                 <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                    Selamat datang di UndanganDigital. Kami berkomitmen untuk melindungi privasi dan keamanan data pribadi Anda. 
+                    Selamat datang di Ellori. Kami berkomitmen untuk melindungi privasi dan keamanan data pribadi Anda. 
                     Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi Anda 
                     ketika menggunakan layanan kami.
                 </p>
@@ -133,7 +133,7 @@
                     silakan hubungi kami melalui:
                 </p>
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6 mt-4">
-                    <p class="text-gray-700 dark:text-gray-300"><strong>Email:</strong> privacy@undangandigital.com</p>
+                    <p class="text-gray-700 dark:text-gray-300"><strong>Email:</strong> privacy@ellori.com</p>
                     <p class="text-gray-700 dark:text-gray-300 mt-2"><strong>Alamat:</strong> Indonesia</p>
                 </div>
             </div>
@@ -145,7 +145,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <p class="text-gray-500 dark:text-gray-400 text-sm">
-                    &copy; {{ date('Y') }} UndanganDigital. All rights reserved.
+                    &copy; {{ date('Y') }} Ellori. All rights reserved.
                 </p>
                 <div class="flex items-center gap-6 text-sm">
                     <a href="{{ route('privacy') }}" class="text-amber-600 dark:text-amber-400 font-medium">Kebijakan Privasi</a>

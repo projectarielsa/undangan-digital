@@ -292,7 +292,7 @@
 
         <!-- Footer -->
         <footer class="py-10 px-6 text-center">
-            <p class="text-xs text-gray-300 uppercase tracking-[0.2em]">Powered by <a href="{{ url('/') }}" class="hover:text-[var(--color-primary)] transition">UndanganDigital</a></p>
+            <p class="text-xs text-gray-300 uppercase tracking-[0.2em]">Powered by <a href="{{ url('/') }}" class="hover:text-[var(--color-primary)] transition">Ellori</a></p>
         </footer>
     </div>
 

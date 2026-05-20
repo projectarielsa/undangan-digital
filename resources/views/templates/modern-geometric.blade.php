@@ -614,7 +614,7 @@
         <footer class="py-10 px-6 bg-[var(--color-secondary)] text-center relative">
             <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--color-accent)]/30 to-transparent"></div>
             <p class="text-xs text-[var(--color-primary)]/40 tracking-wider">
-                Made with love • Powered by <a href="{{ url('/') }}" class="text-[var(--color-accent)] hover:underline">UndanganDigital</a>
+                Made with love • Powered by <a href="{{ url('/') }}" class="text-[var(--color-accent)] hover:underline">Ellori</a>
             </p>
         </footer>
     </div>

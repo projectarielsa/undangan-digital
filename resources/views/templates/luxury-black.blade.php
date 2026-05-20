@@ -316,7 +316,7 @@
 
         <!-- Footer -->
         <footer class="py-12 px-6 text-center">
-            <p class="text-xs text-gray-600 uppercase tracking-[0.3em]">Powered by <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">UndanganDigital</a></p>
+            <p class="text-xs text-gray-600 uppercase tracking-[0.3em]">Powered by <a href="{{ url('/') }}" class="text-[var(--color-primary)] hover:underline">Ellori</a></p>
         </footer>
     </div>
 
