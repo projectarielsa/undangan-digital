@@ -26,8 +26,8 @@ class TemplateDemoController extends Controller
         $invitation->bride_mother = 'Rina Kusuma';
         $invitation->groom_instagram = '@andipratama';
         $invitation->bride_instagram = '@putriayu';
-        $invitation->groom_photo = null; // Uses template default (icon silhouette)
-        $invitation->bride_photo = null; // Uses template default (icon silhouette)
+        $invitation->groom_photo = 'demo-groom'; // Flag for DemoInvitation to use public path
+        $invitation->bride_photo = 'demo-bride'; // Flag for DemoInvitation to use public path
         $invitation->event_date = Carbon::now()->addMonths(3);
         $invitation->event_time_start = '10:00';
         $invitation->event_time_end = '14:00';
@@ -134,6 +134,13 @@ class DemoInvitation
         if ($name === 'galleries') return $this->data->galleries;
         if ($name === 'guestbooks') return $this->data->guestbooks;
         if ($name === 'bank_accounts_list') return $this->data->bank_accounts;
+        // Return demo photo paths that work with asset('storage/' . $path)
+        if ($name === 'groom_photo' && $this->data->groom_photo === 'demo-groom') {
+            return '../image/demo/pengantin pria.jpg';
+        }
+        if ($name === 'bride_photo' && $this->data->bride_photo === 'demo-bride') {
+            return '../image/demo/pengantin wanita.jpg';
+        }
         return $this->data->$name ?? null;
     }
 
