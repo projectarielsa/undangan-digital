@@ -39,8 +39,8 @@ class UpdateInvitationRequest extends FormRequest
 
             // Event Details
             'event_date' => ['sometimes', 'date'],
-            'event_time_start' => ['sometimes', 'date_format:H:i'],
-            'event_time_end' => ['nullable', 'date_format:H:i'],
+            'event_time_start' => ['sometimes'],
+            'event_time_end' => ['nullable'],
             'event_venue' => ['sometimes', 'string', 'max:255'],
             'event_address' => ['nullable', 'string', 'max:500'],
             'event_maps_url' => ['nullable', 'url', 'max:500'],
