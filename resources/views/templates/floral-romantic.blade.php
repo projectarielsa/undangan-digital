@@ -273,24 +273,28 @@
 
 
         <!-- Digital Envelope -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-20 px-6 floral-bg">
             <div class="max-w-md mx-auto text-center">
                 <p class="text-sm uppercase tracking-[0.3em] text-pink-400 mb-4">Wedding Gift</p>
                 <h2 class="text-5xl font-script text-[var(--color-primary)] mb-10">Amplop Digital</h2>
                 @if($invitation->gift_info)<p class="text-gray-500 mb-10">{{ $invitation->gift_info }}</p>@endif
-                @if($invitation->bank_name)
+                @foreach($invitation->bank_accounts_list as $account)
                 <div class="bg-white rounded-3xl p-8 shadow-lg shadow-pink-100 border border-pink-100 mb-6">
-                    <p class="text-xs uppercase tracking-wider text-pink-400 mb-2">{{ $invitation->bank_name }}</p>
-                    <p class="text-2xl font-semibold text-[var(--color-primary)] mb-1">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-gray-500">a.n. {{ $invitation->bank_account_name }}</p>
+                    <p class="text-xs uppercase tracking-wider text-pink-400 mb-2">{{ $account['bank_name'] }}</p>
+                    <p class="text-2xl font-semibold text-[var(--color-primary)] mb-1">{{ $account['account_number'] }}</p>
+                    <p class="text-sm text-gray-500">a.n. {{ $account['account_name'] }}</p>
                 </div>
-                @endif
+                @endforeach
                 @if($invitation->qris_image)
-                <div class="inline-block bg-white rounded-3xl p-6 shadow-lg shadow-pink-100 border border-pink-100">
+                <div class="inline-block bg-white rounded-3xl p-6 shadow-lg shadow-pink-100 border border-pink-100 cursor-pointer" @click="$dispatch('open-qris')">
+                    <p class="text-xs text-gray-400 mb-2">Tap untuk perbesar</p>
                     <img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain">
                 </div>
                 @endif
+            </div>
+        </section>
+        @endif
             </div>
         </section>
         @endif
@@ -349,5 +353,6 @@
         };
     }
     </script>
+    @include('templates.partials.qris-modal')
 </body>
 </html>

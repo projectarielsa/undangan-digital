@@ -64,9 +64,10 @@ class UpdateInvitationRequest extends FormRequest
             'music_file' => ['nullable', 'file', 'mimes:mp3,wav', 'max:10240'],
 
             // Gift/Bank Info
-            'bank_name' => ['nullable', 'string', 'max:100'],
-            'bank_account_number' => ['nullable', 'string', 'max:50'],
-            'bank_account_name' => ['nullable', 'string', 'max:255'],
+            'bank_accounts' => ['nullable', 'array', 'max:5'],
+            'bank_accounts.*.bank_name' => ['nullable', 'string', 'max:100'],
+            'bank_accounts.*.account_number' => ['nullable', 'string', 'max:50'],
+            'bank_accounts.*.account_name' => ['nullable', 'string', 'max:255'],
             'qris_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'gift_info' => ['nullable', 'string', 'max:500'],
         ];

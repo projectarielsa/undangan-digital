@@ -256,21 +256,22 @@
         </section>
 
         <!-- Digital Envelope -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-20 px-6">
             <div class="max-w-md mx-auto text-center">
                 <p class="text-xs uppercase tracking-[0.4em] text-gray-400 mb-4">Wedding Gift</p>
                 <h2 class="text-4xl font-serif font-semibold text-[var(--color-primary)] mb-10">Gift</h2>
                 @if($invitation->gift_info)<p class="text-gray-500 mb-10">{{ $invitation->gift_info }}</p>@endif
-                @if($invitation->bank_name)
+                @foreach($invitation->bank_accounts_list as $account)
                 <div class="border border-gray-200 p-8 mb-6">
-                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-2">{{ $invitation->bank_name }}</p>
-                    <p class="text-2xl font-light text-[var(--color-primary)] mb-1">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-gray-400">a.n. {{ $invitation->bank_account_name }}</p>
+                    <p class="text-xs uppercase tracking-wider text-gray-400 mb-2">{{ $account['bank_name'] }}</p>
+                    <p class="text-2xl font-light text-[var(--color-primary)] mb-1">{{ $account['account_number'] }}</p>
+                    <p class="text-sm text-gray-400">a.n. {{ $account['account_name'] }}</p>
                 </div>
-                @endif
+                @endforeach
                 @if($invitation->qris_image)
-                <div class="inline-block border border-gray-200 p-6">
+                <div class="inline-block border border-gray-200 p-6 cursor-pointer" @click="$dispatch('open-qris')">
+                    <p class="text-xs text-gray-400 mb-2">Tap untuk perbesar</p>
                     <img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain">
                 </div>
                 @endif
@@ -330,5 +331,6 @@
         };
     }
     </script>
+    @include('templates.partials.qris-modal')
 </body>
 </html>

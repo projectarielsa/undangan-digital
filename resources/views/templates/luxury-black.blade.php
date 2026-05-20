@@ -279,21 +279,22 @@
         </section>
 
         <!-- Digital Envelope -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-24 px-6">
             <div class="max-w-lg mx-auto text-center">
                 <p class="text-xs uppercase tracking-[0.5em] text-[var(--color-primary)] mb-4">Wedding Gift</p>
                 <h2 class="text-4xl font-serif gold-gradient mb-12">Gift</h2>
                 @if($invitation->gift_info)<p class="text-gray-400 mb-12">{{ $invitation->gift_info }}</p>@endif
-                @if($invitation->bank_name)
+                @foreach($invitation->bank_accounts_list as $account)
                 <div class="border border-[var(--color-primary)]/30 p-8 mb-6 glow">
-                    <p class="text-xs uppercase tracking-wider text-gray-500 mb-2">{{ $invitation->bank_name }}</p>
-                    <p class="text-3xl font-light text-[var(--color-primary)] mb-2">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-gray-500">a.n. {{ $invitation->bank_account_name }}</p>
+                    <p class="text-xs uppercase tracking-wider text-gray-500 mb-2">{{ $account['bank_name'] }}</p>
+                    <p class="text-3xl font-light text-[var(--color-primary)] mb-2">{{ $account['account_number'] }}</p>
+                    <p class="text-sm text-gray-500">a.n. {{ $account['account_name'] }}</p>
                 </div>
-                @endif
+                @endforeach
                 @if($invitation->qris_image)
-                <div class="inline-block border border-[var(--color-primary)]/30 p-4">
+                <div class="inline-block border border-[var(--color-primary)]/30 p-4 cursor-pointer" @click="$dispatch('open-qris')">
+                    <p class="text-xs text-gray-500 mb-2">Tap untuk perbesar</p>
                     <img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain">
                 </div>
                 @endif
@@ -354,5 +355,6 @@
         };
     }
     </script>
+    @include('templates.partials.qris-modal')
 </body>
 </html>

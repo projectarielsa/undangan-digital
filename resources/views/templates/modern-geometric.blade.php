@@ -549,7 +549,7 @@
         </section>
 
         <!-- Digital Envelope / Gift -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-24 px-6 bg-[var(--color-primary)] text-white relative overflow-hidden">
             <div class="absolute inset-0">
                 <div class="absolute top-1/4 left-1/4 w-48 h-48 border border-white/5 rotate-45"></div>
@@ -566,19 +566,20 @@
                 <p class="text-white/70 mb-10 leading-relaxed">Tanpa mengurangi rasa hormat, bagi Anda yang ingin memberikan tanda kasih, dapat melalui:</p>
                 @endif
                 
-                @if($invitation->bank_name)
+                @foreach($invitation->bank_accounts_list as $account)
                 <div class="bg-white/10 backdrop-blur-sm p-8 mb-6 relative group">
                     <div class="absolute inset-0 border border-[var(--color-accent)]/30 rotate-1 group-hover:rotate-0 transition-transform duration-500"></div>
                     <div class="relative">
-                        <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-accent)] mb-3">{{ $invitation->bank_name }}</p>
-                        <p class="text-3xl font-display text-white mb-2">{{ $invitation->bank_account_number }}</p>
-                        <p class="text-white/60 text-sm">a.n. {{ $invitation->bank_account_name }}</p>
+                        <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-accent)] mb-3">{{ $account['bank_name'] }}</p>
+                        <p class="text-3xl font-display text-white mb-2">{{ $account['account_number'] }}</p>
+                        <p class="text-white/60 text-sm">a.n. {{ $account['account_name'] }}</p>
                     </div>
                 </div>
-                @endif
+                @endforeach
                 
                 @if($invitation->qris_image)
-                <div class="inline-block bg-white p-4 mt-6">
+                <div class="inline-block bg-white p-4 mt-6 cursor-pointer" @click="$dispatch('open-qris')">
+                    <p class="text-xs text-gray-500 mb-2">Tap untuk perbesar</p>
                     <img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain">
                 </div>
                 @endif
@@ -688,5 +689,6 @@
         document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
     });
     </script>
+    @include('templates.partials.qris-modal')
 </body>
 </html>

@@ -223,19 +223,19 @@
         </section>
 
         <!-- Digital Envelope -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-16 px-6 bg-white">
             <div class="max-w-lg mx-auto text-center">
                 <h3 class="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)] mb-2">Wedding Gift</h3>
                 <h2 class="text-3xl font-serif font-bold text-[var(--color-secondary)] mb-8">Amplop Digital</h2>
                 @if($invitation->gift_info)<p class="text-gray-600 mb-8">{{ $invitation->gift_info }}</p>@endif
-                @if($invitation->bank_name)
+                @foreach($invitation->bank_accounts_list as $account)
                 <div class="bg-[#faf8f5] rounded-2xl p-6 border border-[var(--color-primary)]/10 mb-4">
-                    <p class="text-sm text-gray-500 mb-1">{{ $invitation->bank_name }}</p>
-                    <p class="text-xl font-bold text-[var(--color-secondary)]">{{ $invitation->bank_account_number }}</p>
-                    <p class="text-sm text-gray-500">a.n. {{ $invitation->bank_account_name }}</p>
+                    <p class="text-sm text-gray-500 mb-1">{{ $account['bank_name'] }}</p>
+                    <p class="text-xl font-bold text-[var(--color-secondary)]">{{ $account['account_number'] }}</p>
+                    <p class="text-sm text-gray-500">a.n. {{ $account['account_name'] }}</p>
                 </div>
-                @endif
+                @endforeach
                 @if($invitation->qris_image)
                 <div class="inline-block bg-white p-4 rounded-2xl border border-gray-200"><img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain mx-auto"></div>
                 @endif
@@ -293,6 +293,7 @@
             }
         };
     }
+    @include('templates.partials.qris-modal')
     </script>
 </body>
 </html>

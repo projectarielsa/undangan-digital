@@ -76,39 +76,71 @@
 
 
         <!-- Section Info Bank / Amplop Digital -->
-        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Amplop Digital (Gift)</h3>
-            <p class="text-sm text-gray-500 mb-4">Informasi rekening untuk tamu yang ingin memberikan hadiah</p>
-            <div class="space-y-4">
-                <div class="grid md:grid-cols-3 gap-4">
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">Nama Bank</label>
-                        <select name="bank_name" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                            <option value="">Pilih Bank</option>
-                            <option value="BCA" {{ old('bank_name', $invitation->bank_name) == 'BCA' ? 'selected' : '' }}>BCA</option>
-                            <option value="BNI" {{ old('bank_name', $invitation->bank_name) == 'BNI' ? 'selected' : '' }}>BNI</option>
-                            <option value="BRI" {{ old('bank_name', $invitation->bank_name) == 'BRI' ? 'selected' : '' }}>BRI</option>
-                            <option value="Mandiri" {{ old('bank_name', $invitation->bank_name) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
-                            <option value="BSI" {{ old('bank_name', $invitation->bank_name) == 'BSI' ? 'selected' : '' }}>BSI</option>
-                            <option value="CIMB Niaga" {{ old('bank_name', $invitation->bank_name) == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
-                            <option value="Permata" {{ old('bank_name', $invitation->bank_name) == 'Permata' ? 'selected' : '' }}>Permata</option>
-                            <option value="Danamon" {{ old('bank_name', $invitation->bank_name) == 'Danamon' ? 'selected' : '' }}>Danamon</option>
-                            <option value="OCBC NISP" {{ old('bank_name', $invitation->bank_name) == 'OCBC NISP' ? 'selected' : '' }}>OCBC NISP</option>
-                            <option value="Maybank" {{ old('bank_name', $invitation->bank_name) == 'Maybank' ? 'selected' : '' }}>Maybank</option>
-                            <option value="Jenius" {{ old('bank_name', $invitation->bank_name) == 'Jenius' ? 'selected' : '' }}>Jenius</option>
-                            <option value="Jago" {{ old('bank_name', $invitation->bank_name) == 'Jago' ? 'selected' : '' }}>Jago</option>
-                            <option value="SeaBank" {{ old('bank_name', $invitation->bank_name) == 'SeaBank' ? 'selected' : '' }}>SeaBank</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">Nomor Rekening</label>
-                        <input type="text" name="bank_account_number" value="{{ old('bank_account_number', $invitation->bank_account_number) }}" placeholder="1234567890" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                    </div>
-                    <div>
-                        <label class="block text-sm text-gray-600 mb-1">Nama Pemilik Rekening</label>
-                        <input type="text" name="bank_account_name" value="{{ old('bank_account_name', $invitation->bank_account_name) }}" placeholder="Nama sesuai buku rekening" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
-                    </div>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6" x-data="bankAccountsManager()">
+            <div class="flex items-center justify-between mb-2">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Amplop Digital (Gift)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Informasi rekening untuk tamu yang ingin memberikan hadiah</p>
                 </div>
+                <button type="button" @click="addAccount()" class="px-4 py-2 bg-amber-50 text-amber-700 text-sm font-medium rounded-xl hover:bg-amber-100 transition flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Rekening
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- Bank Accounts Repeater -->
+                <template x-for="(account, index) in accounts" :key="index">
+                    <div class="relative border border-gray-200 dark:border-gray-600 rounded-xl p-4">
+                        <!-- Remove button -->
+                        <button type="button" @click="removeAccount(index)" x-show="accounts.length > 1" class="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full bg-red-50 text-red-500 hover:bg-red-100 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                        
+                        <p class="text-xs font-medium text-gray-400 mb-3" x-text="'Rekening #' + (index + 1)"></p>
+                        
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Nama Bank</label>
+                                <select :name="'bank_accounts[' + index + '][bank_name]'" x-model="account.bank_name" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                                    <option value="">Pilih Bank</option>
+                                    <option value="BCA">BCA</option>
+                                    <option value="BNI">BNI</option>
+                                    <option value="BRI">BRI</option>
+                                    <option value="Mandiri">Mandiri</option>
+                                    <option value="BSI">BSI</option>
+                                    <option value="CIMB Niaga">CIMB Niaga</option>
+                                    <option value="Permata">Permata</option>
+                                    <option value="Danamon">Danamon</option>
+                                    <option value="OCBC NISP">OCBC NISP</option>
+                                    <option value="Maybank">Maybank</option>
+                                    <option value="Jenius">Jenius</option>
+                                    <option value="Jago">Jago</option>
+                                    <option value="SeaBank">SeaBank</option>
+                                    <option value="GoPay">GoPay</option>
+                                    <option value="OVO">OVO</option>
+                                    <option value="DANA">DANA</option>
+                                    <option value="ShopeePay">ShopeePay</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Nomor Rekening</label>
+                                <input type="text" :name="'bank_accounts[' + index + '][account_number]'" x-model="account.account_number" placeholder="1234567890" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            </div>
+                            <div>
+                                <label class="block text-sm text-gray-600 mb-1">Nama Pemilik</label>
+                                <input type="text" :name="'bank_accounts[' + index + '][account_name]'" x-model="account.account_name" placeholder="Nama sesuai rekening" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            </div>
+                        </div>
+                    </div>
+                </template>
+                
+                <!-- Empty state -->
+                <div x-show="accounts.length === 0" class="text-center py-6 border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-xl">
+                    <svg class="w-10 h-10 mx-auto text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+                    <p class="text-sm text-gray-400">Belum ada rekening. Klik "Tambah Rekening" untuk menambahkan.</p>
+                </div>
+
                 <div>
                     <label class="block text-sm text-gray-600 mb-1">QRIS (Opsional)</label>
                     <input type="file" name="qris_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">
@@ -121,6 +153,20 @@
                 </div>
             </div>
         </div>
+
+        <script>
+        function bankAccountsManager() {
+            return {
+                accounts: @json($invitation->bank_accounts_list ?? []),
+                addAccount() {
+                    this.accounts.push({ bank_name: '', account_number: '', account_name: '' });
+                },
+                removeAccount(index) {
+                    this.accounts.splice(index, 1);
+                }
+            }
+        }
+        </script>
 
         <button type="submit" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl">Simpan Perubahan</button>
     </form>

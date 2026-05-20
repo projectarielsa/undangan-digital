@@ -25,6 +25,26 @@ class InvitationService
             if (isset($data[$field]) && $data[$field]) { if ($inv->$field) Storage::disk('public')->delete($inv->$field); $data[$field] = $data[$field]->store('invitations', 'public'); }
         }
         if (isset($data['music_file']) && $data['music_file']) { if ($inv->music_url) Storage::disk('public')->delete($inv->music_url); $data['music_url'] = $data['music_file']->store('invitations/music', 'public'); unset($data['music_file']); }
+        
+        // Process bank_accounts array - filter out empty entries
+        if (isset($data['bank_accounts'])) {
+            $data['bank_accounts'] = collect($data['bank_accounts'])
+                ->filter(fn($account) => !empty($account['bank_name']) || !empty($account['account_number']))
+                ->values()
+                ->toArray();
+            // Also update legacy fields with first account for backward compatibility
+            if (!empty($data['bank_accounts'])) {
+                $first = $data['bank_accounts'][0];
+                $data['bank_name'] = $first['bank_name'] ?? null;
+                $data['bank_account_number'] = $first['account_number'] ?? null;
+                $data['bank_account_name'] = $first['account_name'] ?? null;
+            } else {
+                $data['bank_name'] = null;
+                $data['bank_account_number'] = null;
+                $data['bank_account_name'] = null;
+            }
+        }
+        
         $inv->update($data);
         return $inv->fresh();
     }

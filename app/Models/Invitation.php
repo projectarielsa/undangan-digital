@@ -18,6 +18,7 @@ class Invitation extends Model
         return [
             'event_date' => 'date', 'reception_date' => 'date', 'music_autoplay' => 'boolean',
             'published_at' => 'datetime', 'expires_at' => 'datetime', 'settings' => 'array', 'love_story' => 'array',
+            'bank_accounts' => 'array',
         ];
     }
     protected static function boot()
@@ -115,4 +116,34 @@ class Invitation extends Model
     }
     
     public function scopePublished($query) { return $query->where('status', 'published'); }
+
+    /**
+     * Get bank accounts (with backward compatibility for old single fields)
+     */
+    public function getBankAccountsListAttribute(): array
+    {
+        // Use new bank_accounts JSON if available
+        if (!empty($this->bank_accounts)) {
+            return $this->bank_accounts;
+        }
+
+        // Fallback to old single fields for backward compatibility
+        if ($this->bank_name) {
+            return [[
+                'bank_name' => $this->bank_name,
+                'account_number' => $this->bank_account_number,
+                'account_name' => $this->bank_account_name,
+            ]];
+        }
+
+        return [];
+    }
+
+    /**
+     * Check if invitation has any bank accounts or QRIS
+     */
+    public function hasDigitalEnvelope(): bool
+    {
+        return !empty($this->bank_accounts_list) || !empty($this->qris_image);
+    }
 }

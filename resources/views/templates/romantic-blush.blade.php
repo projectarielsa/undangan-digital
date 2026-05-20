@@ -645,7 +645,7 @@
 
 
         <!-- Digital Envelope / Gift Section -->
-        @if($invitation->bank_name || $invitation->qris_image)
+        @if($invitation->hasDigitalEnvelope())
         <section class="py-20 px-6 bg-white">
             <div class="max-w-xl mx-auto">
                 <div class="text-center mb-12 scroll-animate" data-scroll>
@@ -658,9 +658,9 @@
                     @endif
                 </div>
                 
-                <div class="space-y-6 scroll-animate" data-scroll x-data="{ copied: false }">
-                    @if($invitation->bank_name)
-                    <div class="bg-gradient-to-br from-[var(--color-accent)] to-white rounded-3xl p-6 border border-[var(--color-primary)]/10">
+                <div class="space-y-6 scroll-animate" data-scroll>
+                    @foreach($invitation->bank_accounts_list as $account)
+                    <div class="bg-gradient-to-br from-[var(--color-accent)] to-white rounded-3xl p-6 border border-[var(--color-primary)]/10" x-data="{ copied: false }">
                         <div class="flex items-center gap-4 mb-4">
                             <div class="w-12 h-12 bg-[var(--color-primary)]/10 rounded-xl flex items-center justify-center">
                                 <svg class="w-6 h-6 text-[var(--color-primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -668,13 +668,13 @@
                                 </svg>
                             </div>
                             <div>
-                                <p class="text-sm text-gray-500">{{ $invitation->bank_name }}</p>
-                                <p class="text-lg font-semibold text-[var(--color-secondary)]">{{ $invitation->bank_account_name }}</p>
+                                <p class="text-sm text-gray-500">{{ $account['bank_name'] }}</p>
+                                <p class="text-lg font-semibold text-[var(--color-secondary)]">{{ $account['account_name'] }}</p>
                             </div>
                         </div>
                         <div class="flex items-center justify-between bg-white rounded-xl p-4">
-                            <span class="text-xl font-mono font-semibold text-[var(--color-secondary)]">{{ $invitation->bank_account_number }}</span>
-                            <button @click="navigator.clipboard.writeText('{{ $invitation->bank_account_number }}'); copied = true; setTimeout(() => copied = false, 2000)"
+                            <span class="text-xl font-mono font-semibold text-[var(--color-secondary)]">{{ $account['account_number'] }}</span>
+                            <button @click="navigator.clipboard.writeText('{{ $account['account_number'] }}'); copied = true; setTimeout(() => copied = false, 2000)"
                                     class="px-4 py-2 bg-[var(--color-primary)] text-white text-sm font-medium rounded-lg hover:opacity-90 transition flex items-center gap-2">
                                 <svg x-show="!copied" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
@@ -686,11 +686,11 @@
                             </button>
                         </div>
                     </div>
-                    @endif
+                    @endforeach
                     
                     @if($invitation->qris_image)
-                    <div class="bg-white rounded-3xl p-6 border border-gray-100 text-center">
-                        <p class="text-sm text-gray-500 mb-4">Scan QRIS</p>
+                    <div class="bg-white rounded-3xl p-6 border border-gray-100 text-center cursor-pointer" @click="$dispatch('open-qris')">
+                        <p class="text-sm text-gray-500 mb-4">Scan QRIS (tap untuk perbesar)</p>
                         <div class="inline-block p-4 bg-white rounded-2xl shadow-sm border">
                             <img src="{{ asset('storage/' . $invitation->qris_image) }}" alt="QRIS" class="w-48 h-48 object-contain mx-auto">
                         </div>
@@ -840,5 +840,6 @@
         };
     }
     </script>
+    @include('templates.partials.qris-modal')
 </body>
 </html>
