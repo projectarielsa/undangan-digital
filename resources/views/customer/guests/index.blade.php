@@ -21,8 +21,7 @@
         <form method="POST" action="{{ route('customer.guests.store', $invitation) }}" class="flex flex-wrap gap-3">
             @csrf
             <input type="text" name="name" required placeholder="Nama tamu" class="flex-1 min-w-[200px] px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
-            <input type="text" name="phone" placeholder="No. HP" class="w-40 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
-            <input type="email" name="email" placeholder="Email" class="w-48 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
+            <input type="text" name="phone" placeholder="No. HP (08xxx)" class="w-48 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
             <input type="text" name="invited_by" placeholder="Turut Mengundang (opsional)" class="w-56 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
             <button type="submit" class="px-5 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition">Tambah</button>
         </form>
@@ -37,7 +36,7 @@
             <input type="file" name="file" accept=".csv,.xlsx,.xls" required class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">
             <button type="submit" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Import</button>
         </form>
-        <p class="text-xs text-gray-400 mt-2">Format: Nama, No HP, Email, Turut Mengundang (satu baris per tamu)</p>
+        <p class="text-xs text-gray-400 mt-2">Format: Nama, No HP, Turut Mengundang (satu baris per tamu)</p>
     </div>
 
     <!-- Share All -->
@@ -69,7 +68,7 @@
             <div class="p-4 flex items-center justify-between gap-4">
                 <div class="flex-1 min-w-0">
                     <p class="font-medium text-gray-900 dark:text-white">{{ $guest->name }}</p>
-                    <p class="text-xs text-gray-500">{{ $guest->phone }} {{ $guest->email }}</p>
+                    <p class="text-xs text-gray-500">{{ $guest->phone }}</p>
                     @if($guest->invited_by)
                     <p class="text-xs text-amber-600 dark:text-amber-400 mt-0.5">Turut Mengundang: {{ $guest->invited_by }}</p>
                     @endif
