@@ -23,6 +23,7 @@ class StoreGuestRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20', 'regex:/^[0-9+\-\s()]+$/'],
             'email' => ['nullable', 'email', 'max:255'],
+            'invited_by' => ['nullable', 'string', 'max:255'],
             'number_of_guests' => ['nullable', 'integer', 'min:1', 'max:10'],
             'notes' => ['nullable', 'string', 'max:500'],
         ];
@@ -39,6 +40,7 @@ class StoreGuestRequest extends FormRequest
             'phone.regex' => 'Format nomor telepon tidak valid.',
             'phone.max' => 'Nomor telepon maksimal 20 karakter.',
             'email.email' => 'Format email tidak valid.',
+            'invited_by.max' => 'Nama pengundang maksimal 255 karakter.',
             'number_of_guests.integer' => 'Jumlah tamu harus berupa angka.',
             'number_of_guests.min' => 'Jumlah tamu minimal 1.',
             'number_of_guests.max' => 'Jumlah tamu maksimal 10.',

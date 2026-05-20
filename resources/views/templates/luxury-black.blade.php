@@ -33,7 +33,12 @@
             <h1 class="text-5xl sm:text-7xl font-serif font-semibold gold-gradient mb-8">{{ $invitation->bride_name }}</h1>
             @if($guestName)
             <p class="text-xs uppercase tracking-[0.3em] text-gray-500 mb-2">Honorable Guest</p>
-            <p class="text-xl text-[var(--color-primary)] mb-8">{{ urldecode($guestName) }}</p>
+            <p class="text-xl text-[var(--color-primary)] mb-4">{{ urldecode($guestName) }}</p>
+            @if($guest && $guest->invited_by)
+            <p class="text-sm text-[var(--color-primary)]/70 mb-8">Invited by: {{ $guest->invited_by }}</p>
+            @else
+            <div class="mb-8"></div>
+            @endif
             @endif
             <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent mx-auto mb-10"></div>
             <button @click="openInvitation()" class="px-12 py-4 bg-transparent border-2 border-[var(--color-primary)] text-[var(--color-primary)] text-sm uppercase tracking-[0.3em] hover:bg-[var(--color-primary)] hover:text-[var(--color-secondary)] transition-all duration-500 glow">

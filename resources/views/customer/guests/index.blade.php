@@ -23,8 +23,10 @@
             <input type="text" name="name" required placeholder="Nama tamu" class="flex-1 min-w-[200px] px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
             <input type="text" name="phone" placeholder="No. HP" class="w-40 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
             <input type="email" name="email" placeholder="Email" class="w-48 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
+            <input type="text" name="invited_by" placeholder="Turut Mengundang (opsional)" class="w-56 px-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm focus:ring-2 focus:ring-amber-500">
             <button type="submit" class="px-5 py-2.5 bg-amber-600 text-white text-sm font-medium rounded-xl hover:bg-amber-700 transition">Tambah</button>
         </form>
+        <p class="text-xs text-gray-400 mt-2">Contoh "Turut Mengundang": Bapak Ahmad, Ibu Siti, Keluarga Besar Surya</p>
     </div>
 
     <!-- Import -->
@@ -35,7 +37,7 @@
             <input type="file" name="file" accept=".csv,.xlsx,.xls" required class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">
             <button type="submit" class="px-5 py-2.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Import</button>
         </form>
-        <p class="text-xs text-gray-400 mt-2">Format: Nama, No HP, Email (satu baris per tamu)</p>
+        <p class="text-xs text-gray-400 mt-2">Format: Nama, No HP, Email, Turut Mengundang (satu baris per tamu)</p>
     </div>
 
     <!-- Guest List -->
@@ -50,6 +52,9 @@
                 <div class="flex-1 min-w-0">
                     <p class="font-medium text-gray-900 dark:text-white">{{ $guest->name }}</p>
                     <p class="text-xs text-gray-500">{{ $guest->phone }} {{ $guest->email }}</p>
+                    @if($guest->invited_by)
+                    <p class="text-xs text-amber-600 dark:text-amber-400 mt-0.5">Turut Mengundang: {{ $guest->invited_by }}</p>
+                    @endif
                 </div>
                 <span class="px-2 py-0.5 text-xs font-medium rounded-full {{ $guest->rsvp_status === 'attending' ? 'bg-green-100 text-green-700' : ($guest->rsvp_status === 'not_attending' ? 'bg-red-100 text-red-700' : ($guest->rsvp_status === 'maybe' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-600')) }}">{{ ucfirst(str_replace('_', ' ', $guest->rsvp_status)) }}</span>
                 <form method="POST" action="{{ route('customer.guests.destroy', [$invitation, $guest]) }}" onsubmit="return confirm('Hapus tamu ini?')">@csrf @method('DELETE')<button class="p-1 text-gray-400 hover:text-red-600"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></form>

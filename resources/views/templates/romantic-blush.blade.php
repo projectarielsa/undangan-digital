@@ -136,6 +136,9 @@
             <div class="mb-8 animate-fade-in-up delay-400">
                 <p class="text-sm text-gray-500 mb-2">Kepada Yth. Bapak/Ibu/Saudara/i</p>
                 <p class="text-xl font-display font-medium text-[var(--color-secondary)]">{{ urldecode($guestName) }}</p>
+                @if($guest && $guest->invited_by)
+                <p class="text-sm text-[var(--color-primary)] mt-2">Turut Mengundang: {{ $guest->invited_by }}</p>
+                @endif
             </div>
             @endif
             

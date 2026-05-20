@@ -75,6 +75,7 @@ class GuestController extends Controller
                         'name' => trim($row[0]),
                         'phone' => trim($row[1] ?? '') ?: null,
                         'email' => trim($row[2] ?? '') ?: null,
+                        'invited_by' => trim($row[3] ?? '') ?: null, // Kolom ke-4: Turut Mengundang
                     ]);
                     $imported++;
                 } else {
