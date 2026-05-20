@@ -33,9 +33,33 @@ class User extends Authenticatable
     public function invitations(): HasMany { return $this->hasMany(Invitation::class); }
     public function payments(): HasMany { return $this->hasMany(Payment::class); }
     public function subscriptions(): HasMany { return $this->hasMany(Subscription::class); }
+    public function supportTickets(): HasMany { return $this->hasMany(SupportTicket::class); }
     public function activeSubscription()
     {
         return $this->subscriptions()->where('status', 'active')->where('expires_at', '>', now())->latest()->first();
     }
     public function emailOtps(): HasMany { return $this->hasMany(EmailOtp::class); }
+    
+    /**
+     * Check if user has a specific feature based on their subscription
+     */
+    public function hasFeature(string $feature): bool
+    {
+        $subscription = $this->activeSubscription();
+        if (!$subscription) {
+            return false;
+        }
+        
+        $featureField = 'has_' . $feature;
+        return $subscription->package->$featureField ?? false;
+    }
+    
+    /**
+     * Check if user has priority support (Exclusive package only)
+     */
+    public function hasPrioritySupport(): bool
+    {
+        $subscription = $this->activeSubscription();
+        return $subscription && $subscription->package->slug === 'exclusive';
+    }
 }

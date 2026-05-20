@@ -189,5 +189,80 @@
             <a href="{{ route('customer.guests.index', $invitation) }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Kelola Tamu &rarr;</a>
         </div>
     </div>
+
+    <!-- Premium Features Section -->
+    <div class="mt-8 grid md:grid-cols-2 gap-4">
+        <!-- Love Story -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-pink-100 dark:bg-pink-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Love Story Timeline</h3>
+                    <p class="text-sm text-gray-500 mt-1">Ceritakan perjalanan cinta kalian</p>
+                    @if($invitation->hasLoveStoryFeature())
+                    <a href="{{ route('customer.invitations.love-story', $invitation) }}" class="inline-block mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium">Edit Love Story &rarr;</a>
+                    @else
+                    <p class="mt-3 text-xs text-gray-400">Premium & Exclusive</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Analytics</h3>
+                    <p class="text-sm text-gray-500 mt-1">Statistik pengunjung & RSVP detail</p>
+                    @if($invitation->hasAnalyticsFeature())
+                    <a href="{{ route('customer.invitations.analytics', $invitation) }}" class="inline-block mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium">Lihat Analytics &rarr;</a>
+                    @else
+                    <p class="mt-3 text-xs text-gray-400">Premium & Exclusive</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Check-in -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">QR Check-in</h3>
+                    <p class="text-sm text-gray-500 mt-1">Scan QR untuk check-in tamu</p>
+                    @if($invitation->hasQrCheckinFeature())
+                    <a href="{{ route('customer.invitations.qr-checkin', $invitation) }}" class="inline-block mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium">Kelola QR Check-in &rarr;</a>
+                    @else
+                    <p class="mt-3 text-xs text-gray-400">Exclusive only</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Domain -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 bg-green-100 dark:bg-green-900/30 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                </div>
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Custom Domain</h3>
+                    <p class="text-sm text-gray-500 mt-1">Gunakan domain pribadi Anda</p>
+                    @if($invitation->hasCustomDomainFeature())
+                    <a href="{{ route('customer.invitations.custom-domain', $invitation) }}" class="inline-block mt-3 text-sm text-amber-600 hover:text-amber-700 font-medium">Setting Domain &rarr;</a>
+                    @else
+                    <p class="mt-3 text-xs text-gray-400">Exclusive only</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

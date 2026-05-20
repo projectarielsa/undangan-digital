@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Invitation extends Model
@@ -38,13 +39,25 @@ class Invitation extends Model
     public function guestbooks(): HasMany { return $this->hasMany(Guestbook::class); }
     public function galleries(): HasMany { return $this->hasMany(Gallery::class)->orderBy('sort_order'); }
     public function payments(): HasMany { return $this->hasMany(Payment::class); }
-    public function getUrl(): string { return url('/' . $this->slug); }
+    public function visitorLogs(): HasMany { return $this->hasMany(VisitorLog::class); }
+    public function customDomain(): HasOne { return $this->hasOne(CustomDomain::class); }
+    
+    public function getUrl(): string 
+    { 
+        // Check if has active custom domain
+        if ($this->customDomain && $this->customDomain->isActive()) {
+            return 'https://' . $this->customDomain->domain;
+        }
+        return url('/' . $this->slug); 
+    }
+    
     public function isPublished(): bool { return $this->status === 'published'; }
     public function isDraft(): bool { return $this->status === 'draft'; }
     public function isPaused(): bool { return $this->status === 'paused'; }
     public function publish(): void { $this->update(['status' => 'published', 'published_at' => now()]); }
     public function pause(): void { $this->update(['status' => 'paused']); }
     public function incrementView(): void { $this->increment('view_count'); }
+    
     public function getRsvpStats(): array
     {
         $g = $this->guests();
@@ -53,7 +66,53 @@ class Invitation extends Model
             'not_attending' => (clone $g)->where('rsvp_status', 'not_attending')->count(),
             'maybe' => (clone $g)->where('rsvp_status', 'maybe')->count(),
             'pending' => (clone $g)->where('rsvp_status', 'pending')->count(),
+            'expected_guests' => (clone $g)->where('rsvp_status', 'attending')->sum('number_of_guests'),
         ];
     }
+    
+    /**
+     * Get the active subscription package for this invitation's owner
+     */
+    public function getActivePackage(): ?Package
+    {
+        $subscription = $this->user->activeSubscription();
+        return $subscription?->package;
+    }
+    
+    /**
+     * Check if invitation has a specific feature based on subscription
+     */
+    public function hasFeature(string $feature): bool
+    {
+        $package = $this->getActivePackage();
+        if (!$package) {
+            return false;
+        }
+        
+        $featureField = 'has_' . $feature;
+        return $package->$featureField ?? false;
+    }
+    
+    /**
+     * Check specific features
+     */
+    public function hasLoveStoryFeature(): bool { return $this->hasFeature('love_story'); }
+    public function hasAnalyticsFeature(): bool { return $this->hasFeature('analytics'); }
+    public function hasQrCheckinFeature(): bool { return $this->hasFeature('qr_checkin'); }
+    public function hasCustomDomainFeature(): bool { return $this->hasFeature('custom_domain'); }
+    
+    /**
+     * Get check-in stats
+     */
+    public function getCheckinStats(): array
+    {
+        $guests = $this->guests();
+        return [
+            'total' => $guests->count(),
+            'checked_in' => (clone $guests)->where('is_checked_in', true)->count(),
+            'not_checked_in' => (clone $guests)->where('is_checked_in', false)->count(),
+        ];
+    }
+    
     public function scopePublished($query) { return $query->where('status', 'published'); }
 }
