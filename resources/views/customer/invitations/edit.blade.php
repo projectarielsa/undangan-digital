@@ -13,6 +13,7 @@
         </div>
     </div>
 
+    @if(session('success'))<div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-2xl"><p class="text-sm text-green-600">{{ session('success') }}</p></div>@endif
     @if($errors->any())<div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl">@foreach($errors->all() as $error)<p class="text-sm text-red-600">{{ $error }}</p>@endforeach</div>@endif
 
     <div class="bg-white dark:bg-gray-800 rounded-2xl border p-4 mb-6 flex items-center justify-between">
@@ -45,6 +46,7 @@
             </div>
         </div>
 
+
         <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Detail Acara</h3>
             <div class="grid md:grid-cols-2 gap-4">
@@ -66,15 +68,121 @@
                     <input type="text" name="slug" value="{{ old('slug', $invitation->slug) }}" placeholder="Custom Slug" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
                 </div>
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div><label class="block text-sm text-gray-600 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700"></div>
-                    <div><label class="block text-sm text-gray-600 mb-1">Music (MP3)</label><input type="file" name="music_file" accept=".mp3,.wav" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700"></div>
+                    <div><label class="block text-sm text-gray-600 mb-1">Cover Image</label><input type="file" name="cover_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">@if($invitation->cover_image)<p class="text-xs text-green-600 mt-1">Cover saat ini: tersimpan</p>@endif</div>
+                    <div><label class="block text-sm text-gray-600 mb-1">Music (MP3)</label><input type="file" name="music_file" accept=".mp3,.wav" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">@if($invitation->music_url)<p class="text-xs text-green-600 mt-1">Musik saat ini: tersimpan</p>@endif</div>
                 </div>
             </div>
         </div>
 
-        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 transition-all">Simpan Perubahan</button>
+
+        <!-- Section Info Bank / Amplop Digital -->
+        <div class="bg-white dark:bg-gray-800 rounded-2xl border p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Amplop Digital (Gift)</h3>
+            <p class="text-sm text-gray-500 mb-4">Informasi rekening untuk tamu yang ingin memberikan hadiah</p>
+            <div class="space-y-4">
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Nama Bank</label>
+                        <select name="bank_name" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                            <option value="">Pilih Bank</option>
+                            <option value="BCA" {{ old('bank_name', $invitation->bank_name) == 'BCA' ? 'selected' : '' }}>BCA</option>
+                            <option value="BNI" {{ old('bank_name', $invitation->bank_name) == 'BNI' ? 'selected' : '' }}>BNI</option>
+                            <option value="BRI" {{ old('bank_name', $invitation->bank_name) == 'BRI' ? 'selected' : '' }}>BRI</option>
+                            <option value="Mandiri" {{ old('bank_name', $invitation->bank_name) == 'Mandiri' ? 'selected' : '' }}>Mandiri</option>
+                            <option value="BSI" {{ old('bank_name', $invitation->bank_name) == 'BSI' ? 'selected' : '' }}>BSI</option>
+                            <option value="CIMB Niaga" {{ old('bank_name', $invitation->bank_name) == 'CIMB Niaga' ? 'selected' : '' }}>CIMB Niaga</option>
+                            <option value="Permata" {{ old('bank_name', $invitation->bank_name) == 'Permata' ? 'selected' : '' }}>Permata</option>
+                            <option value="Danamon" {{ old('bank_name', $invitation->bank_name) == 'Danamon' ? 'selected' : '' }}>Danamon</option>
+                            <option value="OCBC NISP" {{ old('bank_name', $invitation->bank_name) == 'OCBC NISP' ? 'selected' : '' }}>OCBC NISP</option>
+                            <option value="Maybank" {{ old('bank_name', $invitation->bank_name) == 'Maybank' ? 'selected' : '' }}>Maybank</option>
+                            <option value="Jenius" {{ old('bank_name', $invitation->bank_name) == 'Jenius' ? 'selected' : '' }}>Jenius</option>
+                            <option value="Jago" {{ old('bank_name', $invitation->bank_name) == 'Jago' ? 'selected' : '' }}>Jago</option>
+                            <option value="SeaBank" {{ old('bank_name', $invitation->bank_name) == 'SeaBank' ? 'selected' : '' }}>SeaBank</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Nomor Rekening</label>
+                        <input type="text" name="bank_account_number" value="{{ old('bank_account_number', $invitation->bank_account_number) }}" placeholder="1234567890" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Nama Pemilik Rekening</label>
+                        <input type="text" name="bank_account_name" value="{{ old('bank_account_name', $invitation->bank_account_name) }}" placeholder="Nama sesuai buku rekening" class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">QRIS (Opsional)</label>
+                    <input type="file" name="qris_image" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-amber-50 file:text-amber-700">
+                    @if($invitation->qris_image)<p class="text-xs text-green-600 mt-1">QRIS tersimpan</p>@endif
+                    <p class="text-xs text-gray-400 mt-1">Upload gambar QRIS untuk pembayaran via e-wallet</p>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-600 mb-1">Pesan untuk Gift (Opsional)</label>
+                    <textarea name="gift_info" rows="2" placeholder="Contoh: Doa restu Anda adalah hadiah terindah bagi kami..." class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent">{{ old('gift_info', $invitation->gift_info) }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-amber-600 to-amber-700 text-white font-semibold rounded-xl shadow-lg shadow-amber-500/25 transition-all hover:shadow-xl">Simpan Perubahan</button>
     </form>
 
+
+    <!-- Section Galeri Foto -->
+    <div class="mt-8 bg-white dark:bg-gray-800 rounded-2xl border p-6">
+        <div class="flex items-center justify-between mb-4">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Galeri Foto</h3>
+                <p class="text-sm text-gray-500">Upload foto-foto untuk ditampilkan di undangan (max 20 foto)</p>
+            </div>
+        </div>
+        
+        <!-- Upload Form -->
+        <form method="POST" action="{{ route('customer.gallery.store', $invitation) }}" enctype="multipart/form-data" class="mb-6">
+            @csrf
+            <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center hover:border-amber-400 transition">
+                <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+                <input type="file" name="images[]" id="gallery-upload" multiple accept="image/*" class="hidden" onchange="this.form.submit()">
+                <label for="gallery-upload" class="cursor-pointer">
+                    <span class="text-amber-600 hover:text-amber-700 font-medium">Klik untuk upload</span>
+                    <span class="text-gray-500"> atau drag & drop</span>
+                </label>
+                <p class="text-xs text-gray-400 mt-2">PNG, JPG, JPEG (max 5MB per foto)</p>
+            </div>
+        </form>
+
+        <!-- Gallery Grid -->
+        @if($invitation->galleries && $invitation->galleries->count() > 0)
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4" id="gallery-grid">
+            @foreach($invitation->galleries as $gallery)
+            <div class="relative group aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-700">
+                <img src="{{ $gallery->getImageUrl() }}" alt="Gallery" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                    <form method="POST" action="{{ route('customer.gallery.destroy', [$invitation, $gallery]) }}" onsubmit="return confirm('Hapus foto ini?')">
+                        @csrf @method('DELETE')
+                        <button type="submit" class="p-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+                @if($gallery->caption)<p class="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs p-2 truncate">{{ $gallery->caption }}</p>@endif
+            </div>
+            @endforeach
+        </div>
+        <p class="text-sm text-gray-500 mt-4">{{ $invitation->galleries->count() }} foto terupload</p>
+        @else
+        <div class="text-center py-8 text-gray-500">
+            <svg class="w-16 h-16 mx-auto text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p>Belum ada foto di galeri</p>
+        </div>
+        @endif
+    </div>
+
+    <!-- Section Kelola Tamu -->
     <div class="mt-8 bg-white dark:bg-gray-800 rounded-2xl border p-6">
         <div class="flex items-center justify-between">
             <div><h3 class="font-semibold text-gray-900 dark:text-white">Kelola Tamu</h3><p class="text-sm text-gray-500">Tambah tamu, lihat RSVP, dan kirim undangan personal</p></div>

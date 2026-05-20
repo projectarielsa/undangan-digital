@@ -60,6 +60,9 @@ Route::middleware("auth")->group(function () {
         Route::get("/users", [UserController::class, "index"])->name("users.index");
         Route::get("/users/{user}", [UserController::class, "show"])->name("users.show");
         Route::post("/users/{user}/toggle-active", [UserController::class, "toggleActive"])->name("users.toggle");
+        Route::post("/users/{user}/subscription", [UserController::class, "addSubscription"])->name("users.subscription.add");
+        Route::post("/subscriptions/{subscription}/cancel", [UserController::class, "cancelSubscription"])->name("subscriptions.cancel");
+        Route::post("/subscriptions/{subscription}/extend", [UserController::class, "extendSubscription"])->name("subscriptions.extend");
         Route::get("/invitations", [AdminInvitation::class, "index"])->name("invitations.index");
         Route::get("/invitations/{invitation}", [AdminInvitation::class, "show"])->name("invitations.show");
         Route::delete("/invitations/{invitation}", [AdminInvitation::class, "destroy"])->name("invitations.destroy");
