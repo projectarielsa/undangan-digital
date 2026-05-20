@@ -189,5 +189,53 @@
             <a href="{{ route('customer.guests.index', $invitation) }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Kelola Tamu &rarr;</a>
         </div>
     </div>
+
+    <!-- Section Love Story -->
+    <div class="mt-4 bg-white dark:bg-gray-800 rounded-2xl border p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Love Story Timeline</h3>
+                    @if(!$invitation->package || !$invitation->package->has_love_story)
+                    <span class="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-700 rounded-full">Premium</span>
+                    @endif
+                </div>
+                <p class="text-sm text-gray-500">Ceritakan perjalanan cinta kalian</p>
+            </div>
+            <a href="{{ route('customer.invitations.love-story', $invitation) }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Kelola Love Story &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Section Analytics -->
+    <div class="mt-4 bg-white dark:bg-gray-800 rounded-2xl border p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">Analytics Pengunjung</h3>
+                    @if(!$invitation->package || !$invitation->package->has_analytics)
+                    <span class="px-2 py-0.5 text-xs font-medium bg-amber-100 text-amber-700 rounded-full">Premium</span>
+                    @endif
+                </div>
+                <p class="text-sm text-gray-500">Lihat statistik lengkap pengunjung undangan</p>
+            </div>
+            <a href="{{ route('customer.invitations.analytics', $invitation) }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">Lihat Analytics &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Section QR Check-in -->
+    <div class="mt-4 bg-white dark:bg-gray-800 rounded-2xl border p-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <div class="flex items-center gap-2">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">QR Check-in</h3>
+                    @if(!$invitation->package || !$invitation->package->has_qr_checkin)
+                    <span class="px-2 py-0.5 text-xs font-medium bg-purple-100 text-purple-700 rounded-full">Exclusive</span>
+                    @endif
+                </div>
+                <p class="text-sm text-gray-500">Scan QR untuk check-in tamu di hari H</p>
+            </div>
+            <a href="{{ route('customer.qr-checkin.index', $invitation) }}" class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-xl hover:bg-gray-200 transition">QR Check-in &rarr;</a>
+        </div>
+    </div>
 </div>
 @endsection

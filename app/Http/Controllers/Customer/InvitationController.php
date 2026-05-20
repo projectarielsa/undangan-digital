@@ -58,4 +58,33 @@ class InvitationController extends Controller
     public function publish(Invitation $invitation) { $this->authorize("update", $invitation); $invitation->publish(); return back()->with("success", "Dipublikasikan!"); }
     public function pause(Invitation $invitation) { $this->authorize("update", $invitation); $invitation->pause(); return back()->with("success", "Dijeda."); }
     public function duplicate(Invitation $invitation) { $this->authorize("view", $invitation); $new = $this->service->duplicate($invitation); return redirect()->route("customer.invitations.edit", $new)->with("success", "Diduplikasi!"); }
+
+    public function loveStory(Invitation $invitation, Request $request)
+    {
+        $this->authorize('view', $invitation);
+        $loveStory = $invitation->love_story ?? [];
+        $package = $invitation->package;
+        $hasFeature = $package && $package->has_love_story;
+        return view('customer.invitations.love-story', compact('invitation', 'loveStory', 'hasFeature'));
+    }
+
+    public function updateLoveStory(Request $request, Invitation $invitation)
+    {
+        $this->authorize('update', $invitation);
+        
+        // Check if user has love story feature
+        $package = $invitation->package;
+        if (!$package || !$package->has_love_story) {
+            return back()->with('error', 'Fitur Love Story tidak tersedia untuk paket Anda.');
+        }
+        
+        $loveStory = collect($request->input('love_story', []))
+            ->filter(fn($item) => !empty($item['title']) || !empty($item['description']))
+            ->values()
+            ->toArray();
+        
+        $invitation->update(['love_story' => $loveStory]);
+        
+        return back()->with('success', 'Love Story berhasil disimpan!');
+    }
 }

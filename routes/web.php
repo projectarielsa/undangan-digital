@@ -9,11 +9,13 @@ use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\OtpVerificationController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Customer\AnalyticsController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\GalleryController;
 use App\Http\Controllers\Customer\GuestController;
 use App\Http\Controllers\Customer\InvitationController;
 use App\Http\Controllers\Customer\PaymentController;
+use App\Http\Controllers\Customer\QrCheckinController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\PublicInvitationController;
@@ -50,6 +52,22 @@ Route::middleware("auth")->group(function () {
         Route::post("/invitations/{invitation}/gallery", [GalleryController::class, "store"])->name("gallery.store");
         Route::put("/invitations/{invitation}/gallery/order", [GalleryController::class, "updateOrder"])->name("gallery.order");
         Route::delete("/invitations/{invitation}/gallery/{gallery}", [GalleryController::class, "destroy"])->name("gallery.destroy");
+        
+        // Love Story
+        Route::get("/invitations/{invitation}/love-story", [InvitationController::class, "loveStory"])->name("invitations.love-story");
+        Route::put("/invitations/{invitation}/love-story", [InvitationController::class, "updateLoveStory"])->name("invitations.love-story.update");
+        
+        // Analytics
+        Route::get("/invitations/{invitation}/analytics", [AnalyticsController::class, "show"])->name("invitations.analytics");
+        
+        // QR Check-in
+        Route::get("/invitations/{invitation}/qr-checkin", [QrCheckinController::class, "index"])->name("qr-checkin.index");
+        Route::get("/invitations/{invitation}/qr-checkin/scanner", [QrCheckinController::class, "scanner"])->name("qr-checkin.scanner");
+        Route::post("/invitations/{invitation}/qr-checkin/generate-all", [QrCheckinController::class, "generateAllQr"])->name("qr-checkin.generate-all");
+        Route::get("/invitations/{invitation}/qr-checkin/{guest}/generate", [QrCheckinController::class, "generateQr"])->name("qr-checkin.generate");
+        Route::get("/invitations/{invitation}/qr-checkin/{guest}/card", [QrCheckinController::class, "downloadQrCard"])->name("qr-checkin.card");
+        Route::post("/invitations/{invitation}/qr-checkin/{guest}/manual", [QrCheckinController::class, "manualCheckin"])->name("qr-checkin.manual");
+        Route::post("/invitations/{invitation}/qr-checkin/{guest}/undo", [QrCheckinController::class, "undoCheckin"])->name("qr-checkin.undo");
         Route::get("/packages", [PaymentController::class, "packages"])->name("packages");
         Route::post("/checkout/{package}", [PaymentController::class, "checkout"])->name("checkout");
         Route::get("/payments/finish", [PaymentController::class, "finish"])->name("payments.finish");
@@ -72,6 +90,15 @@ Route::middleware("auth")->group(function () {
     });
 });
 Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])->name("midtrans.webhook");
+
+// Public check-in route
+Route::post("/checkin/process", [QrCheckinController::class, "processCheckin"])->name("checkin.process");
+Route::get("/checkin/{code}", function($code) {
+    $guest = \App\Models\Guest::where('qr_code', $code)->first();
+    if (!$guest) abort(404);
+    return redirect($guest->invitation->getUrl() . '?to=' . urlencode($guest->name));
+})->name("checkin.scan");
+
 Route::get("/{slug}", [PublicInvitationController::class, "show"])->name("invitation.show");
 Route::post("/{slug}/rsvp", [PublicInvitationController::class, "rsvp"])->name("invitation.rsvp");
 Route::post("/{slug}/guestbook", [PublicInvitationController::class, "guestbook"])->name("invitation.guestbook");

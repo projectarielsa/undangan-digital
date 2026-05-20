@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use App\Models\Invitation;
+use App\Models\InvitationView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -14,6 +15,12 @@ class PublicInvitationController extends Controller
         $guestName = $request->query("to");
         $guest = null;
         if ($guestName) { $guest = $invitation->guests()->where("name", urldecode($guestName))->first(); $guest?->markAsOpened(); }
+        
+        // Record detailed view for analytics (if package supports)
+        if ($invitation->package && $invitation->package->has_analytics) {
+            InvitationView::recordView($invitation, $request, $guest);
+        }
+        
         $bladeView = $invitation->template ? $invitation->template->blade_view : "templates.elegant-gold";
         return view($bladeView, compact("invitation","guest","guestName"));
     }

@@ -38,6 +38,7 @@ class Invitation extends Model
     public function guestbooks(): HasMany { return $this->hasMany(Guestbook::class); }
     public function galleries(): HasMany { return $this->hasMany(Gallery::class)->orderBy('sort_order'); }
     public function payments(): HasMany { return $this->hasMany(Payment::class); }
+    public function views(): HasMany { return $this->hasMany(\App\Models\InvitationView::class); }
     public function getUrl(): string { return url('/' . $this->slug); }
     public function isPublished(): bool { return $this->status === 'published'; }
     public function isDraft(): bool { return $this->status === 'draft'; }
