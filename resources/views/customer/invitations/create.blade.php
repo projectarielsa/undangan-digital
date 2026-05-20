@@ -529,11 +529,11 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Pria:</span>
-                                    <span class="font-medium text-gray-900 dark:text-white" x-text="$refs.groom_name?.value || '-'">-</span>
+                                    <span class="font-medium text-gray-900 dark:text-white" x-text="summary.groom_name || '-'">-</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Wanita:</span>
-                                    <span class="font-medium text-gray-900 dark:text-white" x-text="$refs.bride_name?.value || '-'">-</span>
+                                    <span class="font-medium text-gray-900 dark:text-white" x-text="summary.bride_name || '-'">-</span>
                                 </div>
                             </div>
                         </div>
@@ -549,11 +549,11 @@
                             <div class="space-y-2 text-sm">
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Tanggal:</span>
-                                    <span class="font-medium text-gray-900 dark:text-white" x-text="$refs.event_date?.value || '-'">-</span>
+                                    <span class="font-medium text-gray-900 dark:text-white" x-text="summary.event_date || '-'">-</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Tempat:</span>
-                                    <span class="font-medium text-gray-900 dark:text-white truncate max-w-[150px]" x-text="$refs.event_venue?.value || '-'">-</span>
+                                    <span class="font-medium text-gray-900 dark:text-white truncate max-w-[150px]" x-text="summary.event_venue || '-'">-</span>
                                 </div>
                             </div>
                         </div>
@@ -605,15 +605,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Hidden refs for summary -->
-        <div class="hidden">
-            <input x-ref="groom_name" :value="document.querySelector('[name=groom_name]')?.value">
-            <input x-ref="bride_name" :value="document.querySelector('[name=bride_name]')?.value">
-            <input x-ref="event_date" :value="document.querySelector('[name=event_date]')?.value">
-            <input x-ref="event_venue" :value="document.querySelector('[name=event_venue]')?.value">
-        </div>
-
 
         <!-- Navigation Buttons -->
         <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-100 dark:border-gray-700">
@@ -670,6 +661,12 @@ function invitationWizard() {
         formData: {
             template_id: '{{ $templates->first()->id ?? '' }}'
         },
+        summary: {
+            groom_name: '',
+            bride_name: '',
+            event_date: '',
+            event_venue: ''
+        },
         steps: [
             { title: 'Template', icon: 'template' },
             { title: 'Mempelai', icon: 'couple' },
@@ -686,6 +683,12 @@ function invitationWizard() {
                 }
                 this.currentStep++;
                 this.maxStep = Math.max(this.maxStep, this.currentStep);
+                
+                // Update summary when entering step 5
+                if (this.currentStep === 5) {
+                    this.updateSummary();
+                }
+                
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         },
@@ -700,6 +703,12 @@ function invitationWizard() {
         goToStep(step) {
             if (step <= this.maxStep) {
                 this.currentStep = step;
+                
+                // Update summary when going to step 5
+                if (this.currentStep === 5) {
+                    this.updateSummary();
+                }
+                
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         },
@@ -730,13 +739,10 @@ function invitationWizard() {
         },
         
         updateSummary() {
-            // Update summary refs when reaching step 5
-            if (this.currentStep === 5) {
-                this.$refs.groom_name.value = document.querySelector('[name="groom_name"]')?.value || '';
-                this.$refs.bride_name.value = document.querySelector('[name="bride_name"]')?.value || '';
-                this.$refs.event_date.value = document.querySelector('[name="event_date"]')?.value || '';
-                this.$refs.event_venue.value = document.querySelector('[name="event_venue"]')?.value || '';
-            }
+            this.summary.groom_name = document.querySelector('[name="groom_name"]')?.value || '';
+            this.summary.bride_name = document.querySelector('[name="bride_name"]')?.value || '';
+            this.summary.event_date = document.querySelector('[name="event_date"]')?.value || '';
+            this.summary.event_venue = document.querySelector('[name="event_venue"]')?.value || '';
         }
     };
 }
