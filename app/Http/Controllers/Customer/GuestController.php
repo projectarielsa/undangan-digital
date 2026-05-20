@@ -1,25 +1,95 @@
 <?php
+
 namespace App\Http\Controllers\Customer;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\ImportGuestRequest;
+use App\Http\Requests\Customer\StoreGuestRequest;
 use App\Models\Guest;
 use App\Models\Invitation;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class GuestController extends Controller
 {
-    public function index(Invitation $invitation) { $this->authorize("view", $invitation); $guests = $invitation->guests()->latest()->paginate(20); return view("customer.guests.index", ["invitation"=>$invitation,"guests"=>$guests,"rsvpStats"=>$invitation->getRsvpStats()]); }
-    public function store(Request $request, Invitation $invitation) { $this->authorize("update", $invitation); $v = $request->validate(["name"=>"required|string|max:255","phone"=>"nullable|string|max:20","email"=>"nullable|email"]); $invitation->guests()->create($v); return back()->with("success", "Tamu ditambahkan."); }
-    public function destroy(Invitation $invitation, Guest $guest) { $this->authorize("update", $invitation); $guest->delete(); return back()->with("success", "Tamu dihapus."); }
-    public function import(Request $request, Invitation $invitation)
+    /**
+     * Display the list of guests for an invitation.
+     */
+    public function index(Invitation $invitation): View
     {
-        $this->authorize("update", $invitation);
-        $request->validate(["file" => "required|file|mimes:xlsx,xls,csv|max:5120"]);
-        $file = $request->file("file"); $imported = 0;
-        if (in_array($file->getClientOriginalExtension(), ["csv","txt"])) {
-            $h = fopen($file->getPathname(), "r"); fgetcsv($h);
-            while (($row = fgetcsv($h)) !== false) { if (!empty($row[0])) { $invitation->guests()->create(["name"=>$row[0],"phone"=>$row[1]??null,"email"=>$row[2]??null]); $imported++; } }
-            fclose($h);
+        $this->authorize('view', $invitation);
+
+        $guests = $invitation->guests()
+            ->latest()
+            ->paginate(20);
+
+        return view('customer.guests.index', [
+            'invitation' => $invitation,
+            'guests' => $guests,
+            'rsvpStats' => $invitation->getRsvpStats(),
+        ]);
+    }
+
+    /**
+     * Store a new guest for an invitation.
+     */
+    public function store(StoreGuestRequest $request, Invitation $invitation): RedirectResponse
+    {
+        $invitation->guests()->create($request->validated());
+
+        return back()->with('success', 'Tamu berhasil ditambahkan.');
+    }
+
+    /**
+     * Delete a guest from an invitation.
+     */
+    public function destroy(Invitation $invitation, Guest $guest): RedirectResponse
+    {
+        $this->authorize('update', $invitation);
+
+        $guest->delete();
+
+        return back()->with('success', 'Tamu berhasil dihapus.');
+    }
+
+    /**
+     * Import guests from a file (CSV/Excel).
+     */
+    public function import(ImportGuestRequest $request, Invitation $invitation): RedirectResponse
+    {
+        $file = $request->file('file');
+        $imported = 0;
+        $skipped = 0;
+
+        $extension = strtolower($file->getClientOriginalExtension());
+
+        if (in_array($extension, ['csv', 'txt'])) {
+            $handle = fopen($file->getPathname(), 'r');
+            
+            // Skip header row
+            fgetcsv($handle);
+
+            while (($row = fgetcsv($handle)) !== false) {
+                if (!empty(trim($row[0] ?? ''))) {
+                    $invitation->guests()->create([
+                        'name' => trim($row[0]),
+                        'phone' => trim($row[1] ?? '') ?: null,
+                        'email' => trim($row[2] ?? '') ?: null,
+                    ]);
+                    $imported++;
+                } else {
+                    $skipped++;
+                }
+            }
+
+            fclose($handle);
         }
-        return back()->with("success", "Berhasil import $imported tamu.");
+
+        $message = "Berhasil mengimpor {$imported} tamu.";
+        if ($skipped > 0) {
+            $message .= " ({$skipped} baris dilewati karena nama kosong)";
+        }
+
+        return back()->with('success', $message);
     }
 }
