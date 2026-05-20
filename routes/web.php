@@ -118,6 +118,7 @@ Route::middleware("auth")->group(function () {
         Route::post("/support/{ticket}/reply", [SupportTicketController::class, "reply"])->name("support.reply");
         Route::post("/support/{ticket}/close", [SupportTicketController::class, "close"])->name("support.close");
         Route::post("/support/{ticket}/reopen", [SupportTicketController::class, "reopen"])->name("support.reopen");
+        Route::get("/support/{ticket}/messages", [SupportTicketController::class, "messages"])->name("support.messages");
     });
     Route::middleware(["verified.email","role:super_admin"])->prefix("admin")->name("admin.")->group(function () {
         Route::get("/dashboard", [AdminDashboard::class, "index"])->name("dashboard");
@@ -143,6 +144,7 @@ Route::middleware("auth")->group(function () {
         Route::post("/support/{ticket}/reply", [AdminSupportController::class, "reply"])->name("support.reply");
         Route::put("/support/{ticket}/status", [AdminSupportController::class, "updateStatus"])->name("support.status");
         Route::put("/support/{ticket}/priority", [AdminSupportController::class, "updatePriority"])->name("support.priority");
+        Route::get("/support/{ticket}/messages", [AdminSupportController::class, "messages"])->name("support.messages");
     });
 });
 Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])

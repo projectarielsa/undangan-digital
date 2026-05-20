@@ -170,6 +170,32 @@ class SupportTicketController extends Controller
     }
 
     /**
+     * Get messages as JSON (for live polling)
+     */
+    public function messages(Request $request, SupportTicket $ticket)
+    {
+        if ($ticket->user_id !== $request->user()->id) {
+            abort(403);
+        }
+
+        $ticket->load(['messages.user']);
+
+        $messages = $ticket->messages->map(function ($message) {
+            return [
+                'id' => $message->id,
+                'is_admin_reply' => $message->is_admin_reply,
+                'user_name' => $message->is_admin_reply ? 'Tim Support' : $message->user->name,
+                'user_initial' => substr($message->user->name, 0, 1),
+                'message' => $message->message,
+                'attachment_url' => $message->attachment ? $message->attachment_url : null,
+                'created_at' => $message->created_at->format('d M Y H:i'),
+            ];
+        });
+
+        return response()->json(['messages' => $messages, 'status' => $ticket->status]);
+    }
+
+    /**
      * Reopen ticket
      */
     public function reopen(Request $request, SupportTicket $ticket)
