@@ -387,6 +387,53 @@
         </section>
 
 
+        <!-- Love Story Timeline -->
+        @if($invitation->love_story && count($invitation->love_story) > 0)
+        <section class="py-24 px-6 bg-white relative overflow-hidden">
+            <div class="absolute -left-32 top-1/2 -translate-y-1/2 w-64 h-64 border border-[var(--color-accent)]/10 rotate-45"></div>
+            <div class="absolute -right-32 top-1/2 -translate-y-1/2 w-64 h-64 border border-[var(--color-accent)]/10 rotate-45"></div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 section-reveal" x-intersect="$el.classList.add('revealed')">
+                    <p class="text-xs uppercase tracking-[0.5em] text-[var(--color-accent)] mb-4">Our Journey</p>
+                    <h2 class="text-4xl sm:text-5xl font-display text-[var(--color-primary)]">Love Story</h2>
+                </div>
+                
+                <div class="relative section-reveal" x-intersect="$el.classList.add('revealed')">
+                    <!-- Timeline line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-[var(--color-accent)]/30 transform md:-translate-x-1/2"></div>
+                    
+                    @foreach($invitation->love_story as $index => $story)
+                    <div class="relative mb-16 last:mb-0 {{ $index % 2 == 0 ? 'md:pr-1/2' : 'md:pl-1/2 md:ml-auto' }}">
+                        <!-- Timeline dot -->
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-[var(--color-accent)] rotate-45 transform -translate-x-1/2 md:-translate-x-1/2 border-4 border-white"></div>
+                        
+                        <div class="ml-12 md:ml-0 {{ $index % 2 == 0 ? 'md:mr-8' : 'md:ml-8' }}">
+                            <div class="bg-[var(--color-secondary)] p-6 relative group">
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[var(--color-accent)] opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                @if(!empty($story['date']))
+                                <p class="text-xs uppercase tracking-[0.3em] text-[var(--color-accent)] mb-2">{{ $story['date'] }}</p>
+                                @endif
+                                <h4 class="text-xl font-display text-[var(--color-primary)] mb-2">{{ $story['title'] }}</h4>
+                                <p class="text-[var(--color-primary)]/70 text-sm leading-relaxed">{{ $story['description'] }}</p>
+                                @if(!empty($story['image']))
+                                <div class="mt-4 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $story['image']) }}" alt="{{ $story['title'] }}" class="w-full h-48 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+
+
         <!-- Gallery -->
         @if($invitation->galleries->count() > 0)
         <section class="py-24 px-6 relative">

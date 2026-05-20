@@ -171,6 +171,46 @@
         </section>
 
 
+        <!-- Love Story Timeline -->
+        @if($invitation->love_story && count($invitation->love_story) > 0)
+        <section class="py-24 px-6">
+            <div class="max-w-3xl mx-auto">
+                <p class="text-xs uppercase tracking-[0.5em] text-[var(--color-primary)] text-center mb-4">Our Journey Together</p>
+                <h2 class="text-4xl font-serif gold-gradient text-center mb-16">Love Story</h2>
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-[var(--color-primary)]/30 transform md:-translate-x-1/2"></div>
+                    
+                    @foreach($invitation->love_story as $index => $story)
+                    <div class="relative mb-16 last:mb-0 {{ $index % 2 == 0 ? 'md:pr-1/2' : 'md:pl-1/2 md:ml-auto' }}">
+                        <!-- Timeline dot -->
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-[var(--color-primary)] transform -translate-x-1/2 md:-translate-x-1/2 border-4 border-[var(--color-secondary)] glow"></div>
+                        
+                        <div class="ml-12 md:ml-0 {{ $index % 2 == 0 ? 'md:mr-8' : 'md:ml-8' }}">
+                            <div class="border border-[var(--color-primary)]/20 p-6 relative glow">
+                                <div class="absolute top-0 left-0 w-4 h-4 border-t border-l border-[var(--color-primary)]"></div>
+                                <div class="absolute top-0 right-0 w-4 h-4 border-t border-r border-[var(--color-primary)]"></div>
+                                <div class="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-[var(--color-primary)]"></div>
+                                <div class="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-[var(--color-primary)]"></div>
+                                @if(!empty($story['date']))
+                                <p class="text-sm text-[var(--color-primary)] font-medium mb-2">{{ $story['date'] }}</p>
+                                @endif
+                                <h4 class="text-xl font-serif gold-gradient mb-2">{{ $story['title'] }}</h4>
+                                <p class="text-gray-400 text-sm leading-relaxed">{{ $story['description'] }}</p>
+                                @if(!empty($story['image']))
+                                <div class="mt-4 border border-[var(--color-primary)]/20 p-1">
+                                    <img src="{{ asset('storage/' . $story['image']) }}" alt="{{ $story['title'] }}" class="w-full h-48 object-cover">
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+
         <!-- Gallery -->
         @if($invitation->galleries->count() > 0)
         <section class="py-24 px-6 bg-[var(--color-accent)]">

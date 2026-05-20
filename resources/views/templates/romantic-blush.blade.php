@@ -427,6 +427,46 @@
         </section>
 
 
+        <!-- Love Story Timeline -->
+        @if($invitation->love_story && count($invitation->love_story) > 0)
+        <section class="py-20 px-6 bg-white">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-16 scroll-animate" data-scroll>
+                    <p class="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)] mb-3">Our Journey</p>
+                    <h2 class="text-4xl font-display font-semibold text-[var(--color-secondary)]">Love Story</h2>
+                </div>
+                
+                <div class="relative scroll-animate" data-scroll>
+                    <!-- Timeline line -->
+                    <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-[var(--color-primary)]/30 transform md:-translate-x-1/2"></div>
+                    
+                    @foreach($invitation->love_story as $index => $story)
+                    <div class="relative mb-12 last:mb-0 {{ $index % 2 == 0 ? 'md:pr-1/2' : 'md:pl-1/2 md:ml-auto' }}">
+                        <!-- Timeline dot -->
+                        <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-[var(--color-primary)] rounded-full transform -translate-x-1/2 md:-translate-x-1/2 border-4 border-white shadow-lg shadow-[var(--color-primary)]/20"></div>
+                        
+                        <div class="ml-12 md:ml-0 {{ $index % 2 == 0 ? 'md:mr-8' : 'md:ml-8' }}">
+                            <div class="bg-gradient-to-br from-[var(--color-accent)] to-white rounded-3xl p-6 border border-[var(--color-primary)]/10">
+                                @if(!empty($story['date']))
+                                <p class="text-sm text-[var(--color-primary)] font-medium mb-2">{{ $story['date'] }}</p>
+                                @endif
+                                <h4 class="text-xl font-display font-semibold text-[var(--color-secondary)] mb-2">{{ $story['title'] }}</h4>
+                                <p class="text-gray-600 text-sm leading-relaxed">{{ $story['description'] }}</p>
+                                @if(!empty($story['image']))
+                                <div class="mt-4 rounded-2xl overflow-hidden">
+                                    <img src="{{ asset('storage/' . $story['image']) }}" alt="{{ $story['title'] }}" class="w-full h-48 object-cover hover:scale-110 transition-transform duration-700">
+                                </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </section>
+        @endif
+
+
         <!-- Gallery Section -->
         @if($invitation->galleries->count() > 0)
         <section class="py-20 px-6 bg-[#FFFAF8]">
