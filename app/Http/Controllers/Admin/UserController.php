@@ -29,6 +29,7 @@ class UserController extends Controller
         ]);
         
         $package = Package::findOrFail($request->package_id);
+        $days = (int) $request->duration_days;
         
         // Create subscription
         Subscription::create([
@@ -36,10 +37,10 @@ class UserController extends Controller
             "package_id" => $package->id,
             "status" => "active",
             "starts_at" => now(),
-            "expires_at" => now()->addDays($request->duration_days),
+            "expires_at" => now()->addDays($days),
         ]);
         
-        return back()->with("success", "Langganan {$package->name} berhasil ditambahkan untuk {$user->name} selama {$request->duration_days} hari.");
+        return back()->with("success", "Langganan {$package->name} berhasil ditambahkan untuk {$user->name} selama {$days} hari.");
     }
     
     public function cancelSubscription(Subscription $subscription)
@@ -51,7 +52,8 @@ class UserController extends Controller
     public function extendSubscription(Request $request, Subscription $subscription)
     {
         $request->validate(["days" => "required|integer|min:1|max:365"]);
-        $subscription->update(["expires_at" => $subscription->expires_at->addDays($request->days)]);
-        return back()->with("success", "Langganan diperpanjang {$request->days} hari.");
+        $days = (int) $request->days;
+        $subscription->update(["expires_at" => $subscription->expires_at->addDays($days)]);
+        return back()->with("success", "Langganan diperpanjang {$days} hari.");
     }
 }
