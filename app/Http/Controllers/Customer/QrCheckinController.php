@@ -165,7 +165,15 @@ class QrCheckinController extends Controller
                 ->with('error', 'Fitur QR Check-in hanya tersedia untuk paket Exclusive.');
         }
 
-        return view('customer.invitations.qr-welcome-display', compact('invitation'));
+        // Load template and galleries for styling
+        $invitation->load(['template', 'galleries']);
+        
+        // Get gallery images (max 10 for slideshow)
+        $galleryImages = $invitation->galleries->take(10)->map(function ($gallery) {
+            return $gallery->getImageUrl();
+        })->toArray();
+
+        return view('customer.invitations.qr-welcome-display', compact('invitation', 'galleryImages'));
     }
 
     /**
