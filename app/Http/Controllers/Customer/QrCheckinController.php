@@ -175,10 +175,10 @@ class QrCheckinController extends Controller
     {
         $this->authorize('view', $invitation);
 
-        // Get the most recent check-in within the last minute
+        // Get the most recent check-in within the last 15 seconds
         $latestGuest = $invitation->guests()
             ->where('is_checked_in', true)
-            ->where('checked_in_at', '>=', now()->subMinute())
+            ->where('checked_in_at', '>=', now()->subSeconds(15))
             ->orderByDesc('checked_in_at')
             ->first();
 
