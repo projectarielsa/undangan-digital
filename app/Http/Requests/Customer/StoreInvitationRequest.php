@@ -38,9 +38,9 @@ class StoreInvitationRequest extends FormRequest
             'bride_instagram' => ['nullable', 'string', 'max:100'],
 
             // Event Details
-            'event_date' => ['required', 'date', 'after:today'],
-            'event_time_start' => ['required', 'date_format:H:i'],
-            'event_time_end' => ['nullable', 'date_format:H:i', 'after:event_time_start'],
+            'event_date' => ['required', 'date', 'after_or_equal:today'],
+            'event_time_start' => ['required'],
+            'event_time_end' => ['nullable'],
             'event_venue' => ['required', 'string', 'max:255'],
             'event_address' => ['nullable', 'string', 'max:500'],
             'event_maps_url' => ['nullable', 'url', 'max:500'],

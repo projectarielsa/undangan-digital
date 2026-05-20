@@ -76,6 +76,15 @@
     <!-- Form -->
     <form method="POST" action="{{ route('customer.invitations.store') }}" enctype="multipart/form-data" @submit="submitting = true">
         @csrf
+
+        @if($errors->any())
+        <script>
+            // Auto scroll to top to show errors
+            document.addEventListener('DOMContentLoaded', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        </script>
+        @endif
         
         <!-- Step 1: Template Selection -->
         <div x-show="currentStep === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0">

@@ -9,6 +9,10 @@ class InvitationService
     public function create(User $user, array $data): Invitation
     {
         $data['user_id'] = $user->id;
+        // Ensure title is set
+        if (empty($data['title'])) {
+            $data['title'] = ($data['groom_name'] ?? '') . ' & ' . ($data['bride_name'] ?? '');
+        }
         foreach (['cover_image', 'groom_photo', 'bride_photo', 'qris_image'] as $field) {
             if (isset($data[$field]) && $data[$field]) $data[$field] = $data[$field]->store('invitations', 'public');
         }
