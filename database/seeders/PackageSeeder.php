@@ -45,6 +45,11 @@ class PackageSeeder extends Seeder
                 'features' => ['Semua Template Premium', 'Unlimited Foto & Tamu', 'RSVP + QR Check-in', 'Background Music', 'Love Story Timeline', 'Amplop Digital + QRIS', 'Custom Domain', 'Full Analytics', 'Priority Support', 'Berlaku 1 Tahun'],
             ],
         ];
-        foreach ($packages as $p) Package::create($p);
+        foreach ($packages as $p) {
+            Package::updateOrCreate(
+                ['slug' => $p['slug']],
+                $p
+            );
+        }
     }
 }
