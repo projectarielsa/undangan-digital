@@ -11,10 +11,9 @@
         </div>
         <div class="relative z-10 flex flex-col justify-center items-center w-full p-12 text-white">
             <div class="max-w-md text-center">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm rounded-2xl mb-6">
-                    <img src="/image/logo.png" alt="Ellori" class="w-12 h-12 object-contain">
+                <div class="inline-flex items-center justify-center w-28 h-28 bg-white/10 backdrop-blur-sm rounded-3xl mb-6">
+                    <img src="/image/logo.png" alt="Ellori" class="w-24 h-24 object-contain">
                 </div>
-                <h1 class="text-4xl font-bold font-serif mb-4">Ellori</h1>
                 <p class="text-blue-100/80 text-lg leading-relaxed">Buat undangan pernikahan digital yang elegan, modern, dan berkesan untuk hari spesial Anda.</p>
                 <div class="mt-12 space-y-4">
                     <div class="flex items-center gap-3 text-blue-100/70">

@@ -9,9 +9,8 @@
      x-data="{ open: false }">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-20">
-            <a href="/" class="flex items-center gap-3 group">
-                <img src="/image/logo.png" alt="Ellori" class="w-10 h-10 rounded-xl object-contain group-hover:scale-110 transition-all duration-300">
-                <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
+            <a href="/" class="flex items-center group">
+                <img src="/image/logo.png" alt="Ellori" class="w-14 h-14 rounded-xl object-contain group-hover:scale-110 transition-all duration-300">
             </a>
             
             <div class="hidden md:flex items-center gap-1">
