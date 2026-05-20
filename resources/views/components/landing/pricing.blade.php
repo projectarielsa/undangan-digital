@@ -2,20 +2,20 @@
 <section id="pricing" class="py-24 lg:py-32 bg-white dark:bg-gray-900 relative overflow-hidden">
     <!-- Background -->
     <div class="absolute inset-0">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-amber-100/50 to-rose-100/50 dark:from-amber-900/20 dark:to-rose-900/20 rounded-full blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-100/50 to-sky-100/50 dark:from-blue-900/20 dark:to-sky-900/20 rounded-full blur-3xl"></div>
     </div>
     
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="text-center max-w-3xl mx-auto mb-16">
-            <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-100 to-rose-100 dark:from-amber-900/30 dark:to-rose-900/30 rounded-full mb-6">
-                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-100 to-sky-100 dark:from-blue-900/30 dark:to-sky-900/30 rounded-full mb-6">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <span class="text-sm font-semibold text-amber-700 dark:text-amber-300">Harga Terjangkau</span>
+                <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">Harga Terjangkau</span>
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Pilih Paket <span class="bg-gradient-to-r from-amber-500 to-rose-500 bg-clip-text text-transparent">Terbaik</span> untuk Anda
+                Pilih Paket <span class="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">Terbaik</span> untuk Anda
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Investasi kecil untuk momen tak terlupakan. Semua paket sudah termasuk akses penuh ke semua fitur.
@@ -35,7 +35,7 @@
                 <!-- Popular Badge -->
                 @if($package->is_featured)
                 <div class="absolute -top-5 left-1/2 -translate-x-1/2 z-10">
-                    <div class="px-4 py-1.5 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-xs font-bold rounded-full shadow-lg shadow-amber-500/30">
+                    <div class="px-4 py-1.5 bg-gradient-to-r from-blue-500 to-sky-500 text-white text-xs font-bold rounded-full shadow-lg shadow-blue-500/30">
                         PALING POPULER
                     </div>
                 </div>
@@ -43,11 +43,11 @@
 
 
                 <!-- Card -->
-                <div class="relative h-full p-8 rounded-3xl transition-all duration-500 {{ $package->is_featured ? 'bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 text-white shadow-2xl shadow-gray-900/20 scale-105 border-2 border-amber-500/50' : 'bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-amber-200 dark:hover:border-amber-800 hover:shadow-xl' }} group-hover:-translate-y-2">
+                <div class="relative h-full p-8 rounded-3xl transition-all duration-500 {{ $package->is_featured ? 'bg-gradient-to-b from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 text-white shadow-2xl shadow-gray-900/20 scale-105 border-2 border-blue-500/50' : 'bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 hover:border-blue-200 dark:hover:border-blue-800 hover:shadow-xl' }} group-hover:-translate-y-2">
                     
                     <!-- Glow Effect for Featured -->
                     @if($package->is_featured)
-                    <div class="absolute -inset-px bg-gradient-to-r from-amber-500 to-rose-500 rounded-3xl blur opacity-20"></div>
+                    <div class="absolute -inset-px bg-gradient-to-r from-blue-500 to-sky-500 rounded-3xl blur opacity-20"></div>
                     @endif
                     
                     <div class="relative">
@@ -77,7 +77,7 @@
                             @if($package->features)
                             @foreach($package->features as $feature)
                             <li class="flex items-start gap-3">
-                                <div class="w-5 h-5 rounded-full {{ $package->is_featured ? 'bg-amber-500' : 'bg-green-100 dark:bg-green-900/30' }} flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div class="w-5 h-5 rounded-full {{ $package->is_featured ? 'bg-blue-500' : 'bg-green-100 dark:bg-green-900/30' }} flex items-center justify-center flex-shrink-0 mt-0.5">
                                     <svg class="w-3 h-3 {{ $package->is_featured ? 'text-white' : 'text-green-600 dark:text-green-400' }}" fill="currentColor" viewBox="0 0 20 20">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                                     </svg>
@@ -89,7 +89,7 @@
                         </ul>
                         
                         <!-- CTA Button -->
-                        <a href="{{ route('register') }}" class="block w-full py-4 text-center font-semibold rounded-2xl transition-all duration-300 {{ $package->is_featured ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white hover:shadow-lg hover:shadow-amber-500/30 hover:scale-105' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-amber-500 hover:text-white' }}">
+                        <a href="{{ route('register') }}" class="block w-full py-4 text-center font-semibold rounded-2xl transition-all duration-300 {{ $package->is_featured ? 'bg-gradient-to-r from-blue-500 to-sky-500 text-white hover:shadow-lg hover:shadow-blue-500/30 hover:scale-105' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-blue-500 hover:text-white' }}">
                             Pilih {{ $package->name }}
                         </a>
                     </div>

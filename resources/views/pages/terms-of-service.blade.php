@@ -8,14 +8,14 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <a href="{{ route('home') }}" class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                         </svg>
                     </div>
                     <span class="text-xl font-bold text-gray-900 dark:text-white">Ellori</span>
                 </a>
-                <a href="{{ route('home') }}" class="text-gray-600 dark:text-gray-300 hover:text-amber-600 transition-colors">
+                <a href="{{ route('home') }}" class="text-gray-600 dark:text-gray-300 hover:text-blue-600 transition-colors">
                     &larr; Kembali ke Beranda
                 </a>
             </div>
@@ -171,8 +171,8 @@
                     &copy; {{ date('Y') }} Ellori. All rights reserved.
                 </p>
                 <div class="flex items-center gap-6 text-sm">
-                    <a href="{{ route('privacy') }}" class="text-gray-500 dark:text-gray-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors">Kebijakan Privasi</a>
-                    <a href="{{ route('terms') }}" class="text-amber-600 dark:text-amber-400 font-medium">Syarat & Ketentuan</a>
+                    <a href="{{ route('privacy') }}" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Kebijakan Privasi</a>
+                    <a href="{{ route('terms') }}" class="text-blue-600 dark:text-blue-400 font-medium">Syarat & Ketentuan</a>
                 </div>
             </div>
         </div>

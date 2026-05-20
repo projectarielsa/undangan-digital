@@ -6,7 +6,7 @@
             <!-- Brand -->
             <div class="lg:col-span-1">
                 <a href="/" class="flex items-center gap-3 mb-6">
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
                         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
                         </svg>
@@ -17,12 +17,12 @@
                     Platform undangan pernikahan digital #1 di Indonesia. Buat undangan indah dalam hitungan menit.
                 </p>
                 <div class="flex items-center gap-4">
-                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors">
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-xl flex items-center justify-center transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/>
                         </svg>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-amber-500 rounded-xl flex items-center justify-center transition-colors">
+                    <a href="#" class="w-10 h-10 bg-gray-800 hover:bg-blue-500 rounded-xl flex items-center justify-center transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
                         </svg>
@@ -39,10 +39,10 @@
             <div>
                 <h4 class="font-semibold text-white mb-6">Produk</h4>
                 <ul class="space-y-4">
-                    <li><a href="#features" class="text-gray-400 hover:text-amber-400 transition-colors">Fitur</a></li>
-                    <li><a href="#templates" class="text-gray-400 hover:text-amber-400 transition-colors">Template</a></li>
-                    <li><a href="#pricing" class="text-gray-400 hover:text-amber-400 transition-colors">Harga</a></li>
-                    <li><a href="#testimonials" class="text-gray-400 hover:text-amber-400 transition-colors">Testimoni</a></li>
+                    <li><a href="#features" class="text-gray-400 hover:text-blue-400 transition-colors">Fitur</a></li>
+                    <li><a href="#templates" class="text-gray-400 hover:text-blue-400 transition-colors">Template</a></li>
+                    <li><a href="#pricing" class="text-gray-400 hover:text-blue-400 transition-colors">Harga</a></li>
+                    <li><a href="#testimonials" class="text-gray-400 hover:text-blue-400 transition-colors">Testimoni</a></li>
                 </ul>
             </div>
 
@@ -50,10 +50,10 @@
             <div>
                 <h4 class="font-semibold text-white mb-6">Perusahaan</h4>
                 <ul class="space-y-4">
-                    <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Tentang Kami</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Blog</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Karir</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Kontak</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Tentang Kami</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Blog</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Karir</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Kontak</a></li>
                 </ul>
             </div>
 
@@ -61,10 +61,10 @@
             <div>
                 <h4 class="font-semibold text-white mb-6">Dukungan</h4>
                 <ul class="space-y-4">
-                    <li><a href="#faq" class="text-gray-400 hover:text-amber-400 transition-colors">FAQ</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors">Pusat Bantuan</a></li>
-                    <li><a href="{{ route('terms') }}" class="text-gray-400 hover:text-amber-400 transition-colors">Syarat & Ketentuan</a></li>
-                    <li><a href="{{ route('privacy') }}" class="text-gray-400 hover:text-amber-400 transition-colors">Kebijakan Privasi</a></li>
+                    <li><a href="#faq" class="text-gray-400 hover:text-blue-400 transition-colors">FAQ</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">Pusat Bantuan</a></li>
+                    <li><a href="{{ route('terms') }}" class="text-gray-400 hover:text-blue-400 transition-colors">Syarat & Ketentuan</a></li>
+                    <li><a href="{{ route('privacy') }}" class="text-gray-400 hover:text-blue-400 transition-colors">Kebijakan Privasi</a></li>
                 </ul>
             </div>
         </div>
@@ -78,8 +78,8 @@
                     &copy; {{ date('Y') }} Ellori. All rights reserved.
                 </p>
                 <div class="flex items-center gap-6 text-sm text-gray-400">
-                    <a href="{{ route('privacy') }}" class="hover:text-amber-400 transition-colors">Kebijakan Privasi</a>
-                    <a href="{{ route('terms') }}" class="hover:text-amber-400 transition-colors">Syarat & Ketentuan</a>
+                    <a href="{{ route('privacy') }}" class="hover:text-blue-400 transition-colors">Kebijakan Privasi</a>
+                    <a href="{{ route('terms') }}" class="hover:text-blue-400 transition-colors">Syarat & Ketentuan</a>
                 </div>
             </div>
         </div>

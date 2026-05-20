@@ -3,14 +3,14 @@
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Section Header -->
         <div class="text-center mb-16">
-            <div class="inline-flex items-center gap-2 px-4 py-2 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-6">
-                <svg class="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/30 rounded-full mb-6">
+                <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                <span class="text-sm font-semibold text-amber-700 dark:text-amber-300">FAQ</span>
+                <span class="text-sm font-semibold text-blue-700 dark:text-blue-300">FAQ</span>
             </div>
             <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Pertanyaan yang <span class="bg-gradient-to-r from-amber-500 to-rose-500 bg-clip-text text-transparent">Sering Diajukan</span>
+                Pertanyaan yang <span class="bg-gradient-to-r from-blue-500 to-sky-500 bg-clip-text text-transparent">Sering Diajukan</span>
             </h2>
             <p class="text-xl text-gray-600 dark:text-gray-300">
                 Temukan jawaban untuk pertanyaan umum tentang layanan kami
@@ -32,16 +32,16 @@
 
             @foreach($faqs as $index => $faq)
             <div class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300"
-                 :class="active === {{ $index + 1 }} && 'ring-2 ring-amber-500/50'">
+                 :class="active === {{ $index + 1 }} && 'ring-2 ring-blue-500/50'">
                 <button 
                     @click="active = active === {{ $index + 1 }} ? null : {{ $index + 1 }}"
                     class="w-full flex items-center justify-between p-6 text-left hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                     <span class="font-semibold text-gray-900 dark:text-white pr-4">{{ $faq['q'] }}</span>
-                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center transition-transform duration-300"
-                         :class="active === {{ $index + 1 }} && 'bg-amber-500 rotate-180'">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center transition-transform duration-300"
+                         :class="active === {{ $index + 1 }} && 'bg-blue-500 rotate-180'">
                         <svg class="w-4 h-4 transition-colors" 
-                             :class="active === {{ $index + 1 }} ? 'text-white' : 'text-amber-600 dark:text-amber-400'"
+                             :class="active === {{ $index + 1 }} ? 'text-white' : 'text-blue-600 dark:text-blue-400'"
                              fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
@@ -66,7 +66,7 @@
         <!-- Contact CTA -->
         <div class="mt-12 text-center">
             <p class="text-gray-500 dark:text-gray-400 mb-4">Masih punya pertanyaan?</p>
-            <a href="mailto:support@ellori.com" class="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold hover:text-amber-700 transition-colors">
+            <a href="mailto:support@ellori.com" class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
