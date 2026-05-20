@@ -40,6 +40,9 @@
             <button @click="active = 'minimalist'" :class="active === 'minimalist' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'" class="px-5 py-2 text-sm font-medium rounded-full border border-gray-200 dark:border-gray-700 transition-all">
                 Minimalist
             </button>
+            <button @click="active = 'art'" :class="active === 'art' ? 'bg-gray-900 dark:bg-white text-white dark:text-gray-900' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'" class="px-5 py-2 text-sm font-medium rounded-full border border-gray-200 dark:border-gray-700 transition-all">
+                Art
+            </button>
         </div>
 
 
