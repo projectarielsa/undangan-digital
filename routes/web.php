@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\InvitationController as AdminInvitation;
 use App\Http\Controllers\Admin\PaymentController as AdminPayment;
@@ -20,12 +21,26 @@ use App\Http\Controllers\Customer\LoveStoryController;
 use App\Http\Controllers\Customer\PaymentController;
 use App\Http\Controllers\Customer\QrCheckinController;
 use App\Http\Controllers\Customer\SupportTicketController;
+use App\Http\Controllers\HealthCheckController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\PublicInvitationController;
 use App\Http\Controllers\QrVerifyController;
 use Illuminate\Support\Facades\Route;
 
+/*
+|--------------------------------------------------------------------------
+| Health Check Routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/health', [HealthCheckController::class, 'status'])->name('health');
+Route::get('/ping', [HealthCheckController::class, 'ping'])->name('ping');
+
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
 Route::get("/", [LandingPageController::class, "index"])->name("home");
 Route::middleware("guest")->group(function () {
     Route::get("/login", [LoginController::class, "showLoginForm"])->name("login");
@@ -118,12 +133,20 @@ Route::middleware("auth")->group(function () {
         Route::put("/support/{ticket}/priority", [AdminSupportController::class, "updatePriority"])->name("support.priority");
     });
 });
-Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])->name("midtrans.webhook");
+Route::post("/webhook/midtrans", [MidtransWebhookController::class, "handle"])
+    ->middleware('throttle:webhook')
+    ->name("midtrans.webhook");
 
 // QR Check-in verification (public)
 Route::get("/checkin/verify/{code}", [QrVerifyController::class, "verify"])->name("checkin.verify");
 Route::post("/api/checkin/verify", [QrVerifyController::class, "apiVerify"])->name("api.checkin.verify");
 
-Route::get("/{slug}", [PublicInvitationController::class, "show"])->name("invitation.show");
-Route::post("/{slug}/rsvp", [PublicInvitationController::class, "rsvp"])->name("invitation.rsvp");
-Route::post("/{slug}/guestbook", [PublicInvitationController::class, "guestbook"])->name("invitation.guestbook");
+Route::get("/{slug}", [PublicInvitationController::class, "show"])
+    ->middleware('throttle:invitation-view')
+    ->name("invitation.show");
+Route::post("/{slug}/rsvp", [PublicInvitationController::class, "rsvp"])
+    ->middleware('throttle:rsvp')
+    ->name("invitation.rsvp");
+Route::post("/{slug}/guestbook", [PublicInvitationController::class, "guestbook"])
+    ->middleware('throttle:rsvp')
+    ->name("invitation.guestbook");
