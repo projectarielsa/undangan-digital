@@ -6,10 +6,10 @@
     <aside class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 shadow-xl transform transition-transform duration-300 lg:translate-x-0" :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'">
         <div class="flex flex-col h-full">
             <div class="flex items-center justify-between h-16 px-6 border-b border-gray-100 dark:border-gray-700">
-                <a href="/" class="flex items-center gap-2">
-                    <img src="/image/logo.png" alt="Ellori" class="w-8 h-8 rounded-lg object-contain">
-                    <span class="font-bold text-gray-900 dark:text-white text-sm">Ellori</span>
-                </a>
+                <div class="flex items-center gap-2 select-none cursor-default">
+    <img src="{{ asset('image/logo.png') }}" alt="Ellori" class="w-8 h-8 rounded-lg object-contain">
+    <span class="font-bold text-gray-900 dark:text-white text-sm">Ellori</span>
+</div>
                 <button @click="sidebarOpen = false" class="lg:hidden text-gray-500"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button>
             </div>
             <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto">@yield('sidebar-nav')</nav>

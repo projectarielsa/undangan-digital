@@ -8,13 +8,19 @@ class AdminSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@ellori.com',
-            'password' => Hash::make('password'),
-            'role' => 'super_admin',
-            'email_verified_at' => now(),
-            'is_active' => true,
-        ]);
+        if (app()->isProduction() && ! env('ADMIN_PASSWORD')) {
+            throw new RuntimeException('ADMIN_PASSWORD wajib diisi di production.');
+        }
+
+        User::updateOrCreate(
+            ['email' => env('ADMIN_EMAIL', 'admin@example.com')],
+            [
+                'name' => env('ADMIN_NAME', 'Super Admin'),
+                'password' => Hash::make(env('ADMIN_PASSWORD')),
+                'role' => 'super_admin',
+                'email_verified_at' => now(),
+                'is_active' => true,
+            ]
+        );
     }
 }

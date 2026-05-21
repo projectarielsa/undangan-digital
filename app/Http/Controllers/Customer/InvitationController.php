@@ -10,6 +10,7 @@ use App\Models\InvitationTemplate;
 use App\Services\InvitationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class InvitationController extends Controller
@@ -18,9 +19,6 @@ class InvitationController extends Controller
         protected InvitationService $service
     ) {}
 
-    /**
-     * Display a listing of the user's invitations.
-     */
     public function index(Request $request): View
     {
         $invitations = $request->user()
@@ -32,10 +30,7 @@ class InvitationController extends Controller
         return view('customer.invitations.index', compact('invitations'));
     }
 
-    /**
-     * Show the form for creating a new invitation.
-     */
-    public function create(Request $request): View
+    public function create(Request $request): View|RedirectResponse
     {
         $templates = InvitationTemplate::active()
             ->orderBy('sort_order')
@@ -46,24 +41,24 @@ class InvitationController extends Controller
         return view('customer.invitations.create', compact('templates', 'hasActiveSubscription'));
     }
 
-    /**
-     * Store a newly created invitation.
-     */
     public function store(StoreInvitationRequest $request): RedirectResponse
     {
-        $invitation = $this->service->create(
-            $request->user(),
-            $request->validated()
-        );
+        try {
+            $invitation = $this->service->create(
+                $request->user(),
+                $request->validated()
+            );
+        } catch (ValidationException $e) {
+            return back()
+                ->withInput()
+                ->with('error', $e->validator->errors()->first('package'));
+        }
 
         return redirect()
             ->route('customer.invitations.edit', $invitation)
             ->with('success', 'Undangan berhasil dibuat!');
     }
 
-    /**
-     * Display the specified invitation.
-     */
     public function show(Invitation $invitation): View
     {
         $this->authorize('view', $invitation);
@@ -77,9 +72,6 @@ class InvitationController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified invitation.
-     */
     public function edit(Invitation $invitation, Request $request): View
     {
         $this->authorize('update', $invitation);
@@ -95,11 +87,10 @@ class InvitationController extends Controller
         return view('customer.invitations.edit', compact('invitation', 'templates', 'hasActiveSubscription'));
     }
 
-    /**
-     * Update the specified invitation.
-     */
     public function update(UpdateInvitationRequest $request, Invitation $invitation): RedirectResponse
     {
+        $this->authorize('update', $invitation);
+
         $this->service->update($invitation, $request->validated());
 
         return redirect()
@@ -107,9 +98,6 @@ class InvitationController extends Controller
             ->with('success', 'Undangan berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified invitation.
-     */
     public function destroy(Invitation $invitation): RedirectResponse
     {
         $this->authorize('delete', $invitation);
@@ -121,9 +109,6 @@ class InvitationController extends Controller
             ->with('success', 'Undangan berhasil dihapus.');
     }
 
-    /**
-     * Publish the invitation (make it public).
-     */
     public function publish(Invitation $invitation): RedirectResponse
     {
         $this->authorize('update', $invitation);
@@ -133,9 +118,6 @@ class InvitationController extends Controller
         return back()->with('success', 'Undangan berhasil dipublikasikan!');
     }
 
-    /**
-     * Pause the invitation (hide from public).
-     */
     public function pause(Invitation $invitation): RedirectResponse
     {
         $this->authorize('update', $invitation);
@@ -145,14 +127,16 @@ class InvitationController extends Controller
         return back()->with('success', 'Undangan berhasil dijeda.');
     }
 
-    /**
-     * Duplicate the invitation.
-     */
     public function duplicate(Invitation $invitation): RedirectResponse
     {
         $this->authorize('view', $invitation);
 
-        $newInvitation = $this->service->duplicate($invitation);
+        try {
+            $newInvitation = $this->service->duplicate($invitation);
+        } catch (ValidationException $e) {
+            return back()
+                ->with('error', $e->validator->errors()->first('package'));
+        }
 
         return redirect()
             ->route('customer.invitations.edit', $newInvitation)

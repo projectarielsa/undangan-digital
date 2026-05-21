@@ -122,20 +122,44 @@
             </div>
             
             <!-- Progress Bar -->
-            @php
-                $totalDays = $activeSubscription->starts_at->diffInDays($activeSubscription->expires_at);
-                $usedDays = $activeSubscription->starts_at->diffInDays(now());
-                $percentage = min(100, ($usedDays / $totalDays) * 100);
-            @endphp
-            <div class="mt-6">
-                <div class="flex items-center justify-between text-sm text-gray-400 mb-2">
-                    <span>Penggunaan Paket</span>
-                    <span>{{ $totalDays - $usedDays }} hari tersisa</span>
-                </div>
-                <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-blue-400 to-rose-500 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>
-                </div>
-            </div>
+@php
+    $startsAt = $activeSubscription->starts_at;
+    $expiresAt = $activeSubscription->expires_at;
+
+    $totalDays = max(
+        1,
+        (int) ceil($startsAt->diffInDays($expiresAt, false))
+    );
+
+    $remainingDays = max(
+        0,
+        (int) ceil(now()->diffInDays($expiresAt, false))
+    );
+
+    $usedDays = max(
+        0,
+        $totalDays - $remainingDays
+    );
+
+    $percentage = min(
+        100,
+        max(0, ($usedDays / $totalDays) * 100)
+    );
+@endphp
+
+<div class="mt-6">
+    <div class="flex items-center justify-between text-sm text-gray-400 mb-2">
+        <span>Penggunaan Paket</span>
+        <span>{{ $remainingDays }} hari tersisa</span>
+    </div>
+
+    <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+        <div
+            class="h-full bg-gradient-to-r from-blue-400 to-rose-500 rounded-full transition-all duration-500"
+            style="width: {{ $percentage }}%">
+        </div>
+    </div>
+</div>
         </div>
     </div>
     @else

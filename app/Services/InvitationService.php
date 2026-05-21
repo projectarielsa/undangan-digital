@@ -1,41 +1,69 @@
 <?php
+
 namespace App\Services;
+
 use App\Models\Invitation;
 use App\Models\User;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class InvitationService
 {
     public function create(User $user, array $data): Invitation
     {
+        $this->ensureCanCreateInvitation($user);
+
         $data['user_id'] = $user->id;
-        // Ensure title is set
+
         if (empty($data['title'])) {
-            $data['title'] = ($data['groom_name'] ?? '') . ' & ' . ($data['bride_name'] ?? '');
+            $data['title'] = trim(($data['groom_name'] ?? '') . ' & ' . ($data['bride_name'] ?? ''), ' &');
         }
+
         foreach (['cover_image', 'groom_photo', 'bride_photo', 'qris_image'] as $field) {
-            if (isset($data[$field]) && $data[$field]) $data[$field] = $data[$field]->store('invitations', 'public');
+            if (isset($data[$field]) && $data[$field]) {
+                $data[$field] = $data[$field]->store('invitations', 'public');
+            }
         }
-        if (isset($data['music_file']) && $data['music_file']) { $data['music_url'] = $data['music_file']->store('invitations/music', 'public'); unset($data['music_file']); }
+
+        if (isset($data['music_file']) && $data['music_file']) {
+            $data['music_url'] = $data['music_file']->store('invitations/music', 'public');
+            unset($data['music_file']);
+        }
+
         return Invitation::create($data);
     }
+
     public function update(Invitation $inv, array $data): Invitation
     {
         foreach (['cover_image', 'groom_photo', 'bride_photo', 'qris_image'] as $field) {
-            if (isset($data[$field]) && $data[$field]) { if ($inv->$field) Storage::disk('public')->delete($inv->$field); $data[$field] = $data[$field]->store('invitations', 'public'); }
+            if (isset($data[$field]) && $data[$field]) {
+                if ($inv->$field) {
+                    Storage::disk('public')->delete($inv->$field);
+                }
+
+                $data[$field] = $data[$field]->store('invitations', 'public');
+            }
         }
-        if (isset($data['music_file']) && $data['music_file']) { if ($inv->music_url) Storage::disk('public')->delete($inv->music_url); $data['music_url'] = $data['music_file']->store('invitations/music', 'public'); unset($data['music_file']); }
-        
-        // Process bank_accounts array - filter out empty entries
+
+        if (isset($data['music_file']) && $data['music_file']) {
+            if ($inv->music_url) {
+                Storage::disk('public')->delete($inv->music_url);
+            }
+
+            $data['music_url'] = $data['music_file']->store('invitations/music', 'public');
+            unset($data['music_file']);
+        }
+
         if (isset($data['bank_accounts'])) {
             $accounts = collect($data['bank_accounts'])
-                ->filter(fn($account) => !empty($account['bank_name']) || !empty($account['account_number']))
+                ->filter(fn ($account) => !empty($account['bank_name']) || !empty($account['account_number']))
                 ->values()
                 ->toArray();
-            
-            // Update legacy fields with first account for backward compatibility
+
             if (!empty($accounts)) {
                 $first = $accounts[0];
+
                 $data['bank_name'] = $first['bank_name'] ?? null;
                 $data['bank_account_number'] = $first['account_number'] ?? null;
                 $data['bank_account_name'] = $first['account_name'] ?? null;
@@ -44,34 +72,105 @@ class InvitationService
                 $data['bank_account_number'] = null;
                 $data['bank_account_name'] = null;
             }
-            
-            // Only set bank_accounts if column exists (after migration)
-            if (\Schema::hasColumn('invitations', 'bank_accounts')) {
+
+            if (Schema::hasColumn('invitations', 'bank_accounts')) {
                 $data['bank_accounts'] = $accounts;
             } else {
                 unset($data['bank_accounts']);
             }
         }
-        
+
         $inv->update($data);
+
         return $inv->fresh();
     }
+
     public function duplicate(Invitation $inv): Invitation
     {
-        $new = $inv->replicate(); $new->slug = null; $new->status = 'draft'; $new->published_at = null; $new->view_count = 0; $new->title = $inv->title . ' (Copy)'; $new->save();
-        foreach ($inv->galleries as $g) $new->galleries()->create($g->only(['image_path', 'thumbnail_path', 'caption', 'sort_order']));
+        $this->ensureCanCreateInvitation($inv->user);
+
+        $new = $inv->replicate();
+        $new->slug = null;
+        $new->status = 'draft';
+        $new->published_at = null;
+        $new->view_count = 0;
+        $new->title = $inv->title . ' (Copy)';
+        $new->save();
+
+        foreach ($inv->galleries as $g) {
+            $new->galleries()->create($g->only([
+                'image_path',
+                'thumbnail_path',
+                'caption',
+                'sort_order',
+            ]));
+        }
+
         return $new;
     }
+
     public function delete(Invitation $inv): void
     {
-        foreach (['cover_image', 'groom_photo', 'bride_photo', 'music_url'] as $f) { if ($inv->$f) Storage::disk('public')->delete($inv->$f); }
-        foreach ($inv->galleries as $g) { Storage::disk('public')->delete($g->image_path); }
+        foreach (['cover_image', 'groom_photo', 'bride_photo', 'music_url'] as $f) {
+            if ($inv->$f) {
+                Storage::disk('public')->delete($inv->$f);
+            }
+        }
+
+        foreach ($inv->galleries as $g) {
+            Storage::disk('public')->delete($g->image_path);
+        }
+
         $inv->delete();
     }
+
     public function getFeatureLimits(Invitation $inv): array
     {
         $p = $inv->package;
-        if (!$p) return ['max_photos' => 5, 'max_guests' => 50, 'has_rsvp' => false, 'has_music' => false, 'has_guestbook' => false, 'has_gallery' => true, 'has_countdown' => true, 'has_love_story' => false, 'has_digital_envelope' => false, 'has_qr_checkin' => false, 'has_analytics' => false];
-        return ['max_photos' => $p->max_photos, 'max_guests' => $p->max_guests, 'has_rsvp' => $p->has_rsvp, 'has_music' => $p->has_music, 'has_guestbook' => $p->has_guestbook, 'has_gallery' => $p->has_gallery, 'has_countdown' => $p->has_countdown, 'has_love_story' => $p->has_love_story, 'has_digital_envelope' => $p->has_digital_envelope, 'has_qr_checkin' => $p->has_qr_checkin, 'has_analytics' => $p->has_analytics];
+
+        if (!$p) {
+            return [
+                'max_photos' => 5,
+                'max_guests' => 50,
+                'has_rsvp' => false,
+                'has_music' => false,
+                'has_guestbook' => false,
+                'has_gallery' => true,
+                'has_countdown' => true,
+                'has_love_story' => false,
+                'has_digital_envelope' => false,
+                'has_qr_checkin' => false,
+                'has_analytics' => false,
+            ];
+        }
+
+        return [
+            'max_photos' => $p->max_photos,
+            'max_guests' => $p->max_guests,
+            'has_rsvp' => $p->has_rsvp,
+            'has_music' => $p->has_music,
+            'has_guestbook' => $p->has_guestbook,
+            'has_gallery' => $p->has_gallery,
+            'has_countdown' => $p->has_countdown,
+            'has_love_story' => $p->has_love_story,
+            'has_digital_envelope' => $p->has_digital_envelope,
+            'has_qr_checkin' => $p->has_qr_checkin,
+            'has_analytics' => $p->has_analytics,
+        ];
+    }
+
+    private function ensureCanCreateInvitation(User $user): void
+    {
+        $hasPremiumInvitation = $user->invitations()
+            ->whereNotNull('package_id')
+            ->exists();
+
+        $totalInvitations = $user->invitations()->count();
+
+        if (!$hasPremiumInvitation && $totalInvitations >= 1) {
+            throw ValidationException::withMessages([
+                'package' => 'Paket gratis hanya bisa membuat 1 undangan. Upgrade paket untuk membuat lebih banyak.',
+            ]);
+        }
     }
 }
