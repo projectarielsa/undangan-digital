@@ -1,5 +1,37 @@
 @extends('layouts.app')
-@section('title', 'Ellori - Buat Undangan Pernikahan Online')
+@section('title', 'Ellori - Platform Undangan Digital Pernikahan Online #1 Indonesia | Gratis & Premium')
+
+@section('seo_title', 'Ellori - Buat Undangan Pernikahan Digital Online Premium | Template Modern & Elegan')
+@section('seo_description', 'Buat undangan pernikahan digital premium dalam 5 menit! Fitur lengkap: RSVP online, galeri foto & video, musik, countdown, amplop digital, QR check-in. Gratis trial 7 hari, template undangan nikah modern & elegan. Dipercaya 10.000+ pasangan Indonesia.')
+@section('seo_keywords', 'undangan digital, undangan pernikahan online, undangan nikah digital, undangan website, e-invitation, undangan digital premium, undangan pernikahan modern, undangan online Indonesia, wedding invitation digital, buat undangan online, undangan nikah online, undangan digital gratis, undangan pernikahan murah, template undangan digital, undangan digital RSVP, undangan digital musik, undangan countdown, amplop digital, undangan QR code')
+@section('seo_image', asset('image/og-landing.jpg'))
+@section('seo_type', 'website')
+@section('seo_canonical', route('home'))
+
+@php
+$faqs = [
+    [
+        'question' => 'Apa itu undangan digital Ellori?',
+        'answer' => 'Ellori adalah platform untuk membuat undangan pernikahan digital online dengan fitur lengkap seperti RSVP, galeri foto, musik, countdown, dan amplop digital. Undangan dapat diakses melalui link atau QR code.'
+    ],
+    [
+        'question' => 'Berapa harga undangan digital di Ellori?',
+        'answer' => 'Ellori menyediakan paket gratis trial 7 hari, paket Premium mulai Rp 149.000, dan paket Exclusive Rp 299.000 dengan custom domain. Semua paket termasuk unlimited tamu dan akses selamanya.'
+    ],
+    [
+        'question' => 'Apakah undangan digital bisa langsung digunakan?',
+        'answer' => 'Ya, undangan digital Ellori bisa langsung digunakan setelah selesai dibuat. Anda akan mendapatkan link undangan yang bisa dibagikan ke tamu melalui WhatsApp, Instagram, atau media sosial lainnya.'
+    ],
+    [
+        'question' => 'Fitur apa saja yang tersedia di undangan digital Ellori?',
+        'answer' => 'Fitur lengkap termasuk: template modern & elegan, RSVP online real-time, galeri foto & video, musik latar, countdown timer, amplop digital, QR code check-in, custom domain, analytics dashboard, dan unlimited jumlah tamu.'
+    ],
+    [
+        'question' => 'Bagaimana cara membuat undangan digital di Ellori?',
+        'answer' => 'Sangat mudah! Daftar akun gratis, pilih template yang Anda suka, isi data pernikahan, upload foto, dan undangan siap dibagikan. Proses pembuatan hanya membutuhkan waktu 5 menit.'
+    ]
+];
+@endphp
 
 @section('body')
 <div x-data="{ scrollY: 0 }" @scroll.window="scrollY = window.scrollY">

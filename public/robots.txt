@@ -1,2 +1,71 @@
+# Robots.txt for Ellori - Platform Undangan Digital
+# https://ellori.id
+
 User-agent: *
-Disallow:
+Allow: /
+Allow: /demo/
+Allow: /login
+Allow: /register
+
+# Disallow admin and customer dashboard
+Disallow: /admin/
+Disallow: /customer/
+Disallow: /api/
+Disallow: /webhook/
+
+# Disallow authentication pages
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-otp
+Disallow: /logout
+
+# Disallow utility pages
+Disallow: /health
+Disallow: /ping
+
+# Block common bot traps
+Disallow: /*?*
+Disallow: /*.json$
+Disallow: /*.xml$
+
+# Allow specific query params for tracking
+Allow: /*?utm_*
+
+# Sitemap location
+Sitemap: https://ellori.id/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /

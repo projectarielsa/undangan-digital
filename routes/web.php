@@ -27,6 +27,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MidtransWebhookController;
 use App\Http\Controllers\PublicInvitationController;
 use App\Http\Controllers\QrVerifyController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,16 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/health', [HealthCheckController::class, 'status'])->name('health');
 Route::get('/ping', [HealthCheckController::class, 'ping'])->name('ping');
+
+/*
+|--------------------------------------------------------------------------
+| SEO Routes - Sitemap
+|--------------------------------------------------------------------------
+*/
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap-pages.xml', [SitemapController::class, 'pages'])->name('sitemap.pages');
+Route::get('/sitemap-templates.xml', [SitemapController::class, 'templates'])->name('sitemap.templates');
+Route::get('/sitemap-invitations.xml', [SitemapController::class, 'invitations'])->name('sitemap.invitations');
 
 /*
 |--------------------------------------------------------------------------
