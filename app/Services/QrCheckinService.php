@@ -44,7 +44,7 @@ class QrCheckinService
      */
     public function getCheckinUrl(Guest $guest): string
     {
-        return route('checkin.verify', ['code' => $guest->qr_code]);
+        return secure_url('/checkin/verify/' . $guest->qr_code);
     }
 
     /**

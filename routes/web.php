@@ -53,7 +53,23 @@ Route::get('/sitemap-invitations.xml', [SitemapController::class, 'invitations']
 | Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get("/", [LandingPageController::class, "index"])->name("home");
+Route::get("/", function () {
+
+    if (auth()->check()) {
+        $user = auth()->user();
+
+        if (!$user->isVerified()) {
+            return redirect()->route('verification.otp');
+        }
+
+        return $user->isSuperAdmin()
+            ? redirect()->route('admin.dashboard')
+            : redirect()->route('customer.dashboard');
+    }
+
+    return app(\App\Http\Controllers\LandingPageController::class)->index();
+
+})->name("home");
 Route::get("/privacy-policy", function () {
     return view("pages.privacy-policy");
 })->name("privacy");
@@ -69,8 +85,13 @@ Route::middleware("guest")->group(function () {
     Route::post("/forgot-password", [ForgotPasswordController::class, "sendResetLinkEmail"])->name("password.email");
     Route::get("/reset-password/{token}", [ForgotPasswordController::class, "showResetForm"])->name("password.reset");
     Route::post("/reset-password", [ForgotPasswordController::class, "reset"])->name("password.update");
-    Route::get("/auth/google/redirect", [GoogleAuthController::class, "redirect"])->name("auth.google");
-    Route::get("/auth/google/callback", [GoogleAuthController::class, "callback"]);
+    // Login dengan Google - hanya untuk akun yang sudah terdaftar
+    Route::get("/auth/google/redirect", [GoogleAuthController::class, "loginRedirect"])->name("auth.google");
+    Route::get("/auth/google/callback", [GoogleAuthController::class, "loginCallback"]);
+    
+    // Daftar dengan Google - buat akun baru + OTP
+    Route::get("/register/google/redirect", [GoogleAuthController::class, "registerRedirect"])->name("register.google");
+    Route::get("/register/google/callback", [GoogleAuthController::class, "registerCallback"]);
 });
 Route::middleware("auth")->group(function () {
     Route::post("/logout", [LoginController::class, "logout"])->name("logout");
@@ -169,6 +190,12 @@ Route::get("/demo/{slug}", [\App\Http\Controllers\TemplateDemoController::class,
 // QR Check-in verification (public)
 Route::get("/checkin/verify/{code}", [QrVerifyController::class, "verify"])->name("checkin.verify");
 Route::post("/api/checkin/verify", [QrVerifyController::class, "apiVerify"])->name("api.checkin.verify");
+
+// Welcome display latest check-in public polling
+Route::get(
+    "/public/checkin/latest/{invitation}",
+    [QrCheckinController::class, "latestCheckin"]
+)->name("public.checkin.latest");
 
 Route::get("/{slug}", [PublicInvitationController::class, "show"])
     ->middleware('throttle:invitation-view')

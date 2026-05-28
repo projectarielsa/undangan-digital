@@ -8,6 +8,10 @@
     
     <title>@yield('title', 'Ellori - Platform Undangan Digital Pernikahan Online #1 Indonesia')</title>
     
+    <link rel="icon" type="image/png" href="{{ asset('image/ellori-e.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('image/ellori-e.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('image/ellori-e.png') }}">
+    
     {{-- SEO Meta Tags --}}
     @include('components.seo', [
         'seoTitle' => View::hasSection('seo_title') ? View::getSection('seo_title') : null,

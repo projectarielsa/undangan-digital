@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // Exclude webhook routes from CSRF verification
         $middleware->validateCsrfTokens(except: [
             'webhook/*',
+            'api/checkin/verify',
         ]);
 
         // Configure rate limiting for API routes
