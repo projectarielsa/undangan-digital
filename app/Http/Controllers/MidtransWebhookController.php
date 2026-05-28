@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendPaymentInvoiceJob;
 use App\Services\MidtransService;
 use App\Services\SubscriptionService;
 use Illuminate\Http\JsonResponse;
@@ -51,6 +52,9 @@ class MidtransWebhookController extends Controller
             // Activate subscription if payment is successful
             if ($payment->isPaid()) {
                 $this->subscriptionService->activateFromPayment($payment);
+                
+                // Dispatch job untuk kirim invoice email
+                SendPaymentInvoiceJob::dispatch($payment);
                 
                 Log::info('Subscription activated from payment', [
                     'order_id' => $payment->order_id,
