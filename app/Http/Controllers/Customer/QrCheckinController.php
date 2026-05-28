@@ -180,31 +180,28 @@ class QrCheckinController extends Controller
      * API endpoint to get latest check-in for welcome display
      */
     public function latestCheckin(Request $request, Invitation $invitation)
-    {
-        $this->authorize('view', $invitation);
+{
+    $latestGuest = $invitation->guests()
+        ->where('is_checked_in', true)
+        ->whereNotNull('checked_in_at')
+        ->orderByDesc('checked_in_at')
+        ->first();
 
-        // Get the most recent check-in within the last 15 seconds
-        $latestGuest = $invitation->guests()
-            ->where('is_checked_in', true)
-            ->where('checked_in_at', '>=', now()->subSeconds(15))
-            ->orderByDesc('checked_in_at')
-            ->first();
-
-        if ($latestGuest) {
-            return response()->json([
-                'has_recent' => true,
-                'guest' => [
-                    'id' => $latestGuest->id,
-                    'name' => $latestGuest->name,
-                    'number_of_guests' => $latestGuest->number_of_guests,
-                    'checked_in_at' => $latestGuest->checked_in_at->format('H:i'),
-                ],
-            ]);
-        }
-
+    if ($latestGuest && $latestGuest->checked_in_at->diffInSeconds(now()) <= 15) {
         return response()->json([
-            'has_recent' => false,
-            'guest' => null,
+            'has_recent' => true,
+            'guest' => [
+                'id' => $latestGuest->id,
+                'name' => $latestGuest->name,
+                'number_of_guests' => $latestGuest->number_of_guests,
+                'checked_in_at' => $latestGuest->checked_in_at->format('H:i'),
+            ],
         ]);
     }
+
+    return response()->json([
+        'has_recent' => false,
+        'guest' => null,
+    ]);
+}
 }

@@ -15,7 +15,6 @@
         </a>
     </div>
 
-    <!-- Stats Bar -->
     <div class="grid grid-cols-3 gap-4 mb-6">
         <div class="bg-white dark:bg-gray-800 rounded-xl border p-4 text-center">
             <p class="text-2xl font-bold text-gray-900 dark:text-white" id="stat-total">{{ $stats['total_guests'] }}</p>
@@ -31,10 +30,10 @@
         </div>
     </div>
 
-    <!-- Scanner Area -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl border overflow-hidden">
-        <div class="aspect-square relative bg-gray-900" id="scanner-container">
+        <div class="aspect-square relative bg-gray-900">
             <video id="video" class="w-full h-full object-cover" playsinline></video>
+
             <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div class="w-64 h-64 border-2 border-white/50 rounded-2xl relative">
                     <div class="absolute -top-1 -left-1 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-xl"></div>
@@ -43,8 +42,7 @@
                     <div class="absolute -bottom-1 -right-1 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-xl"></div>
                 </div>
             </div>
-            
-            <!-- Scanning indicator -->
+
             <div x-show="scanning" class="absolute bottom-4 left-4 right-4 bg-white/90 rounded-xl p-3 flex items-center gap-3">
                 <div class="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                 <span class="text-sm font-medium text-gray-700">Memindai...</span>
@@ -54,10 +52,7 @@
         <div class="p-6">
             <div x-show="!cameraActive" class="text-center">
                 <button @click="startCamera()" class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition">
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                        Aktifkan Kamera
-                    </span>
+                    Aktifkan Kamera
                 </button>
                 <p class="text-sm text-gray-500 mt-3">Izinkan akses kamera untuk memindai QR Code</p>
             </div>
@@ -69,25 +64,25 @@
         </div>
     </div>
 
-    <!-- Result Modal -->
     <div x-show="result" x-transition class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" @click.self="closeResult()">
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
             <div x-show="result?.success" class="text-center">
                 <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    ✅
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">Check-in Berhasil!</h3>
                 <p class="text-2xl font-bold text-blue-600 mb-1" x-text="result?.guest?.name"></p>
                 <p class="text-gray-500" x-text="result?.guest?.number_of_guests + ' orang'"></p>
                 <p class="text-sm text-gray-400 mt-2" x-text="'Jam ' + result?.guest?.checked_in_at"></p>
+
                 <div x-show="result?.guest?.was_already_checked_in" class="mt-3 p-2 bg-yellow-50 rounded-lg">
                     <p class="text-sm text-yellow-700">Tamu ini sudah check-in sebelumnya</p>
                 </div>
             </div>
-            
+
             <div x-show="!result?.success" class="text-center">
                 <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    ❌
                 </div>
                 <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-2">QR Code Tidak Valid</h3>
                 <p class="text-gray-500" x-text="result?.message"></p>
@@ -99,12 +94,12 @@
         </div>
     </div>
 
-    <!-- Recent Check-ins -->
     <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl border">
         <div class="p-4 border-b border-gray-100 dark:border-gray-700">
             <h3 class="font-semibold text-gray-900 dark:text-white">Check-in Terbaru</h3>
         </div>
-        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-64 overflow-y-auto" id="recent-checkins">
+
+        <div class="divide-y divide-gray-100 dark:divide-gray-700 max-h-64 overflow-y-auto">
             <template x-for="checkin in recentCheckins" :key="checkin.id">
                 <div class="p-4 flex items-center justify-between">
                     <div>
@@ -114,6 +109,7 @@
                     <span class="text-sm text-green-600" x-text="checkin.checked_in_at"></span>
                 </div>
             </template>
+
             <div x-show="recentCheckins.length === 0" class="p-8 text-center text-gray-500">
                 Belum ada check-in
             </div>
@@ -121,7 +117,8 @@
     </div>
 </div>
 
-<script src="https://unpkg.com/@nicecode/qrcode-reader@1.0.4/dist/qrcode-reader.umd.js"></script>
+<script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
+
 <script>
 function qrScanner() {
     return {
@@ -131,17 +128,21 @@ function qrScanner() {
         recentCheckins: [],
         video: null,
         stream: null,
-        qrReader: null,
         scanInterval: null,
 
         async startCamera() {
             try {
                 this.video = document.getElementById('video');
+
                 this.stream = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'environment' }
+                    video: {
+                        facingMode: 'environment'
+                    }
                 });
+
                 this.video.srcObject = this.stream;
                 await this.video.play();
+
                 this.cameraActive = true;
                 this.startScanning();
             } catch (error) {
@@ -153,77 +154,122 @@ function qrScanner() {
             if (this.stream) {
                 this.stream.getTracks().forEach(track => track.stop());
             }
+
             if (this.scanInterval) {
                 clearInterval(this.scanInterval);
+                this.scanInterval = null;
             }
+
             this.cameraActive = false;
+            this.scanning = false;
         },
 
         startScanning() {
             const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            
+            const context = canvas.getContext('2d', { willReadFrequently: true });
+
             this.scanInterval = setInterval(async () => {
                 if (!this.cameraActive || this.scanning) return;
-                
+                if (!this.video || !this.video.videoWidth || !this.video.videoHeight) return;
+
                 canvas.width = this.video.videoWidth;
                 canvas.height = this.video.videoHeight;
-                context.drawImage(this.video, 0, 0);
-                
+
+                context.drawImage(this.video, 0, 0, canvas.width, canvas.height);
+
                 const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-                
+
                 try {
-                    const code = jsQR(imageData.data, imageData.width, imageData.height);
-                    if (code) {
+                    const qr = jsQR(imageData.data, imageData.width, imageData.height);
+
+                    if (qr && qr.data) {
                         this.scanning = true;
-                        await this.processQrCode(code.data);
+                        await this.processQrCode(qr.data);
                     }
-                } catch (e) {
-                    console.log('Scan error:', e);
+                } catch (error) {
+                    console.log('Scan error:', error);
                 }
-            }, 500);
+            }, 700);
         },
 
         async processQrCode(data) {
-            // Extract code from URL
-            const match = data.match(/checkin\/verify\/([a-zA-Z0-9-]+)/);
-            const code = match ? match[1] : data;
+            let code = String(data || '').trim();
+
+            const match = code.match(/checkin\/verify\/([^/?#]+)/);
+            if (match) {
+                code = match[1];
+            }
+
+            code = decodeURIComponent(code).trim();
+
+            console.log('QR RAW:', data);
+            console.log('QR CODE SENT:', code);
+
+            if (!code) {
+                this.result = {
+                    success: false,
+                    message: 'QR Code kosong atau tidak terbaca.'
+                };
+                this.playSound('error');
+                return;
+            }
 
             try {
-                const response = await fetch('{{ route("api.checkin.verify") }}', {
+                const response = await fetch('/api/checkin/verify', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'Accept': 'application/json'
                     },
-                    body: JSON.stringify({ code })
+                    body: JSON.stringify({ code: code })
                 });
 
-                const result = await response.json();
+                const text = await response.text();
+
+                console.log('STATUS:', response.status);
+                console.log('RAW RESPONSE:', text);
+
+                let result;
+
+                try {
+                    result = JSON.parse(text);
+                } catch (error) {
+                    result = {
+                        success: false,
+                        message: 'Response server bukan JSON.'
+                    };
+                }
+
                 this.result = result;
 
                 if (result.success) {
-                    // Update stats
                     const checkedEl = document.getElementById('stat-checked');
                     const remainingEl = document.getElementById('stat-remaining');
-                    if (!result.guest.was_already_checked_in) {
-                        checkedEl.textContent = parseInt(checkedEl.textContent) + 1;
-                        remainingEl.textContent = parseInt(remainingEl.textContent) - 1;
+
+                    if (result.guest && !result.guest.was_already_checked_in) {
+                        checkedEl.textContent = Math.max(0, parseInt(checkedEl.textContent || '0') + 1);
+                        remainingEl.textContent = Math.max(0, parseInt(remainingEl.textContent || '0') - 1);
                     }
 
-                    // Add to recent checkins
-                    this.recentCheckins.unshift(result.guest);
-                    if (this.recentCheckins.length > 10) {
-                        this.recentCheckins.pop();
+                    if (result.guest) {
+                        this.recentCheckins.unshift(result.guest);
+                        if (this.recentCheckins.length > 10) {
+                            this.recentCheckins.pop();
+                        }
                     }
 
-                    // Play success sound
                     this.playSound('success');
                 } else {
                     this.playSound('error');
                 }
             } catch (error) {
-                this.result = { success: false, message: 'Terjadi kesalahan. Silakan coba lagi.' };
+                console.error('CHECKIN ERROR:', error);
+
+                this.result = {
+                    success: false,
+                    message: error.message || 'Terjadi kesalahan. Silakan coba lagi.'
+                };
+
                 this.playSound('error');
             }
         },
@@ -234,23 +280,25 @@ function qrScanner() {
         },
 
         playSound(type) {
-            // Simple beep using Web Audio API
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = type === 'success' ? 880 : 220;
-            oscillator.type = 'sine';
-            gainNode.gain.value = 0.3;
-            
-            oscillator.start();
-            oscillator.stop(audioContext.currentTime + 0.2);
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = type === 'success' ? 880 : 220;
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.2;
+
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.15);
+            } catch (error) {
+                console.log('Sound error:', error);
+            }
         }
     }
 }
 </script>
-<script src="https://unpkg.com/jsqr@1.4.0/dist/jsQR.js"></script>
 @endsection

@@ -322,147 +322,177 @@
     </div>
 
     <script>
-        const apiUrl = '{{ route("customer.invitations.qr-checkin.latest", $invitation) }}';
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-        const galleryImages = @json($galleryImages);
-        
-        let currentGuestId = null;
-        let slideIndex = 0;
-        let slideInterval = null;
-        
-        const guestWelcome = document.getElementById('guest-welcome');
-        const idleWelcome = document.getElementById('idle-welcome');
-        const guestNameEl = document.getElementById('guest-name');
-        const flowersContainer = document.getElementById('flowers-container');
-        const confettiContainer = document.getElementById('confetti-container');
-        
-        // Flower emojis for falling animation
-        const flowerEmojis = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹', '🌻', '✿', '❀', '❁'];
-        const confettiColors = ['#f472b6', '#fbbf24', '#a78bfa', '#34d399', '#f87171', '#60a5fa'];
-        
-        // Create falling flowers
-        function createFlower() {
-            const flower = document.createElement('div');
-            flower.className = 'flower';
-            flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
-            flower.style.left = Math.random() * 100 + 'vw';
-            flower.style.fontSize = (Math.random() * 20 + 15) + 'px';
-            flower.style.animationDuration = (Math.random() * 5 + 8) + 's';
-            flower.style.animationDelay = Math.random() * 2 + 's';
-            flowersContainer.appendChild(flower);
-            
-            setTimeout(() => flower.remove(), 15000);
+    const apiUrl = '/public/checkin/latest/{{ $invitation->id }}';
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    const galleryImages = @json($galleryImages);
+
+    let currentGuestId = null;
+    let slideIndex = 0;
+    let slideInterval = null;
+
+    const guestWelcome = document.getElementById('guest-welcome');
+    const idleWelcome = document.getElementById('idle-welcome');
+    const guestNameEl = document.getElementById('guest-name');
+    const flowersContainer = document.getElementById('flowers-container');
+    const confettiContainer = document.getElementById('confetti-container');
+
+    const flowerEmojis = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹', '🌻', '✿', '❀', '❁'];
+    const confettiColors = ['#f472b6', '#fbbf24', '#a78bfa', '#34d399', '#f87171', '#60a5fa'];
+
+    function getBestIndonesianVoice() {
+        const voices = window.speechSynthesis ? speechSynthesis.getVoices() : [];
+
+        return (
+            voices.find(v => v.lang === 'id-ID' && v.name.toLowerCase().includes('google')) ||
+            voices.find(v => v.lang === 'id-ID') ||
+            voices.find(v => v.lang.toLowerCase().includes('id')) ||
+            voices.find(v => v.name.toLowerCase().includes('google')) ||
+            voices[0] ||
+            null
+        );
+    }
+
+    function speakWelcome(name) {
+        if (!('speechSynthesis' in window)) return;
+
+        speechSynthesis.cancel();
+
+        const text = `Halo ${name}. Selamat datang di acara pernikahan Kami. Selamat menikmati momen bahagia ini.`;
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'id-ID';
+        utterance.rate = 0.9;
+        utterance.pitch = 1.12;
+        utterance.volume = 0.85;
+
+        const selectedVoice = getBestIndonesianVoice();
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
         }
-        
-        // Create confetti burst
-        function createConfetti() {
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = (Math.random() * 100) + 'vw';
-                    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
-                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
-                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    confettiContainer.appendChild(confetti);
-                    
-                    setTimeout(() => confetti.remove(), 4000);
-                }, i * 30);
-            }
+
+        speechSynthesis.speak(utterance);
+    }
+
+    function createFlower() {
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        flower.textContent = flowerEmojis[Math.floor(Math.random() * flowerEmojis.length)];
+        flower.style.left = Math.random() * 100 + 'vw';
+        flower.style.fontSize = (Math.random() * 20 + 15) + 'px';
+        flower.style.animationDuration = (Math.random() * 5 + 8) + 's';
+        flower.style.animationDelay = Math.random() * 2 + 's';
+        flowersContainer.appendChild(flower);
+
+        setTimeout(() => flower.remove(), 15000);
+    }
+
+    function createConfetti() {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = (Math.random() * 100) + 'vw';
+                confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                confettiContainer.appendChild(confetti);
+
+                setTimeout(() => confetti.remove(), 4000);
+            }, i * 30);
         }
-        
-        // Photo slideshow
-        function startSlideshow() {
-            if (galleryImages.length <= 1) return;
-            
-            slideInterval = setInterval(() => {
-                const slides = document.querySelectorAll('.photo-slide');
-                slides.forEach(slide => slide.classList.remove('active'));
-                slideIndex = (slideIndex + 1) % galleryImages.length;
-                slides.forEach(slide => {
-                    if (parseInt(slide.dataset.index) === slideIndex) {
-                        slide.classList.add('active');
-                    }
-                });
-            }, 5000);
-        }
-        
-        function showGuestWelcome(guest) {
-            if (currentGuestId !== guest.id) {
-                currentGuestId = guest.id;
-                
-                guestNameEl.textContent = guest.name;
-                
-                // Reset animation
-                guestWelcome.classList.remove('hidden');
-                const animDiv = guestWelcome.querySelector('.guest-enter');
-                animDiv.style.animation = 'none';
-                animDiv.offsetHeight; // Trigger reflow
-                animDiv.style.animation = null;
-                
-                idleWelcome.classList.add('hidden');
-                
-                // Celebration effects
-                createConfetti();
-            }
-        }
-        
-        function showIdleWelcome() {
-            if (!idleWelcome.classList.contains('hidden')) return;
-            
-            currentGuestId = null;
-            
-            idleWelcome.classList.remove('hidden');
-            guestWelcome.classList.add('hidden');
-        }
-        
-        async function checkLatestCheckin() {
-            try {
-                const response = await fetch(apiUrl, {
-                    headers: {
-                        'Accept': 'application/json',
-                        'X-CSRF-TOKEN': csrfToken
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.has_recent && data.guest) {
-                    showGuestWelcome(data.guest);
-                } else {
-                    showIdleWelcome();
+    }
+
+    function startSlideshow() {
+        if (galleryImages.length <= 1) return;
+
+        slideInterval = setInterval(() => {
+            const slides = document.querySelectorAll('.photo-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+
+            slideIndex = (slideIndex + 1) % galleryImages.length;
+
+            slides.forEach(slide => {
+                if (parseInt(slide.dataset.index) === slideIndex) {
+                    slide.classList.add('active');
                 }
-            } catch (error) {
-                console.error('Error fetching latest check-in:', error);
-            }
+            });
+        }, 5000);
+    }
+
+    function showGuestWelcome(guest) {
+        if (currentGuestId !== guest.id) {
+            currentGuestId = guest.id;
+
+            guestNameEl.textContent = guest.name;
+
+            guestWelcome.classList.remove('hidden');
+
+            const animDiv = guestWelcome.querySelector('.guest-enter');
+            animDiv.style.animation = 'none';
+            animDiv.offsetHeight;
+            animDiv.style.animation = null;
+
+            idleWelcome.classList.add('hidden');
+
+            createConfetti();
+            speakWelcome(guest.name);
         }
-        
-        // Initialize
-        function init() {
-            // Start slideshow
-            startSlideshow();
-            
-            // Create flowers periodically
-            setInterval(createFlower, 2000);
-            
-            // Initial flowers
-            for (let i = 0; i < 5; i++) {
-                setTimeout(createFlower, i * 400);
+    }
+
+    function showIdleWelcome() {
+        if (!idleWelcome.classList.contains('hidden')) return;
+
+        currentGuestId = null;
+
+        speechSynthesis.cancel();
+
+        idleWelcome.classList.remove('hidden');
+        guestWelcome.classList.add('hidden');
+    }
+
+    async function checkLatestCheckin() {
+        try {
+            const response = await fetch(apiUrl, {
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.has_recent && data.guest) {
+                showGuestWelcome(data.guest);
+            } else {
+                showIdleWelcome();
             }
-            
-            // Initial check
-            checkLatestCheckin();
-            
-            // Poll every 2 seconds
-            setInterval(checkLatestCheckin, 2000);
-            
-            // Show idle welcome initially
-            showIdleWelcome();
+        } catch (error) {
+            console.error('Error fetching latest check-in:', error);
         }
-        
-        init();
-    </script>
+    }
+
+    function init() {
+        if ('speechSynthesis' in window) {
+            speechSynthesis.getVoices();
+            speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+        }
+
+        startSlideshow();
+
+        setInterval(createFlower, 2000);
+
+        for (let i = 0; i < 5; i++) {
+            setTimeout(createFlower, i * 400);
+        }
+
+        checkLatestCheckin();
+        setInterval(checkLatestCheckin, 2000);
+        showIdleWelcome();
+    }
+
+    init();
+</script>
 </body>
 </html>
