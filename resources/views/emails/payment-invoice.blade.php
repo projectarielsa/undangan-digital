@@ -266,7 +266,7 @@
                     </div>
                     <div class="info-row">
                         <div class="info-label">Tanggal Bayar</div>
-                        <div class="info-value">{{ $payment->paid_at->format('d M Y, H:i') }} WIB</div>
+                        <div class="info-value">{{ $payment->paid_at ? $payment->paid_at->format('d M Y, H:i') . ' WIB' : '-' }}</div>
                     </div>
                     <div class="info-row">
                         <div class="info-label">Metode Pembayaran</div>
@@ -284,7 +284,7 @@
                 
                 @if($package->features)
                 <ul class="features-list">
-                    @foreach(json_decode($package->features, true) ?? [] as $feature)
+                    @foreach((is_array($package->features) ? $package->features : json_decode($package->features, true)) ?? [] as $feature)
                         <li>{{ $feature }}</li>
                     @endforeach
                 </ul>

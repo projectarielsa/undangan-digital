@@ -115,7 +115,10 @@ class PaymentInvoiceEmailTest extends TestCase
         $mailable = new PaymentInvoiceMail($this->payment);
         $rendered = $mailable->render();
 
-        $features = json_decode($this->package->features, true);
+        // Handle both array and JSON string
+        $features = is_array($this->package->features) 
+            ? $this->package->features 
+            : json_decode($this->package->features, true);
         
         foreach ($features as $feature) {
             $this->assertStringContainsString($feature, $rendered);
