@@ -1,70 +1,115 @@
 pipeline {
-    agent any
+agent any
 
-    stages {
+```
+stages {
 
-        stage('1. Deploy Undangan STAGING') {
-            steps {
-                script {
-                    echo '🚀 Deploy Undangan Digital STAGING'
+    stage('1. Deploy Undangan STAGING') {
+        steps {
+            script {
+                echo '🚀 Deploy Undangan Digital STAGING'
 
-                    sh '''
-                        cd /srv/apps/undangan-stg
+                sh '''
+                    set -e
 
-                        # Ambil source terbaru
-                        git fetch --all
-                        git reset --hard origin/main
+                    cd /srv/apps/undangan-stg
 
-                        # Pastikan .env aman
-                        if [ ! -f .env ]; then
-                            echo ".env tidak ditemukan!"
-                            exit 1
-                        fi
+                    # Fix Git ownership warning
+                    git config --global --add safe.directory /srv/apps/undangan-stg
 
-                        # Rebuild container
-                        docker compose down --remove-orphans || true
-                        docker compose build --no-cache
-                        docker compose up -d
-                    '''
-                }
-            }
-        }
+                    echo "📥 Update source code..."
+                    git fetch --all
+                    git reset --hard origin/develop
 
-        stage('2. Laravel Optimization') {
-            steps {
-                script {
-                    echo '⚙️ Optimasi Laravel'
+                    # Validasi .env
+                    if [ ! -f .env ]; then
+                        echo "❌ File .env tidak ditemukan"
+                        exit 1
+                    fi
 
-                    sh '''
-                        cd /srv/apps/undangan-stg
+                    # Deteksi docker compose command
+                    if docker compose version >/dev/null 2>&1; then
+                        COMPOSE="docker compose"
+                    elif command -v docker-compose >/dev/null 2>&1; then
+                        COMPOSE="docker-compose"
+                    else
+                        echo "❌ Docker Compose tidak ditemukan"
+                        exit 1
+                    fi
 
-                        APP_CONTAINER=$(docker compose ps -q app)
+                    echo "Menggunakan: $COMPOSE"
 
-                        docker exec -t $APP_CONTAINER rm -f \
-                            bootstrap/cache/config.php \
-                            bootstrap/cache/packages.php \
-                            bootstrap/cache/services.php || true
+                    echo "🛑 Stop container lama..."
+                    $COMPOSE down || true
 
-                        docker exec -t $APP_CONTAINER composer dump-autoload --optimize --no-scripts
+                    echo "🔨 Build image baru..."
+                    $COMPOSE build --no-cache
 
-                        docker exec -t $APP_CONTAINER php artisan package:discover --ansi
-
-                        docker exec -t $APP_CONTAINER php artisan migrate --force
-
-                        docker exec -t $APP_CONTAINER php artisan optimize
-                    '''
-                }
+                    echo "🚀 Start container..."
+                    $COMPOSE up -d
+                '''
             }
         }
     }
 
-    post {
-        success {
-            echo '🎉 Deploy Undangan STAGING berhasil'
-        }
+    stage('2. Laravel Optimization') {
+        steps {
+            script {
+                echo '⚙️ Optimasi Laravel'
 
-        failure {
-            echo '❌ Deploy Undangan STAGING gagal'
+                sh '''
+                    set -e
+
+                    cd /srv/apps/undangan-stg
+
+                    # Deteksi docker compose command
+                    if docker compose version >/dev/null 2>&1; then
+                        COMPOSE="docker compose"
+                    elif command -v docker-compose >/dev/null 2>&1; then
+                        COMPOSE="docker-compose"
+                    else
+                        echo "❌ Docker Compose tidak ditemukan"
+                        exit 1
+                    fi
+
+                    APP_CONTAINER=$($COMPOSE ps -q app)
+
+                    if [ -z "$APP_CONTAINER" ]; then
+                        echo "❌ Container app tidak ditemukan"
+                        exit 1
+                    fi
+
+                    echo "📦 Container: $APP_CONTAINER"
+
+                    docker exec -t $APP_CONTAINER rm -f \
+                        bootstrap/cache/config.php \
+                        bootstrap/cache/packages.php \
+                        bootstrap/cache/services.php || true
+
+                    docker exec -t $APP_CONTAINER composer dump-autoload --optimize --no-scripts
+
+                    docker exec -t $APP_CONTAINER php artisan package:discover --ansi
+
+                    docker exec -t $APP_CONTAINER php artisan migrate --force
+
+                    docker exec -t $APP_CONTAINER php artisan storage:link || true
+
+                    docker exec -t $APP_CONTAINER php artisan optimize
+                '''
+            }
         }
     }
+}
+
+post {
+    success {
+        echo '🎉 Deploy Undangan STAGING berhasil'
+    }
+
+    failure {
+        echo '❌ Deploy Undangan STAGING gagal'
+    }
+}
+```
+
 }
