@@ -33,6 +33,6 @@ class OtpService
     {
         $last = EmailOtp::where('user_id', $user->id)->latest()->first();
         if (!$last) return 0;
-        return max(0, 60 - now()->diffInSeconds($last->created_at));
+        return (int) max(0, 60 - now()->diffInSeconds($last->created_at));
     }
 }

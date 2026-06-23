@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: undangan_stg_app
+    restart: unless-stopped
+    ports:
+      - "8020:80"
+    env_file:
+      - .env
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true
