@@ -87,9 +87,7 @@ stages {
 
                     docker exec -t $APP_CONTAINER composer dump-autoload --optimize --no-scripts
 
-                    docker exec -t $APP_CONTAINER php artisan package:discover --ansi
-
-                    docker exec -t $APP_CONTAINER php artisan migrate --force
+                    docker exec -t $APP_CONTAINER php artisan package:discover --ansi\
 
                     docker exec -t $APP_CONTAINER php artisan storage:link || true
 
