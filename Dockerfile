@@ -1,4 +1,6 @@
-FROM php:8.4-fpm
+FROM php:8.4-apache
+
+RUN a2enmod rewrite
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -40,6 +42,14 @@ RUN npm run build
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-EXPOSE 9000
+# Laravel public folder
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 
-CMD ["php-fpm"]
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/sites-available/*.conf
+
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' \
+    /etc/apache2/apache2.conf \
+    /etc/apache2/conf-available/*.conf
+
+EXPOSE 80
