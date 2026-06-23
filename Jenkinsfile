@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 stages {
 
     stage('1. Deploy Undangan STAGING') {
@@ -110,6 +109,5 @@ post {
         echo '❌ Deploy Undangan STAGING gagal'
     }
 }
-```
 
 }
