@@ -44,6 +44,12 @@ stages {
                 docker exec $CONTAINER php artisan optimize:clear || true
                 docker exec $CONTAINER composer dump-autoload --optimize || true
                 docker exec $CONTAINER php artisan storage:link || true
+
+                docker exec $CONTAINER chown -R www-data:www-data storage bootstrap/cache
+
+                docker exec $CONTAINER chmod -R 775 storage bootstrap/cache
+
+                docker exec $CONTAINER php artisan optimize:clear
             '''
         }
     }
