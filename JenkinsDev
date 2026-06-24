@@ -3,78 +3,59 @@ pipeline {
 
     stages {
 
-        stage('1. Deploy STAGING (FIXED FAST)') {
+        stage('Deploy STAGING') {
             steps {
-                script {
-                    echo '🚀 Deploy Undangan Digital STAGING (FIXED FAST)'
+                sh '''
+                    set -e
 
-                    sh '''
-                        set -e
+                    cd /srv/apps/undangan-stg
 
-                        cd /srv/apps/undangan-stg
+                    git config --global --add safe.directory /srv/apps/undangan-stg
 
-                        # amanin git folder
-                        git config --global --add safe.directory /srv/apps/undangan-stg
+                    echo "📥 Pull latest code..."
+                    git pull origin develop
 
-                        echo "📥 Pull latest code..."
-                        git pull origin develop
+                    if [ ! -f .env ]; then
+                        echo "ENV missing"
+                        exit 1
+                    fi
 
-                        # validasi .env
-                        if [ ! -f .env ]; then
-                            echo "❌ File .env tidak ditemukan"
-                            exit 1
-                        fi
+                    echo "🛑 Stop container"
+                    docker compose down || true
 
-                        # WAJIB: pakai docker compose (bukan docker-compose)
-                        COMPOSE="docker compose"
-
-                        echo "🧹 Clean container lama (anti ContainerConfig error)..."
-                        $COMPOSE down --remove-orphans || true
-
-                        echo "🚀 Start container (NO legacy compose)..."
-                        $COMPOSE up -d --build
-                    '''
-                }
+                    echo "🚀 Start container"
+                    docker compose up -d --build
+                '''
             }
         }
 
-        stage('2. Laravel Optimization (LIGHT & SAFE)') {
+        stage('Laravel Optimize') {
             steps {
-                script {
-                    echo '⚙️ Laravel Optimization (LIGHT)'
+                sh '''
+                    set -e
+                    cd /srv/apps/undangan-stg
 
-                    sh '''
-                        set -e
+                    CONTAINER=$(docker compose ps -q app)
 
-                        cd /srv/apps/undangan-stg
+                    if [ -z "$CONTAINER" ]; then
+                        echo "Container app tidak ditemukan"
+                        exit 1
+                    fi
 
-                        COMPOSE="docker compose"
-
-                        APP_CONTAINER=$($COMPOSE ps -q app)
-
-                        if [ -z "$APP_CONTAINER" ]; then
-                            echo "❌ Container app tidak ditemukan"
-                            exit 1
-                        fi
-
-                        echo "📦 Container: $APP_CONTAINER"
-
-                        # ringan & aman
-                        docker exec $APP_CONTAINER php artisan optimize:clear || true
-                        docker exec $APP_CONTAINER composer dump-autoload --optimize || true
-                        docker exec $APP_CONTAINER php artisan storage:link || true
-                    '''
-                }
+                    docker exec $CONTAINER php artisan optimize:clear || true
+                    docker exec $CONTAINER composer dump-autoload --optimize || true
+                    docker exec $CONTAINER php artisan storage:link || true
+                '''
             }
         }
     }
 
     post {
         success {
-            echo '🎉 STAGING deploy sukses (FIXED)'
+            echo "✅ STAGING SUCCESS"
         }
         failure {
-            echo '❌ STAGING deploy gagal'
+            echo "❌ STAGING FAILED"
         }
     }
 }
