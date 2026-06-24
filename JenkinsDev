@@ -1,68 +1,46 @@
 pipeline {
-agent any
+    agent any
 
+    stages {
 
-stages {
+        stage('Deploy STAGING') {
+            steps {
+                sh '''
+                    set -e
 
-    stage('Deploy STAGING') {
-        steps {
-            sh '''
-                set -e
+                    cd /srv/apps/undangan-stg
 
-                cd /srv/apps/undangan-stg
+                    git config --global --add safe.directory /srv/apps/undangan-stg
 
-                git config --global --add safe.directory /srv/apps/undangan-stg
+                    echo "📥 Pull latest code"
+                    git pull origin develop
 
-                echo "📥 Pull latest code"
-                git pull origin develop
+                    echo "🛑 Stop container"
+                    docker-compose -p undangan-stg -f docker/docker-compose.stg.yml down || true
 
-                echo "🛑 Stop container"
-                docker-compose -f docker/docker-compose.stg.yml down || true
+                    echo "🚀 Build & Start"
+                    docker-compose -p undangan-stg -f docker/docker-compose.stg.yml up -d --build
+                '''
+            }
+        }
 
-                echo "🚀 Build & Start"
-                docker-compose -f docker/docker-compose.stg.yml up -d --build
-            '''
+        stage('Laravel Optimize') {
+            steps {
+                sh '''
+                    set -e
+
+                    cd /srv/apps/undangan-stg
+
+                    CONTAINER=$(docker-compose -p undangan-stg -f docker/docker-compose.stg.yml ps -q app)
+
+                    docker exec $CONTAINER php artisan optimize:clear || true
+                    docker exec $CONTAINER composer dump-autoload --optimize || true
+                    docker exec $CONTAINER php artisan storage:link || true
+
+                    docker exec $CONTAINER chown -R www-data:www-data storage bootstrap/cache
+                    docker exec $CONTAINER chmod -R 775 storage bootstrap/cache
+                '''
+            }
         }
     }
-
-    stage('Laravel Optimize') {
-        steps {
-            sh '''
-                set -e
-
-                cd /srv/apps/undangan-stg
-
-                CONTAINER=$(docker-compose -f docker/docker-compose.stg.yml ps -q app)
-
-                if [ -z "$CONTAINER" ]; then
-                    echo "Container app tidak ditemukan"
-                    exit 1
-                fi
-
-                docker exec $CONTAINER git config --global --add safe.directory /var/www/html || true
-
-                docker exec $CONTAINER php artisan optimize:clear || true
-                docker exec $CONTAINER composer dump-autoload --optimize || true
-                docker exec $CONTAINER php artisan storage:link || true
-
-                docker exec $CONTAINER chown -R www-data:www-data storage bootstrap/cache
-
-                docker exec $CONTAINER chmod -R 775 storage bootstrap/cache
-
-                docker exec $CONTAINER php artisan optimize:clear
-            '''
-        }
-    }
-}
-
-post {
-    success {
-        echo "🎉 STAGING SUCCESS BUILD"
-    }
-
-    failure {
-        echo "❌ STAGING FAILED"
-    }
-}
-
 }

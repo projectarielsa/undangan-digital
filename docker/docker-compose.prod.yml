@@ -1,5 +1,7 @@
 services:
   app:
+    image: undangan-prod:latest
+
     build:
       context: ..
       dockerfile: Dockerfile
