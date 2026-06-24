@@ -2,20 +2,58 @@ pipeline {
     agent any
 
     stages {
-        stage('Test Docker') {
+
+        stage('Deploy STAGING (FAST)') {
             steps {
                 sh '''
-    echo "=== CHECK DOCKER ==="
-    which docker
-    docker version
+                    set -e
 
-    echo "=== CHECK COMPOSE (OLD WAY) ==="
-    docker-compose version || true
+                    cd /srv/apps/undangan-stg
 
-    echo "=== CHECK COMPOSE (NEW WAY) ==="
-    ls -la /usr/libexec/docker/cli-plugins/ || true
-'''
+                    echo "📥 Pull latest code"
+                    git pull origin develop
+
+                    echo "🧹 Stop container"
+                    docker-compose down || true
+
+                    echo "🚀 Start container (NO rebuild full)"
+                    docker-compose up -d
+
+                    echo "✅ Container running"
+                '''
             }
+        }
+
+        stage('Laravel Optimize') {
+            steps {
+                sh '''
+                    set -e
+
+                    cd /srv/apps/undangan-stg
+
+                    CONTAINER=$(docker-compose ps -q app)
+
+                    if [ -z "$CONTAINER" ]; then
+                        echo "❌ Container not found"
+                        exit 1
+                    fi
+
+                    echo "⚙️ Laravel optimize"
+
+                    docker exec $CONTAINER php artisan optimize:clear || true
+                    docker exec $CONTAINER composer dump-autoload --optimize || true
+                    docker exec $CONTAINER php artisan storage:link || true
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "🎉 STAGING SUCCESS"
+        }
+        failure {
+            echo "❌ STAGING FAILED"
         }
     }
 }
