@@ -1,7 +1,6 @@
 pipeline {
 agent any
 
-```
 stages {
 
     stage('Deploy PRODUCTION') {
@@ -58,6 +57,5 @@ post {
         echo "❌ PRODUCTION FAILED"
     }
 }
-```
 
 }
