@@ -1,0 +1,25 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+
+    container_name: undangan_prod_app
+
+    restart: unless-stopped
+
+    ports:
+      - "8021:80"
+
+    env_file:
+      - ../.env
+
+    volumes:
+      - ..:/var/www/html
+
+    networks:
+      - shared
+
+networks:
+  shared:
+    external: true

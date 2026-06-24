@@ -3,23 +3,23 @@ pipeline {
 
     stages {
 
-        stage('Deploy STAGING (FAST)') {
+        stage('Deploy STAGING') {
             steps {
                 sh '''
                     set -e
 
                     cd /srv/apps/undangan-stg
 
+                    git config --global --add safe.directory /srv/apps/undangan-stg
+
                     echo "📥 Pull latest code"
                     git pull origin develop
 
-                    echo "🧹 Stop container"
-                    docker-compose down || true
+                    echo "🛑 Stop container"
+                    docker compose -f docker/docker-compose.stg.yml down || true
 
-                    echo "🚀 Start container (NO rebuild full)"
-                    docker-compose up -d
-
-                    echo "✅ Container running"
+                    echo "🚀 Build & Start"
+                    docker compose -f docker/docker-compose.stg.yml up -d --build
                 '''
             }
         }
@@ -31,17 +31,7 @@ pipeline {
 
                     cd /srv/apps/undangan-stg
 
-                    CONTAINER=$(docker-compose ps -q app)
-
-                    if [ -z "$CONTAINER" ]; then
-                        echo "❌ Container not found"
-                        exit 1
-                    fi
-
-                    echo "⚙️ Fix git safe.directory"
-                    docker exec $CONTAINER git config --global --add safe.directory /var/www/html || true
-
-                    echo "⚙️ Laravel optimize"
+                    CONTAINER=$(docker compose -f docker/docker-compose.stg.yml ps -q app)
 
                     docker exec $CONTAINER php artisan optimize:clear || true
                     docker exec $CONTAINER composer dump-autoload --optimize || true
@@ -53,7 +43,7 @@ pipeline {
 
     post {
         success {
-            echo "🎉 STAGING SUCCESS"
+            echo "✅ STAGING SUCCESS"
         }
         failure {
             echo "❌ STAGING FAILED"

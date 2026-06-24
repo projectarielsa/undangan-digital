@@ -1,33 +1,25 @@
 pipeline {
     agent any
 
-    environment {
-        APP_DIR = "/srv/apps/undangan-prod"
-        SERVICE = "app"
-    }
-
     stages {
 
-        stage('Deploy Production (FAST SAFE)') {
+        stage('Deploy PRODUCTION') {
             steps {
                 sh '''
                     set -e
 
-                    cd $APP_DIR
+                    cd /srv/apps/undangan-prod
 
-                    echo "🔐 Safe directory git"
-                    git config --global --add safe.directory $APP_DIR
+                    git config --global --add safe.directory /srv/apps/undangan-prod
 
                     echo "📥 Pull latest code"
                     git pull origin main
 
                     echo "🛑 Stop container"
-                    docker compose down || true
+                    docker compose -f docker/docker-compose.prod.yml down || true
 
-                    echo "🚀 Start container (NO FULL REBUILD)"
-                    docker compose up -d --build --remove-orphans
-
-                    echo "✅ Container started"
+                    echo "🚀 Build & Start"
+                    docker compose -f docker/docker-compose.prod.yml up -d --build
                 '''
             }
         }
@@ -37,39 +29,24 @@ pipeline {
                 sh '''
                     set -e
 
-                    cd $APP_DIR
+                    cd /srv/apps/undangan-prod
 
-                    echo "📦 Get container ID"
-                    CONTAINER=$(docker compose ps -q $SERVICE)
+                    CONTAINER=$(docker compose -f docker/docker-compose.prod.yml ps -q app)
 
-                    if [ -z "$CONTAINER" ]; then
-                        echo "❌ Container app tidak ditemukan"
-                        exit 1
-                    fi
-
-                    echo "⚙️ Fix safe directory inside container"
-                    docker exec $CONTAINER git config --global --add safe.directory /var/www/html || true
-
-                    echo "🧹 Clear Laravel cache"
                     docker exec $CONTAINER php artisan optimize:clear || true
-
-                    echo "📦 Composer optimize"
                     docker exec $CONTAINER composer dump-autoload --optimize || true
-
-                    echo "🔗 Storage link"
                     docker exec $CONTAINER php artisan storage:link || true
                 '''
             }
         }
-
     }
 
     post {
         success {
-            echo "🎉 Production deploy SUCCESS"
+            echo "✅ PRODUCTION SUCCESS"
         }
         failure {
-            echo "❌ Production deploy FAILED"
+            echo "❌ PRODUCTION FAILED"
         }
     }
 }
