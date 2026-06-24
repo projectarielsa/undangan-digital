@@ -2,60 +2,12 @@ pipeline {
     agent any
 
     stages {
-
-        stage('Deploy STAGING') {
+        stage('Test Docker') {
             steps {
                 sh '''
-                    set -e
-
-                    cd /srv/apps/undangan-stg
-
-                    git config --global --add safe.directory /srv/apps/undangan-stg
-
-                    echo "📥 Pull latest code..."
-                    git pull origin develop
-
-                    if [ ! -f .env ]; then
-                        echo "ENV missing"
-                        exit 1
-                    fi
-
-                    echo "🛑 Stop container"
-                    docker compose down || true
-
-                    echo "🚀 Start container"
-                    docker compose up -d --build
+                    docker compose version
                 '''
             }
-        }
-
-        stage('Laravel Optimize') {
-            steps {
-                sh '''
-                    set -e
-                    cd /srv/apps/undangan-stg
-
-                    CONTAINER=$(docker compose ps -q app)
-
-                    if [ -z "$CONTAINER" ]; then
-                        echo "Container app tidak ditemukan"
-                        exit 1
-                    fi
-
-                    docker exec $CONTAINER php artisan optimize:clear || true
-                    docker exec $CONTAINER composer dump-autoload --optimize || true
-                    docker exec $CONTAINER php artisan storage:link || true
-                '''
-            }
-        }
-    }
-
-    post {
-        success {
-            echo "✅ STAGING SUCCESS"
-        }
-        failure {
-            echo "❌ STAGING FAILED"
         }
     }
 }
