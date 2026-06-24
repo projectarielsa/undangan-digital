@@ -51,13 +51,12 @@ stages {
 
 post {
     success {
-        echo "🎉 STAGING SUCCESS"
+        echo "🎉 STAGING SUCCESS BUILD"
     }
 
     failure {
         echo "❌ STAGING FAILED"
     }
 }
-
 
 }
