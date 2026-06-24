@@ -20,12 +20,6 @@ stages {
 
                 echo "🚀 Build & Start"
                 docker-compose -f docker/docker-compose.prod.yml up -d --build
-
-                docker exec $CONTAINER chown -R www-data:www-data storage bootstrap/cache
-
-                docker exec $CONTAINER chmod -R 775 storage bootstrap/cache
-                
-                docker exec $CONTAINER php artisan optimize:clear
             '''
         }
     }

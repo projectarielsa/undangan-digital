@@ -14,9 +14,6 @@ services:
     env_file:
       - ../.env
 
-    volumes:
-      - ..:/var/www/html
-
     networks:
       - shared
 
