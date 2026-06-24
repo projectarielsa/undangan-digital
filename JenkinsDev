@@ -5,8 +5,16 @@ pipeline {
         stage('Test Docker') {
             steps {
                 sh '''
-                    docker compose version
-                '''
+    echo "=== CHECK DOCKER ==="
+    which docker
+    docker version
+
+    echo "=== CHECK COMPOSE (OLD WAY) ==="
+    docker-compose version || true
+
+    echo "=== CHECK COMPOSE (NEW WAY) ==="
+    ls -la /usr/libexec/docker/cli-plugins/ || true
+'''
             }
         }
     }
