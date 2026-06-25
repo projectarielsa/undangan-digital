@@ -18,6 +18,20 @@
             <input id="name" type="text" name="name" value="{{ old('name') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="Masukkan nama lengkap">
         </div>
         <div>
+    <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+        Nomor WhatsApp
+    </label>
+
+    <input
+        id="phone"
+        type="text"
+        name="phone"
+        value="{{ old('phone') }}"
+        required
+        class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+        placeholder="081234567890">
+</div>
+        <div>
             <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email</label>
             <input id="email" type="email" name="email" value="{{ old('email') }}" required class="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-2xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" placeholder="email@contoh.com">
         </div>
