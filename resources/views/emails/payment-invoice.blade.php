@@ -331,7 +331,12 @@
         <!-- Footer -->
         <div class="footer">
             <p><strong>Butuh bantuan?</strong></p>
-            <p>Hubungi kami di <a href="mailto:support@ellori.my.id</a></p>
+            <p>
+                Hubungi kami di
+                <a href="mailto:{{ config('app.support_email') }}">
+                    {{ config('app.support_email') }}
+                </a>
+            </p>
             <p style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #e5e7eb;">
                 &copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.
             </p>
