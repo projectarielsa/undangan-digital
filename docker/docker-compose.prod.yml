@@ -19,6 +19,21 @@ services:
     networks:
       - shared
 
+  queue:
+    image: undangan-prod:latest
+
+    container_name: undangan_prod_queue
+
+    restart: unless-stopped
+
+    command: php artisan queue:work --sleep=3 --tries=3
+
+    env_file:
+      - ../.env
+
+    networks:
+      - shared
+
 networks:
   shared:
     external: true
