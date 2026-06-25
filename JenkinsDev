@@ -15,19 +15,11 @@ pipeline {
                     echo "📥 Pull latest code"
                     git pull origin develop
 
-                    echo "===== BEFORE ====="
-                    docker ps -a
-                    docker compose ls
-
                     echo "🛑 Stop container"
                     docker-compose -p undangan-stg -f docker/docker-compose.stg.yml down || true
 
                     echo "🚀 Build & Start"
                     docker-compose -p undangan-stg -f docker/docker-compose.stg.yml up -d --build
-
-                    echo "===== AFTER ====="
-                    docker ps -a
-                    docker compose ls
                 '''
             }
         }
