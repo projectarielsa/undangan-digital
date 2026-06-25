@@ -18,9 +18,6 @@ class MidtransWebhookController extends Controller
 
     /**
      * Handle incoming Midtrans webhook notification
-     * 
-     * This endpoint receives payment status updates from Midtrans.
-     * Security: Signature verification is mandatory to prevent fake notifications.
      */
     public function handle(Request $request): JsonResponse
     {
