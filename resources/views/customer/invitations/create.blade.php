@@ -102,6 +102,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="p-6">
                     @if(!$hasActiveSubscription)
                     <div class="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
@@ -111,77 +112,120 @@
                         </p>
                     </div>
                     @endif
+
+                    <!-- Search + Filter -->
+                    <div class="flex flex-col sm:flex-row gap-3 mb-5">
+                        <div class="relative flex-1">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <input type="text" placeholder="Cari template..." x-model="templateSearch"
+                                   class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <template x-for="cat in templateCategories" :key="cat">
+                                <button type="button" @click="templateFilter = (templateFilter === cat) ? 'all' : cat"
+                                        class="px-3 py-1.5 rounded-lg text-xs font-medium transition-all"
+                                        :class="templateFilter === cat ? 'bg-blue-500 text-white shadow-md shadow-blue-500/25' : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'">
+                                    <span x-text="cat === 'all' ? 'Semua' : cat"></span>
+                                </button>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Template Grid -->
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         @foreach($templates as $template)
                         @php $isLocked = $template->is_premium && !$hasActiveSubscription; @endphp
-                        <div class="relative group">
-                        <label class="{{ $isLocked ? 'cursor-not-allowed' : 'cursor-pointer' }} group block">
-                            <input type="radio" name="template_id" value="{{ $template->id }}" class="peer hidden" {{ $loop->first && !$isLocked ? 'checked' : '' }} {{ $isLocked ? 'disabled' : '' }} x-model="formData.template_id">
-                            <div class="relative rounded-2xl border-2 border-gray-200 dark:border-gray-600 peer-checked:border-blue-500 peer-checked:ring-4 peer-checked:ring-blue-500/20 overflow-hidden transition-all duration-300 {{ $isLocked ? 'opacity-60' : 'group-hover:border-blue-300 group-hover:shadow-lg' }}">
-                                <!-- Preview -->
-                                <div class="aspect-[3/4] flex items-center justify-center relative" style="background: linear-gradient(135deg, {{ $template->color_primary }}25, {{ $template->color_secondary }}15)">
-                                    <div class="text-center p-4">
-                                        <p class="text-[10px] uppercase tracking-widest mb-2 opacity-60" style="color: {{ $template->color_primary }}">{{ $template->category }}</p>
-                                        <p class="text-sm font-serif font-semibold text-gray-800 dark:text-gray-200">{{ $template->name }}</p>
-                                    </div>
-                                    @if($template->is_premium)
-                                    <div class="absolute top-2 right-2">
-                                        <span class="px-2 py-0.5 {{ $isLocked ? 'bg-gray-500' : 'bg-blue-500' }} text-white text-[10px] font-bold rounded-full flex items-center gap-1">
-                                            @if($isLocked)
-                                            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
-                                            @else
-                                            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20">
-                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                            </svg>
-                                            @endif
-                                            PRO
-                                        </span>
-                                    </div>
-                                    @endif
-                                    @if($isLocked)
-                                    <!-- Locked Overlay -->
-                                    <div class="absolute inset-0 bg-black/30 flex items-center justify-center z-10">
-                                        <div class="bg-white dark:bg-gray-800 rounded-lg px-3 py-1.5 shadow">
-                                            <svg class="w-5 h-5 text-gray-500 mx-auto" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
-                                            <p class="text-[10px] text-gray-500 mt-1">Berlangganan</p>
+                        <div class="relative group"
+                             x-show="(templateFilter === 'all' || '{{ strtolower($template->category) }}' === templateFilter) &amp;&amp; (templateSearch === '' || '{{ strtolower($template->name) }}'.includes(templateSearch.toLowerCase()))"
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95"
+                             x-transition:enter-end="opacity-100 scale-100">
+                            <label class="{{ $isLocked ? 'cursor-not-allowed' : 'cursor-pointer' }} block">
+                                <input type="radio" name="template_id" value="{{ $template->id }}" class="peer hidden"
+                                       {{ $loop->first && !$isLocked ? 'checked' : '' }}
+                                       {{ $isLocked ? 'disabled' : '' }}
+                                       x-model="formData.template_id">
+                                <div class="relative rounded-2xl border-2 border-gray-200 dark:border-gray-600 peer-checked:border-blue-500 peer-checked:ring-4 peer-checked:ring-blue-500/20 overflow-hidden transition-all duration-300 {{ $isLocked ? 'opacity-60' : 'group-hover:border-blue-300 group-hover:shadow-lg hover:scale-[1.02]' }}">
+                                    <!-- Thumbnail Image -->
+                                    <div class="aspect-[3/4] relative overflow-hidden bg-gray-100 dark:bg-gray-700">
+                                        @if($template->thumbnail)
+                                        <img src="{{ asset($template->thumbnail) }}" alt="{{ $template->name }}"
+                                             class="w-full h-full object-cover object-top"
+                                             loading="lazy">
+                                        @else
+                                        <div class="w-full h-full flex items-center justify-center" style="background: linear-gradient(135deg, {{ $template->color_primary }}25, {{ $template->color_secondary }}15)">
+                                            <div class="text-center p-4">
+                                                <p class="text-[10px] uppercase tracking-widest mb-2 opacity-60" style="color: {{ $template->color_primary }}">{{ $template->category }}</p>
+                                                <p class="text-sm font-serif font-semibold text-gray-800 dark:text-gray-200">{{ $template->name }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                    @endif
+                                        @endif
 
-                                    <!-- Check Mark -->
-                                    <div class="absolute inset-0 bg-blue-500/20 flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity">
-                                        <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg">
-                                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                                            </svg>
+                                        <!-- PRO Badge -->
+                                        @if($template->is_premium)
+                                        <div class="absolute top-2 right-2 z-20">
+                                            <span class="px-2 py-0.5 {{ $isLocked ? 'bg-gray-500' : 'bg-gradient-to-r from-blue-500 to-purple-500' }} text-white text-[10px] font-bold rounded-full shadow-md">
+                                                @if($isLocked)
+                                                🔒 PRO
+                                                @else
+                                                ⭐ PRO
+                                                @endif
+                                            </span>
+                                        </div>
+                                        @endif
+
+                                        <!-- Lock Overlay -->
+                                        @if($isLocked)
+                                        <div class="absolute inset-0 bg-black/40 backdrop-blur-[1px] flex flex-col items-center justify-center z-10">
+                                            <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mb-2">
+                                                <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                                            </div>
+                                            <p class="text-white text-[11px] font-semibold">Berlangganan</p>
+                                        </div>
+                                        @endif
+
+                                        <!-- Selected Checkmark -->
+                                        <div class="absolute inset-0 bg-blue-500/20 flex items-center justify-center opacity-0 peer-checked:opacity-100 transition-opacity z-20">
+                                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/40 ring-4 ring-white/50">
+                                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                                </svg>
+                                            </div>
+                                        </div>
+
+                                        <!-- Hover Overlay: Demo Button -->
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-end justify-center pb-4">
+                                            <a href="{{ route('demo.show', $template->slug) }}" target="_blank"
+                                               onclick="event.stopPropagation();"
+                                               class="inline-flex items-center gap-1.5 bg-white/95 hover:bg-white text-gray-900 text-xs font-semibold px-4 py-2 rounded-full shadow-lg transition-all hover:scale-105 no-underline">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                                </svg>
+                                                Preview
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Info Bar -->
+                                    <div class="p-3 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
+                                        <p class="text-sm font-semibold text-gray-900 dark:text-white truncate">{{ $template->name }}</p>
+                                        <div class="flex items-center justify-between mt-1.5">
+                                            <div class="flex items-center gap-1">
+                                                <div class="w-3 h-3 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-200 dark:ring-gray-600" style="background: {{ $template->color_primary }}"></div>
+                                                <div class="w-3 h-3 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-200 dark:ring-gray-600" style="background: {{ $template->color_secondary }}"></div>
+                                            </div>
+                                            <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase tracking-wider">{{ $template->category }}</span>
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Info -->
-                                <div class="p-3 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
-                                    <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $template->name }}</p>
-                                    <div class="flex items-center gap-1 mt-1">
-                                        <div class="w-3 h-3 rounded-full border border-white shadow-sm" style="background: {{ $template->color_primary }}"></div>
-                                        <div class="w-3 h-3 rounded-full border border-white shadow-sm" style="background: {{ $template->color_secondary }}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </label>
-                        <!-- Demo button outside label for clickability -->
-                        <a href="{{ route('demo.show', $template->slug) }}" target="_blank"
-                           class="absolute top-2 left-2 z-30 bg-black/60 hover:bg-black/80 text-white w-9 h-9 rounded-full flex items-center justify-center shadow-lg transition-all duration-200 no-underline">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                        </a>
+                            </label>
                         </div>
                         @endforeach
                     </div>
                 </div>
             </div>
         </div>
-
 
         <!-- Step 2: Couple Information -->
         <div x-show="currentStep === 2" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-x-8" x-transition:enter-end="opacity-100 translate-x-0">
@@ -681,6 +725,9 @@ function invitationWizard() {
         formData: {
             template_id: '{{ $templates->first()->id ?? '' }}'
         },
+        templateSearch: '',
+        templateFilter: 'all',
+        templateCategories: ['all', 'elegant', 'minimal', 'luxury', 'floral', 'islamic', 'traditional', 'rustic', 'modern', 'vintage', 'tropical'],
         summary: {
             groom_name: '',
             bride_name: '',
