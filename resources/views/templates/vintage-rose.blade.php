@@ -19,19 +19,19 @@
             --gold: #B8956B;
             --border: rgba(196,136,139,0.2);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Lora', serif;
-            font-weight: 400;
+            font-family: 'Lora', serif !important;
+            line-height: 1.6 !important;
             color: var(--text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             background-color: var(--antique);
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0v60M0 30h60' stroke='%23C4888B' stroke-width='0.3' opacity='0.04'/%3E%3C/svg%3E");
         }
-        .font-display { font-family: 'EB Garamond', serif; }
-        .font-script { font-family: 'Dancing Script', cursive; font-weight: 600; }
-        .font-body { font-family: 'Lora', serif; }
+        .font-display { font-family: 'EB Garamond', serif !important; }
+        .font-script { font-family: 'Dancing Script', cursive !important; }
+        .font-body { font-family: 'Lora', serif !important; }
         [x-cloak] { display: none !important; }
 
         /* Animations */
@@ -312,7 +312,7 @@
     <div x-show="opened" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
 
         <!-- =================== HERO SECTION =================== -->
-        <section class="min-h-screen flex items-center justify-center py-24 px-6 relative overflow-hidden">
+        <section class="min-h-screen flex items-center justify-center py-20 px-6 relative overflow-hidden">
             <!-- Subtle radial glow -->
             <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 40%, rgba(196,136,139,0.06) 0%, transparent 60%)"></div>
 
@@ -543,7 +543,7 @@
         </section>
 
         <!-- =================== GALLERY =================== -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6" style="background: var(--sepia);">
             <div class="max-w-lg mx-auto">
                 <div class="text-center mb-12 reveal">
@@ -639,7 +639,7 @@
 
 
         <!-- =================== DIGITAL ENVELOPE =================== -->
-        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
+        @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-20 px-6 bg-[var(--antique)]">
             <div class="max-w-sm mx-auto text-center">
                 <div class="reveal">
@@ -656,13 +656,13 @@
                     <div class="ornate-divider-sm mb-8"></div>
                 </div>
 
-                @if($invitation->bankAccounts->count() > 0)
+                @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0)
                     @foreach($invitation->bankAccounts as $bank)
                     <div class="vintage-card p-6 mb-4 reveal reveal-delay-1" x-data="{ copied: false }">
-                        <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2 font-display">{{ $bank->bank_name }}</p>
-                        <p class="text-2xl font-bold text-[var(--brown)] tracking-wider mb-1 font-display">{{ $bank->account_number }}</p>
-                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $bank->account_name }}</p>
-                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 text-xs font-semibold transition-all font-display" style="background: var(--sepia); color: var(--dusty-rose); border: 1px solid var(--border); border-radius: 50px;" onmouseover="this.style.background='var(--dusty-rose)'; this.style.color='white';" onmouseout="this.style.background='var(--sepia)'; this.style.color='var(--dusty-rose)';">
+                        <p class="text-[10px] uppercase tracking-[0.3em] text-[var(--muted)] mb-2 font-display">{{ $bank['bank_name'] }}</p>
+                        <p class="text-2xl font-bold text-[var(--brown)] tracking-wider mb-1 font-display">{{ $bank['account_number'] }}</p>
+                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $bank['account_name'] }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank['account_number'] }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 text-xs font-semibold transition-all font-display" style="background: var(--sepia); color: var(--dusty-rose); border: 1px solid var(--border); border-radius: 50px;" onmouseover="this.style.background='var(--dusty-rose)'; this.style.color='white';" onmouseout="this.style.background='var(--sepia)'; this.style.color='var(--dusty-rose)';">
                             <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
                         </button>
                     </div>
@@ -850,3 +850,4 @@
     </script>
 </body>
 </html>
+

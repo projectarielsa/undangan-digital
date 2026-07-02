@@ -210,7 +210,7 @@
         @endif
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[var(--color-accent)]/50">
             <div class="max-w-4xl mx-auto">
                 <p class="text-sm uppercase tracking-[0.3em] text-pink-400 text-center mb-4">Our Love Story</p>

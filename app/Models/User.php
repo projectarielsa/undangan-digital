@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Traits\LogsActivity;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, LogsActivity;
 
     protected $fillable = [
         'name', 'email', 'password', 'phone', 'avatar',
-        'google_id', 'provider', 'role', 'is_active', 'email_verified_at',
+        'google_id', 'provider', 'email_verified_at',
     ];
 
     protected $hidden = ['password', 'remember_token'];

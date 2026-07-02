@@ -124,7 +124,7 @@ class PublicInvitationController extends Controller
         $invitation->guestbooks()->create([
             'name' => $v['name'],
             'message' => $v['message'],
-            'is_approved' => true,
+            'is_approved' => false,
             'ip_address' => $request->ip(),
         ]);
 

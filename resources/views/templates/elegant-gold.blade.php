@@ -131,7 +131,7 @@
         </section>
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-16 px-6 bg-[#faf8f5]">
             <div class="max-w-4xl mx-auto">
                 <h3 class="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)] text-center mb-2">Our Moments</h3>

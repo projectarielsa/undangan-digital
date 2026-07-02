@@ -471,7 +471,7 @@
 
 
         <!-- Gallery Section -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[#FFFAF8]">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16 scroll-animate" data-scroll>

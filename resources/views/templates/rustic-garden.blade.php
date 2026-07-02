@@ -471,7 +471,7 @@
         </section>
 
         <!-- ===================== GALLERY ===================== -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-kraft">
             <div class="max-w-lg mx-auto">
                 <div class="text-center mb-12 reveal">
@@ -539,7 +539,7 @@
                     </button>
                 </form>
 
-                @if($invitation->guestbooks->count() > 0)
+                @if(($invitation->guestbooks ? $invitation->guestbooks->count() : 0) > 0)
                 <div class="space-y-3 max-h-80 overflow-y-auto pr-1 reveal reveal-delay-2">
                     @foreach($invitation->guestbooks as $msg)
                     <div class="bg-white rounded-2xl p-5 border border-[var(--border)] shadow-sm">
@@ -562,7 +562,7 @@
 
 
         <!-- ===================== DIGITAL ENVELOPE ===================== -->
-        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
+        @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-20 px-6 bg-white relative">
             <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--sage)] to-transparent opacity-30"></div>
             <div class="max-w-sm mx-auto text-center">
@@ -579,13 +579,13 @@
                     @endif
                 </div>
 
-                @if($invitation->bankAccounts->count() > 0)
+                @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0)
                     @foreach($invitation->bankAccounts as $bank)
                     <div class="rustic-card p-6 mb-4 reveal reveal-delay-1" x-data="{ copied: false }">
-                        <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] mb-2 font-body">{{ $bank->bank_name }}</p>
-                        <p class="text-2xl font-display text-[var(--green)] tracking-wider mb-1">{{ $bank->account_number }}</p>
-                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $bank->account_name }}</p>
-                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 bg-[var(--kraft)] text-[var(--green)] text-xs font-medium rounded-full hover:bg-[var(--green)] hover:text-white transition-all border border-[var(--border)] font-body">
+                        <p class="text-[10px] uppercase tracking-[0.2em] text-[var(--muted)] mb-2 font-body">{{ $bank['bank_name'] }}</p>
+                        <p class="text-2xl font-display text-[var(--green)] tracking-wider mb-1">{{ $bank['account_number'] }}</p>
+                        <p class="text-sm text-[var(--muted)] font-body">a.n. {{ $bank['account_name'] }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank['account_number'] }}'); copied = true; setTimeout(() => copied = false, 2000)" class="mt-4 px-5 py-2 bg-[var(--kraft)] text-[var(--green)] text-xs font-medium rounded-full hover:bg-[var(--green)] hover:text-white transition-all border border-[var(--border)] font-body">
                             <span x-text="copied ? '✓ Tersalin!' : 'Salin Nomor'"></span>
                         </button>
                     </div>

@@ -193,7 +193,7 @@
         @endif
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[var(--color-accent)]">
             <div class="max-w-5xl mx-auto">
                 <p class="text-xs uppercase tracking-[0.4em] text-gray-400 text-center mb-4">Our Story</p>

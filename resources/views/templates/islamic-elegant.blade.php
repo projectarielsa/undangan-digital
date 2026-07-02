@@ -220,7 +220,7 @@
         @endif
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[var(--color-accent)]">
             <div class="max-w-4xl mx-auto">
                 <p class="text-sm uppercase tracking-[0.3em] text-[var(--color-primary)] text-center mb-4">Moment Bahagia</p>

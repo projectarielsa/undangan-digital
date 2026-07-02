@@ -17,6 +17,15 @@ class OtpVerificationController extends Controller
     public function verify(Request $request)
     {
         $request->validate(["code" => "required|string|size:6"]);
+
+        // Rate limit: max 10 verify attempts per minute per user
+        $key = "otp-verify:" . $request->user()->id;
+        if (RateLimiter::tooManyAttempts($key, 10)) {
+            $seconds = RateLimiter::availableIn($key);
+            return back()->withErrors(["code" => "Terlalu banyak percobaan. Coba lagi dalam {$seconds} detik."]);
+        }
+        RateLimiter::hit($key, 60);
+
         $result = $this->otpService->verify($request->user(), $request->code);
         if (!$result["success"]) return back()->withErrors(["code" => $result["message"]]);
         return $request->user()->isSuperAdmin() ? redirect()->route("admin.dashboard") : redirect()->route("customer.dashboard");

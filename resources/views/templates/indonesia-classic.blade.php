@@ -809,7 +809,7 @@
 
 
         {{-- ========== SECTION 7: GALLERY ========== --}}
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-24 px-6 bg-[var(--cream)]">
             <div class="max-w-lg mx-auto">
                 {{-- Section Header --}}
@@ -952,7 +952,7 @@
                 </form>
 
                 {{-- Messages List --}}
-                @if($invitation->guestbooks->count() > 0)
+                @if(($invitation->guestbooks ? $invitation->guestbooks->count() : 0) > 0)
                 <div class="space-y-3 max-h-80 overflow-y-auto pr-1 reveal reveal-d2" style="scrollbar-width: thin; scrollbar-color: var(--border) transparent;">
                     @foreach($invitation->guestbooks->sortByDesc('created_at') as $msg)
                     <div class="message-card">
@@ -978,7 +978,7 @@
 
 
         {{-- ========== SECTION 10: AMPLOP DIGITAL / GIFT ========== --}}
-        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
+        @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-24 px-6 bg-[var(--card)] relative overflow-hidden">
             {{-- Decorative elements --}}
             <div class="batik-corner batik-tl" style="opacity: 0.3; width: 100px; height: 100px;">
@@ -1019,7 +1019,7 @@
                 </div>
 
                 {{-- Bank Transfer --}}
-                @if($invitation->bankAccounts->count() > 0)
+                @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0)
                     @foreach($invitation->bankAccounts as $bank)
                     <div class="event-card mb-5 reveal reveal-d1" x-data="{ copied: false }">
                         <div class="w-12 h-12 mx-auto mb-4 rounded-full bg-[var(--warm)] flex items-center justify-center">
@@ -1027,10 +1027,10 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
                             </svg>
                         </div>
-                        <p class="text-[10px] uppercase tracking-widest text-[var(--muted)] mb-3">{{ $bank->bank_name }}</p>
-                        <p class="text-2xl font-bold text-[var(--text)] tracking-wider mb-1 font-display">{{ $bank->account_number }}</p>
-                        <p class="text-xs text-[var(--muted)]">a.n. {{ $bank->account_name }}</p>
-                        <button @click="navigator.clipboard.writeText('{{ $bank->account_number }}'); copied = true; setTimeout(() => copied = false, 2500)"
+                        <p class="text-[10px] uppercase tracking-widest text-[var(--muted)] mb-3">{{ $bank['bank_name'] }}</p>
+                        <p class="text-2xl font-bold text-[var(--text)] tracking-wider mb-1 font-display">{{ $bank['account_number'] }}</p>
+                        <p class="text-xs text-[var(--muted)]">a.n. {{ $bank['account_name'] }}</p>
+                        <button @click="navigator.clipboard.writeText('{{ $bank['account_number'] }}'); copied = true; setTimeout(() => copied = false, 2500)"
                             class="mt-5 px-6 py-2.5 bg-[var(--warm)] text-[var(--primary)] text-[11px] font-medium rounded-full hover:bg-[var(--primary)] hover:text-white transition-all border border-[var(--border)] cursor-pointer">
                             <span x-show="!copied">
                                 <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>

@@ -34,9 +34,7 @@ class GoogleAuthController extends Controller
                 ->withErrors(['google' => 'Gagal login dengan Google.']);
         }
 
-        $user = User::where('google_id', $gu->getId())
-            ->orWhere('email', $gu->getEmail())
-            ->first();
+        $user = User::where('google_id', $gu->getId())->first();
 
         if (!$user) {
             return redirect()->route('login')
@@ -100,8 +98,7 @@ class GoogleAuthController extends Controller
                 'google_id' => $gu->getId(),
                 'provider' => 'google',
                 'avatar' => $gu->getAvatar(),
-                'role' => 'customer',
-                'is_active' => true,
+                // role and is_active set below (not in fillable)
                 'email_verified_at' => null,
             ]);
         } else {
@@ -109,10 +106,14 @@ class GoogleAuthController extends Controller
                 'google_id' => $user->google_id ?: $gu->getId(),
                 'provider' => 'google',
                 'avatar' => $gu->getAvatar(),
-                'is_active' => true,
+                // is_active set below
                 'email_verified_at' => null,
             ]);
         }
+
+        $user->role = 'customer';
+        $user->is_active = true;
+        $user->save();
 
         Auth::login($user);
 

@@ -120,6 +120,12 @@ class Invitation extends Model
     /**
      * Get bank accounts (with backward compatibility for old single fields)
      */
+    public function getBankAccountsAttribute()
+    {
+        $accounts = $this->bank_accounts_list;
+        return collect($accounts ?: []);
+    }
+
     public function getBankAccountsListAttribute(): array
     {
         // Use new bank_accounts JSON if available

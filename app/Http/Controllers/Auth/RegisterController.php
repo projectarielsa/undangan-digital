@@ -37,8 +37,12 @@ class RegisterController extends Controller
             'email' => $validated['email'],
             'phone' => preg_replace('/^0/', '62', $validated['phone']),
             'password' => Hash::make($validated['password']),
-            'role' => 'customer',
+            // role set below (not in fillable)
         ]);
+
+        $user->role = 'customer';
+        $user->is_active = true;
+        $user->save();
 
         Auth::login($user);
 

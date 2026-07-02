@@ -131,9 +131,11 @@ class DemoInvitation
     {
         if ($name === 'template') return $this->template;
         if ($name === 'event_date') return $this->data->event_date;
-        if ($name === 'galleries') return $this->data->galleries;
-        if ($name === 'guestbooks') return $this->data->guestbooks;
-        if ($name === 'bank_accounts_list') return $this->data->bank_accounts;
+        if ($name === 'galleries') return collect($this->data->galleries ?? []);
+        if ($name === 'guestbooks') return collect($this->data->guestbooks ?? []);
+        if ($name === 'bankAccounts' || $name === 'bank_accounts_list') {
+            return collect($this->data->bank_accounts ?? []);
+        }
         // Return demo photo paths that work with asset('storage/' . $path)
         if ($name === 'groom_photo' && $this->data->groom_photo === 'demo-groom') {
             return '../image/demo/pengantin pria.jpg';

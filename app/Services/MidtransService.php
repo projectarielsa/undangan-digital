@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Illuminate\Support\Str;
 
 class MidtransService
 {
@@ -29,7 +30,7 @@ class MidtransService
      */
     public function createTransaction(User $user, Package $package, ?int $invitationId = null): Payment
     {
-        $orderId = 'INV-' . time() . '-' . $user->id;
+        $orderId = 'INV-' . strtoupper(Str::random(8)) . '-' . $user->id;
         $amount = $package->getEffectivePrice();
 
         $payment = Payment::create([

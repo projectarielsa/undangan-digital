@@ -49,7 +49,7 @@
         <div class="absolute inset-0">
             @php
                 $coverImage = null;
-                if($invitation->galleries->count() > 0) {
+                if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0) {
                     $coverImage = $invitation->galleries->first()->getImageUrl();
                 } elseif($invitation->groom_photo) {
                     $coverImage = asset('storage/' . $invitation->groom_photo);
@@ -335,7 +335,7 @@
 
 
         <!-- ========== GALLERY ========== -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[var(--color-accent)] section-reveal">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-12">

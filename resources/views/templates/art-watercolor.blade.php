@@ -359,7 +359,7 @@
 
 
         <!-- ========== GALLERY ========== -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-white section-watercolor reveal">
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-12">

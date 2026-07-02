@@ -20,10 +20,17 @@
             --muted: #7A8B85;
             --border: rgba(232,117,109,0.15);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Nunito', sans-serif; font-weight: 400; color: var(--text); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        .font-display { font-family: 'Pacifico', cursive; }
-        .font-accent { font-family: 'Josefin Sans', sans-serif; }
+
+        body {
+            font-family: 'Nunito', sans-serif !important;
+            line-height: 1.6 !important;
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            background: white;
+        }
+        .font-display { font-family: 'Pacifico', cursive !important; }
+        .font-accent { font-family: 'Josefin Sans', sans-serif !important; }
         [x-cloak] { display: none !important; }
 
         /* Animations */
@@ -243,7 +250,7 @@
     <div x-show="opened" x-transition:enter="transition ease-out duration-1000" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">
 
         <!-- ===================== HERO SECTION ===================== -->
-        <section class="min-h-screen flex items-center justify-center py-24 px-6 relative overflow-hidden">
+        <section class="min-h-screen flex items-center justify-center py-20 px-6 relative overflow-hidden">
             <!-- Subtle background gradient -->
             <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 20%, rgba(232,117,109,0.05) 0%, transparent 60%)"></div>
 
@@ -527,7 +534,7 @@
 
 
         <!-- ===================== GALLERY ===================== -->
-        @if($invitation->galleries && $invitation->galleries->count() > 0)
+        @if($invitation->galleries && ($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-20 px-6 bg-[var(--sand)] relative overflow-hidden">
             <!-- Decorative palm leaf -->
             <div class="absolute bottom-0 left-0 w-32 h-48 pointer-events-none floating-leaf" style="opacity: 0.08;">
@@ -634,7 +641,7 @@
                 </div>
 
                 <!-- Messages -->
-                @if($invitation->guestbooks && $invitation->guestbooks->count() > 0)
+                @if($invitation->guestbooks && ($invitation->guestbooks ? $invitation->guestbooks->count() : 0) > 0)
                 <div class="space-y-4 max-h-96 overflow-y-auto pr-2 reveal reveal-delay-2">
                     @foreach($invitation->guestbooks->sortByDesc('created_at') as $guestbook)
                     <div class="bg-white rounded-2xl p-5 border border-[var(--border)]" style="box-shadow: 0 2px 12px rgba(232,117,109,0.05);">
@@ -657,7 +664,7 @@
 
 
         <!-- ===================== DIGITAL ENVELOPE ===================== -->
-        @if($invitation->bankAccounts->count() > 0 || $invitation->bank_name || $invitation->qris_image)
+        @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0 || $invitation->bank_name || $invitation->qris_image)
         <section class="py-20 px-6 bg-white relative overflow-hidden">
             <!-- Decorative wave divider top -->
             <div class="absolute top-0 left-0 right-0 pointer-events-none wave-motion" style="opacity: 0.4;">
@@ -676,7 +683,7 @@
                 </div>
 
                 <div class="space-y-5">
-                    @if($invitation->bankAccounts->count() > 0)
+                    @if(($invitation->bankAccounts ? $invitation->bankAccounts->count() : 0) > 0)
                         @foreach($invitation->bankAccounts as $bank)
                         <div class="tropical-card p-6 sm:p-8 reveal reveal-delay-1">
                             <div class="flex items-center gap-4 mb-4">
@@ -684,16 +691,16 @@
                                     <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-accent font-bold text-[var(--text)]">{{ $bank->bank_name }}</p>
+                                    <p class="text-sm font-accent font-bold text-[var(--text)]">{{ $bank['bank_name'] }}</p>
                                     <p class="text-xs text-[var(--muted)]">Transfer Bank</p>
                                 </div>
                             </div>
                             <div class="bg-[var(--sand)] rounded-xl p-4 flex items-center justify-between">
                                 <div>
-                                    <p class="text-lg font-bold text-[var(--text)] font-accent tracking-wider">{{ $bank->account_number }}</p>
-                                    <p class="text-xs text-[var(--muted)] mt-1">a.n. {{ $bank->account_name }}</p>
+                                    <p class="text-lg font-bold text-[var(--text)] font-accent tracking-wider">{{ $bank['account_number'] }}</p>
+                                    <p class="text-xs text-[var(--muted)] mt-1">a.n. {{ $bank['account_name'] }}</p>
                                 </div>
-                                <button onclick="navigator.clipboard.writeText('{{ $bank->account_number }}')" class="p-2 rounded-xl bg-white border border-[var(--border)] hover:border-[var(--teal)] transition-colors" title="Salin">
+                                <button onclick="navigator.clipboard.writeText('{{ $bank['account_number'] }}')" class="p-2 rounded-xl bg-white border border-[var(--border)] hover:border-[var(--teal)] transition-colors" title="Salin">
                                     <svg class="w-5 h-5 text-[var(--teal)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                                 </button>
                             </div>
@@ -745,7 +752,7 @@
         @endif
 
         <!-- ===================== CLOSING TEXT ===================== -->
-        <section class="py-24 px-6 relative overflow-hidden" style="background: linear-gradient(180deg, var(--sand) 0%, rgba(232,117,109,0.05) 100%);">
+        <section class="py-20 px-6 relative overflow-hidden" style="background: linear-gradient(180deg, var(--sand) 0%, rgba(232,117,109,0.05) 100%);">
             <!-- Tropical leaf frame for closing -->
             <div class="absolute top-8 left-4 w-24 h-24 pointer-events-none floating-leaf" style="opacity: 0.12;">
                 <svg viewBox="0 0 100 100" fill="var(--palm)">

@@ -438,7 +438,7 @@
 
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-24 px-6 relative">
             <div class="absolute inset-0 geo-grid opacity-50"></div>
             

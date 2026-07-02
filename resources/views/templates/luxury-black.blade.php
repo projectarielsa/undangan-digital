@@ -217,7 +217,7 @@
         @endif
 
         <!-- Gallery -->
-        @if($invitation->galleries->count() > 0)
+        @if(($invitation->galleries ? $invitation->galleries->count() : 0) > 0)
         <section class="py-24 px-6 bg-[var(--color-accent)]">
             <div class="max-w-5xl mx-auto">
                 <p class="text-xs uppercase tracking-[0.5em] text-[var(--color-primary)] text-center mb-4">Our Precious Moments</p>

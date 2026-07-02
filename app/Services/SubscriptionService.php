@@ -10,6 +10,10 @@ class SubscriptionService
 {
     public function activateFromPayment(Payment $payment): Subscription
     {
+        // Idempotency check: prevent duplicate subscription from webhook retries
+        $existing = Subscription::where('payment_id', $payment->id)->first();
+        if ($existing) return $existing;
+
         $pkg = $payment->package;
         $sub = Subscription::create(['user_id' => $payment->user_id, 'package_id' => $pkg->id, 'payment_id' => $payment->id, 'invitation_id' => $payment->invitation_id, 'status' => 'active', 'starts_at' => now(), 'expires_at' => now()->addDays($pkg->duration_days)]);
         if ($payment->invitation_id) { $inv = Invitation::find($payment->invitation_id); if ($inv) { $inv->update(['package_id' => $pkg->id, 'expires_at' => $sub->expires_at]); if ($inv->isDraft()) $inv->publish(); } }
