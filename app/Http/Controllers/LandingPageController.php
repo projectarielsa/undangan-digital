@@ -9,7 +9,7 @@ class LandingPageController extends Controller
     public function index()
     {
         $packages = Package::active()->ordered()->get();
-        $templates = InvitationTemplate::active()->orderBy("sort_order")->take(9)->get();
+        $templates = InvitationTemplate::active()->orderBy("sort_order")->get();
         $testimonials = Testimonial::active()->take(6)->get();
         return view("landing", compact("packages","templates","testimonials"));
     }

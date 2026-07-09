@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         }
 
         body {
-            font-family:var(--font-base);
+            font-family:var(--font-base) !important;
             line-height:1.6;
             color:var(--brown);
             overflow-x:hidden;
@@ -82,7 +82,7 @@
             border:none;
             cursor:pointer;
             text-decoration:none;
-            font-family:var(--font-base);
+            font-family:var(--font-base) !important;
             box-shadow:0 4px 15px rgba(159,112,154,.35);
             transition:all .3s;
         }
@@ -105,7 +105,7 @@
             background:transparent;
             cursor:pointer;
             text-decoration:none;
-            font-family:var(--font-base);
+            font-family:var(--font-base) !important;
             transition:all .3s;
         }
 
@@ -122,7 +122,7 @@
             border-radius:12px;
             font-size:14px;
             color:var(--brown);
-            font-family:var(--font-base);
+            font-family:var(--font-base) !important;
         }
 
         .inp:focus {
@@ -134,12 +134,23 @@
         .sf {
             min-height:100vh;
             position:relative;
-            overflow:hidden;
             display:flex;
             flex-direction:column;
             justify-content:center;
             align-items:center;
-            padding:80px 20px;
+            padding:80px 24px;
+        }
+
+        @media(min-width:768px) {
+            .sf {
+                padding:80px 48px;
+            }
+        }
+
+        @media(min-width:1024px) {
+            .sf {
+                padding:80px 80px;
+            }
         }
 
         .cd {
@@ -159,7 +170,7 @@
             font-size:1.8rem;
             font-weight:700;
             color:var(--purple);
-            font-family:var(--font-accent);
+            font-family:var(--font-accent) !important;
         }
 
         .cd .l {
@@ -168,7 +179,6 @@
         }
 
         .gi {
-            overflow:hidden;
             border-radius:8px;
             border:3px solid var(--olive);
         }
@@ -188,15 +198,13 @@
             transform:rotate(-4deg);
             border:3px solid var(--olive);
             border-radius:6px;
-            overflow:hidden;
-        }
+            }
 
         .ft2 {
             transform:rotate(2deg);
             border:3px solid var(--olive);
             border-radius:6px;
-            overflow:hidden;
-        }
+            }
 
         .bc {
             display:flex;
@@ -250,21 +258,22 @@
         }
 
         @media(max-width:480px) {
-            .cd{padding:8px 10px;
-            min-width:50px}.cd .n{font-size:1.4rem}.sf{padding:80px 16px};
+            .cd {
+                padding:8px 10px;
+                min-width:50px;
+            }
+            .cd .n {
+                font-size:1.4rem;
+            }
+            .sf {
+                padding:60px 16px;
+            }
         }
 
-        /* Section spacing */
-        .main-content > section + section {
-            margin-top: 40px;
-        }
 
-        .main-content > div + div {
-            margin-top: 40px;
-        }
     </style>
     </head>
-<body x-data="creamApp()" x-cloak>
+<body class="font-body bg-[var(--cream)] text-[var(--brown)] overflow-x-hidden" x-data="creamApp()" x-cloak>
 
     <!-- COVER SECTION -->
     <section x-show="!opened" class="fixed inset-0 z-50 flex items-center justify-center"
@@ -533,8 +542,8 @@
                     <div class="space-y-3">
                         <input type="text" placeholder="Nama" class="inp" x-model="rsvpName">
                         <div class="flex gap-2">
-                            <button @click="rsvpAttend='Hadir'" :class="rsvpAttend=='Hadir'?'btn-c':'btn-o'" class="flex-1 text-sm py-2">Hadir</button>
-                            <button @click="rsvpAttend='Tidak Hadir'" :class="rsvpAttend=='Tidak Hadir'?'btn-c':'btn-o'" class="flex-1 text-sm py-2">Tidak Hadir</button>
+                            <button @click="rsvpAttend='Hadir'" :class="rsvpAttend=='Hadir'?'btn-c':'btn-o' + ' flex-1 text-sm py-2'">Hadir</button>
+                            <button @click="rsvpAttend='Tidak Hadir'" :class="rsvpAttend=='Tidak Hadir'?'btn-c':'btn-o' + ' flex-1 text-sm py-2'">Tidak Hadir</button>
                         </div>
                         <textarea placeholder="Ucapan & Doa" class="inp" rows="3" x-model="rsvpMsg"></textarea>
                         <button @click="submitRsvp()" class="btn-c w-full justify-center">Kirim</button>

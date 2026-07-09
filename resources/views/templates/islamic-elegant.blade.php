@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root { --color-primary: {{ $invitation->color_primary ?? '#1B5E20' }}; --color-secondary: {{ $invitation->color_secondary ?? '#F5F5DC' }}; --color-accent: {{ $invitation->color_accent ?? '#E8F5E9' }}; }
-        .font-arabic { font-family: 'Amiri', serif; }
-        .font-sans { font-family: 'Poppins', sans-serif; }
+        .font-arabic { font-family: 'Amiri', serif !important; }
+        .font-sans { font-family: 'Poppins', sans-serif !important; }
         [x-cloak] { display: none !important; }
         .islamic-pattern { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z' fill='none' stroke='%231B5E20' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E"); background-size: 40px; }
         .geometric-border { border: 2px solid; border-image: repeating-linear-gradient(45deg, var(--color-primary), var(--color-primary) 10px, transparent 10px, transparent 20px) 1; }
     </style>
 </head>
-<body class="font-sans bg-[var(--color-secondary)] text-gray-700 overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-sans bg-[var(--color-secondary)] text-gray-700" x-data="invitationApp()" x-cloak>
 
 
     <!-- Opening Cover -->

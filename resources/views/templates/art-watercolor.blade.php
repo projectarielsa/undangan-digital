@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +13,9 @@
             --color-secondary: {{ $invitation->color_secondary ?? '#3D3D3D' }};
             --color-accent: {{ $invitation->color_accent ?? '#F5EFE6' }};
         }
-        .font-display { font-family: 'Cormorant Garamond', serif; }
-        .font-body { font-family: 'Josefin Sans', sans-serif; }
-        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-display { font-family: 'Cormorant Garamond', serif !important; }
+        .font-body { font-family: 'Josefin Sans', sans-serif !important; }
+        .font-script { font-family: 'Great Vibes', cursive !important; }
         [x-cloak] { display: none !important; }
         .animate-spin-slow { animation: spin 3s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -65,7 +65,7 @@
         }
         .section-watercolor {
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
         .section-watercolor::before {
             content: '';
@@ -116,7 +116,7 @@
     </style>
 </head>
 
-<body class="font-body bg-[var(--color-accent)] text-[var(--color-secondary)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-body bg-[var(--color-accent)] text-[var(--color-secondary)]" x-data="invitationApp()" x-cloak>
 
     <!-- ==================== OPENING COVER ==================== -->
     <section x-show="!opened" class="fixed inset-0 z-50 flex items-center justify-center"

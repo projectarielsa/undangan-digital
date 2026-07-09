@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,8 +14,8 @@
             --color-accent: #F5E6E0;
             --color-gold: #C9A959;
         }
-        .font-display { font-family: 'Cormorant Garamond', serif; }
-        .font-body { font-family: 'Montserrat', sans-serif; }
+        .font-display { font-family: 'Cormorant Garamond', serif !important; }
+        .font-body { font-family: 'Montserrat', sans-serif !important; }
         [x-cloak] { display: none !important; }
         
         /* Animations */
@@ -68,7 +68,7 @@
         .divider-ornament::before, .divider-ornament::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); }
     </style>
 </head>
-<body class="font-body bg-[#FFFAF8] text-[var(--color-secondary)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-body bg-[#FFFAF8] text-[var(--color-secondary)]" x-data="invitationApp()" x-cloak>
 
 
     <!-- Floating Petals Background -->

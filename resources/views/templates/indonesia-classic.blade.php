@@ -21,20 +21,18 @@
             --border: rgba(107,91,75,0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
-            font-family: 'Jost', sans-serif;
+            font-family: 'Jost', sans-serif !important;
             font-weight: 300;
             color: var(--text);
             background: var(--cream);
-            overflow: hidden;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        .font-display { font-family: 'Marcellus', serif; }
-        .font-script { font-family: 'Pinyon Script', cursive; }
+        .font-display { font-family: 'Marcellus', serif !important; }
+        .font-script { font-family: 'Pinyon Script', cursive !important; }
         [x-cloak] { display: none !important; }
 
         /* ============ SCROLL REVEAL ANIMATIONS ============ */
@@ -120,7 +118,7 @@
             color: #FFFFFF;
             font-size: 13px;
             font-weight: 500;
-            font-family: 'Jost', sans-serif;
+            font-family: 'Jost', sans-serif !important;
             letter-spacing: 0.5px;
             border-radius: 50px;
             border: none;
@@ -144,7 +142,7 @@
             color: var(--primary);
             font-size: 13px;
             font-weight: 500;
-            font-family: 'Jost', sans-serif;
+            font-family: 'Jost', sans-serif !important;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -165,7 +163,7 @@
             border-radius: 14px;
             font-size: 14px;
             color: var(--text);
-            font-family: 'Jost', sans-serif;
+            font-family: 'Jost', sans-serif !important;
             font-weight: 300;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -181,7 +179,6 @@
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            overflow: hidden;
             border: 4px solid var(--accent);
             box-shadow: 0 8px 32px rgba(107,91,75,0.15), 0 0 0 8px rgba(196,169,125,0.08);
             margin: 0 auto;
@@ -200,7 +197,6 @@
         }
         .gallery-item {
             border-radius: 16px;
-            overflow: hidden;
             aspect-ratio: 1;
             position: relative;
         }
@@ -278,7 +274,7 @@
         }
     </style>
 </head>
-<body x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-body bg-[var(--cream)] text-[var(--text)]" x-data="invitationApp()" x-cloak>
 
 
     {{-- ========== SVG ORNAMENT DEFINITIONS ========== --}}

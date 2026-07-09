@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +13,8 @@
             --color-secondary: {{ $invitation->color_secondary ?? '#f8f6f4' }}; 
             --color-accent: {{ $invitation->color_accent ?? '#c9a87c' }}; 
         }
-        .font-display { font-family: 'Italiana', serif; }
-        .font-body { font-family: 'Josefin Sans', sans-serif; }
+        .font-display { font-family: 'Italiana', serif !important; }
+        .font-body { font-family: 'Josefin Sans', sans-serif !important; }
         [x-cloak] { display: none !important; }
         
         /* Animations */
@@ -88,7 +88,7 @@
         .section-reveal.revealed { opacity: 1; transform: translateY(0); }
     </style>
 </head>
-<body class="font-body bg-[var(--color-secondary)] text-[var(--color-primary)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-body bg-[var(--color-secondary)] text-[var(--color-primary)]" x-data="invitationApp()" x-cloak>
 
 
     <!-- Decorative Background Elements -->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,17 +19,16 @@
             --accent: #C4956A;
             --border: rgba(74,103,65,0.12);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Josefin Sans', sans-serif;
+            font-family: 'Josefin Sans', sans-serif !important;
             font-weight: 300;
             color: var(--text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
-        .font-display { font-family: 'Amatic SC', cursive; font-weight: 700; }
-        .font-script { font-family: 'Sacramento', cursive; }
-        .font-body { font-family: 'Josefin Sans', sans-serif; }
+        .font-display { font-family: 'Amatic SC', cursive !important; font-weight: 700; }
+        .font-script { font-family: 'Sacramento', cursive !important; }
+        .font-body { font-family: 'Josefin Sans', sans-serif !important; }
         [x-cloak] { display: none !important; }
 
         /* Kraft paper texture background */
@@ -95,7 +94,7 @@
             box-shadow: 0 4px 16px rgba(74,103,65,0.25);
             transition: all 0.3s ease;
             text-decoration: none;
-            font-family: 'Josefin Sans', sans-serif;
+            font-family: 'Josefin Sans', sans-serif !important;
         }
         .btn-green:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(74,103,65,0.35); background: var(--green-light); }
 
@@ -107,7 +106,7 @@
             border-radius: 50px; cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none; background: transparent;
-            font-family: 'Josefin Sans', sans-serif;
+            font-family: 'Josefin Sans', sans-serif !important;
         }
         .btn-outline-green:hover { background: var(--green); color: white; }
 
@@ -117,7 +116,7 @@
             background: var(--kraft); border: 1px solid var(--border);
             border-radius: 12px; font-size: 14px; color: var(--text);
             transition: border-color 0.3s;
-            font-family: 'Josefin Sans', sans-serif;
+            font-family: 'Josefin Sans', sans-serif !important;
         }
         .input-rustic:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(74,103,65,0.08); }
         .input-rustic::placeholder { color: var(--muted); opacity: 0.6; }
@@ -125,11 +124,9 @@
         /* Organic photo shapes */
         .photo-organic {
             border-radius: 60% 40% 50% 50% / 50% 55% 45% 50%;
-            overflow: hidden;
         }
         .photo-organic-alt {
             border-radius: 40% 60% 50% 50% / 55% 45% 55% 45%;
-            overflow: hidden;
         }
 
         /* Masonry gallery */
@@ -144,7 +141,6 @@
         }
         .gallery-masonry .gallery-item {
             border-radius: 12px;
-            overflow: hidden;
             aspect-ratio: 1;
         }
         .gallery-masonry .gallery-item:first-child {
@@ -185,7 +181,7 @@
         }
     </style>
 </head>
-<body class="bg-kraft" x-data="invitationApp()" x-cloak>
+<body class="font-body bg-kraft text-[var(--text)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
 
 
     <!-- ===================== OPENING COVER ===================== -->
