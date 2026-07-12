@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,15 +9,15 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root { --color-primary: {{ $invitation->color_primary ?? '#C9A96E' }}; --color-secondary: {{ $invitation->color_secondary ?? '#0d0d0d' }}; --color-accent: {{ $invitation->color_accent ?? '#1a1a1a' }}; }
-        .font-serif { font-family: 'Cinzel', serif; }
-        .font-sans { font-family: 'Raleway', sans-serif; }
+        .font-serif { font-family: 'Cinzel', serif !important; }
+        .font-sans { font-family: 'Raleway', sans-serif !important; }
         [x-cloak] { display: none !important; }
         .gold-gradient { background: linear-gradient(135deg, #C9A96E 0%, #E8D5A3 50%, #C9A96E 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .border-gold { border-image: linear-gradient(135deg, #C9A96E, #E8D5A3, #C9A96E) 1; }
         .glow { box-shadow: 0 0 30px rgba(201, 169, 110, 0.3); }
     </style>
 </head>
-<body class="font-sans bg-[var(--color-secondary)] text-gray-300 overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-sans bg-[var(--color-secondary)] text-gray-300" x-data="invitationApp()" x-cloak>
 
 
     <!-- Opening Cover -->

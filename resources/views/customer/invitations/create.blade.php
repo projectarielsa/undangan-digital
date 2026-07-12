@@ -194,7 +194,7 @@
                                         </div>
 
                                         <!-- Hover Overlay: Demo Button -->
-                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity z-20 flex items-end justify-center pb-4">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-100 transition-opacity z-20 flex items-end justify-center pb-4">
                                             <a href="{{ route('demo.show', $template->slug) }}" target="_blank"
                                                onclick="event.stopPropagation();"
                                                class="inline-flex items-center gap-1.5 bg-white/95 hover:bg-white text-gray-900 text-xs font-semibold px-4 py-2 rounded-full shadow-lg transition-all hover:scale-105 no-underline">

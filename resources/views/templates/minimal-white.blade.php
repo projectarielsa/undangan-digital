@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,13 +9,13 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root { --color-primary: {{ $invitation->color_primary ?? '#2d2d2d' }}; --color-secondary: {{ $invitation->color_secondary ?? '#ffffff' }}; --color-accent: {{ $invitation->color_accent ?? '#f5f5f5' }}; }
-        .font-serif { font-family: 'Cormorant Garamond', serif; }
-        .font-sans { font-family: 'Montserrat', sans-serif; }
+        .font-serif { font-family: 'Cormorant Garamond', serif !important; }
+        .font-sans { font-family: 'Montserrat', sans-serif !important; }
         [x-cloak] { display: none !important; }
         .line-decoration { width: 60px; height: 1px; background: var(--color-primary); }
     </style>
 </head>
-<body class="font-sans bg-white text-gray-800 overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-sans bg-white text-gray-800" x-data="invitationApp()" x-cloak>
 
     <!-- Opening Cover -->
     <section x-show="!opened" class="fixed inset-0 z-50 flex items-center justify-center bg-white" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">

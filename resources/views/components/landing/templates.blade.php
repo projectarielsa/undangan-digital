@@ -40,100 +40,73 @@
 
                 <!-- CARD CLICKABLE -->
                 <a href="{{ route('demo.show', $template->slug) }}"
-                   class="group relative block">
+                   class="group relative block no-underline">
 
                     <div class="relative bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 group-hover:border-transparent group-hover:-translate-y-2">
 
                         <!-- Preview Area -->
-                        <div class="relative aspect-[3/4] overflow-hidden">
+                        <div class="relative aspect-[3/4] overflow-hidden bg-gray-100 dark:bg-gray-700">
 
-                            <!-- Background -->
+                            @if($template->thumbnail)
+                            <!-- Real Screenshot Thumbnail -->
+                            <img src="{{ asset($template->thumbnail) }}" alt="{{ $template->name }}"
+                                 class="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                 loading="lazy">
+                            @else
+                            <!-- Fallback: Gradient -->
                             <div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110"
                                  style="background: linear-gradient(135deg, {{ $template->color_primary }}30, {{ $template->color_secondary }}20)">
-
-                                <div class="absolute top-8 left-1/2 -translate-x-1/2 w-32 h-32 border border-current opacity-10 rounded-full"
-                                     style="color: {{ $template->color_primary }}">
-                                </div>
-
-                                <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-48 h-48 border border-current opacity-10 rounded-full"
-                                     style="color: {{ $template->color_secondary }}">
+                                <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
+                                    <p class="text-xs font-medium uppercase tracking-[0.3em] mb-4 opacity-60"
+                                       style="color: {{ $template->color_primary }}">
+                                        {{ $template->category }}
+                                    </p>
+                                    <h3 class="text-3xl font-serif font-bold text-gray-900 dark:text-white">
+                                        {{ $template->name }}
+                                    </h3>
                                 </div>
                             </div>
-
-                            <!-- Content -->
-                            <div class="absolute inset-0 flex flex-col items-center justify-center p-8 text-center z-10">
-
-                                <p class="text-xs font-medium uppercase tracking-[0.3em] mb-4 opacity-60"
-                                   style="color: {{ $template->color_primary }}">
-                                    {{ $template->category }}
-                                </p>
-
-                                <h3 class="text-3xl font-serif font-bold text-gray-900 dark:text-white mb-2">
-                                    {{ $template->name }}
-                                </h3>
-
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-[200px]">
-                                    {{ $template->description ?? 'Template undangan yang elegan dan modern' }}
-                                </p>
-
-                                <!-- Palette -->
-                                <div class="flex items-center gap-2 mb-6">
-                                    <div class="w-8 h-8 rounded-full border-2 border-white shadow-md"
-                                         style="background: {{ $template->color_primary }}">
-                                    </div>
-
-                                    <div class="w-8 h-8 rounded-full border-2 border-white shadow-md"
-                                         style="background: {{ $template->color_secondary }}">
-                                    </div>
-                                </div>
-
-                                <!-- MOBILE BUTTON -->
-                                <span class="md:hidden inline-flex px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full shadow-lg">
-                                    Lihat Demo
-                                </span>
-                            </div>
+                            @endif
 
                             <!-- Premium Badge -->
                             @if($template->is_premium)
                                 <div class="absolute top-4 right-4 z-20">
-                                    <div class="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white text-xs font-bold rounded-full shadow-lg">
-                                        PREMIUM
+                                    <div class="px-3 py-1.5 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-bold rounded-full shadow-lg">
+                                        ⭐ PREMIUM
                                     </div>
                                 </div>
                             @endif
 
                             <!-- Desktop Hover Overlay -->
                             <div class="hidden md:flex absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 items-end justify-center pb-8 z-20">
-
                                 <span class="px-6 py-3 bg-white text-gray-900 font-semibold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
                                     Lihat Demo
                                 </span>
                             </div>
 
+                            <!-- Mobile Button -->
+                            <div class="md:hidden absolute bottom-4 left-0 right-0 flex justify-center z-20">
+                                <span class="px-5 py-2 bg-blue-600 text-white text-sm font-semibold rounded-full shadow-lg">
+                                    Lihat Demo
+                                </span>
+                            </div>
                         </div>
 
                         <!-- Footer -->
                         <div class="p-6 border-t border-gray-100 dark:border-gray-700">
                             <div class="flex items-center justify-between">
-
                                 <div>
                                     <h4 class="font-semibold text-gray-900 dark:text-white mb-1">
                                         {{ $template->name }}
                                     </h4>
-
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                                        {{ $template->font_heading ?? 'Elegant Font' }}
+                                    <p class="text-sm text-gray-500 dark:text-gray-400 capitalize">
+                                        {{ $template->category }}
                                     </p>
                                 </div>
-
-                                <div class="flex items-center gap-1 text-blue-500">
-                                    @for($i = 0; $i < 5; $i++)
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                                        </svg>
-                                    @endfor
+                                <div class="flex items-center gap-1">
+                                    <div class="w-5 h-5 rounded-full border-2 border-white shadow-sm" style="background: {{ $template->color_primary }}"></div>
+                                    <div class="w-5 h-5 rounded-full border-2 border-white shadow-sm" style="background: {{ $template->color_secondary }}"></div>
                                 </div>
-
                             </div>
                         </div>
 

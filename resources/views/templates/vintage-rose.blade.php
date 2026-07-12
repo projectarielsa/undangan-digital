@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -135,7 +135,7 @@
             display: inline-flex; align-items: center; gap: 8px;
             padding: 14px 32px;
             background: linear-gradient(135deg, var(--dusty-rose) 0%, var(--rose-dark) 100%);
-            color: white; font-family: 'EB Garamond', serif; font-weight: 500; font-size: 15px;
+            color: white; font-family: 'EB Garamond', serif !important; font-weight: 500; font-size: 15px;
             border-radius: 50px; border: none; cursor: pointer;
             box-shadow: 0 4px 16px rgba(196,136,139,0.3);
             transition: all 0.3s ease;
@@ -148,7 +148,7 @@
             display: inline-flex; align-items: center; gap: 8px;
             padding: 12px 28px;
             border: 1.5px solid var(--dusty-rose);
-            color: var(--dusty-rose); font-family: 'EB Garamond', serif; font-weight: 500; font-size: 14px;
+            color: var(--dusty-rose); font-family: 'EB Garamond', serif !important; font-weight: 500; font-size: 14px;
             border-radius: 50px; cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none; background: transparent;
@@ -162,7 +162,7 @@
             background: white; border: 1px solid var(--border);
             border-radius: 4px; font-size: 14px; color: var(--text);
             transition: border-color 0.3s;
-            font-family: 'Lora', serif;
+            font-family: 'Lora', serif !important;
         }
         .input-vintage:focus { outline: none; border-color: var(--dusty-rose); box-shadow: 0 0 0 3px rgba(196,136,139,0.1); }
         .input-vintage::placeholder { color: var(--muted); opacity: 0.6; }
@@ -223,7 +223,6 @@
         }
         .gallery-grid .gallery-item {
             aspect-ratio: 1;
-            overflow: hidden;
         }
 
         /* Mobile Responsive */
@@ -239,7 +238,7 @@
     </style>
 </head>
 
-<body class="bg-[var(--antique)]" x-data="invitationApp()" x-cloak>
+<body class="font-body bg-[var(--antique)] text-[var(--text)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
 
     <!-- ===================== OPENING COVER ===================== -->
     <section x-show="!opened" class="fixed inset-0 z-50 flex items-center justify-center"

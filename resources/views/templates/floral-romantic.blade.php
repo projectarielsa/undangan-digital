@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root { --color-primary: {{ $invitation->color_primary ?? '#8B4513' }}; --color-secondary: {{ $invitation->color_secondary ?? '#FFF8F0' }}; --color-accent: {{ $invitation->color_accent ?? '#FFE4E1' }}; }
-        .font-script { font-family: 'Great Vibes', cursive; }
-        .font-sans { font-family: 'Open Sans', sans-serif; }
+        .font-script { font-family: 'Great Vibes', cursive !important; }
+        .font-sans { font-family: 'Open Sans', sans-serif !important; }
         [x-cloak] { display: none !important; }
         .floral-bg { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='20' cy='20' r='2' fill='%23FFB6C1' opacity='0.3'/%3E%3Ccircle cx='80' cy='30' r='3' fill='%23DDA0DD' opacity='0.2'/%3E%3Ccircle cx='40' cy='70' r='2' fill='%23FFB6C1' opacity='0.3'/%3E%3Ccircle cx='90' cy='80' r='2' fill='%23DDA0DD' opacity='0.2'/%3E%3C/svg%3E"); }
         .rose-border { border-image: linear-gradient(135deg, #FFB6C1, #DDA0DD, #FFB6C1) 1; }
     </style>
 </head>
-<body class="font-sans bg-[var(--color-secondary)] text-gray-700 overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-sans bg-[var(--color-secondary)] text-gray-700" x-data="invitationApp()" x-cloak>
 
 
     <!-- Opening Cover -->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,7 +83,6 @@
             border-radius: 24px;
             box-shadow: 0 8px 32px rgba(232,117,109,0.08);
             position: relative;
-            overflow: hidden;
         }
         .tropical-card::before {
             content: '';
@@ -103,7 +102,7 @@
             box-shadow: 0 6px 20px rgba(232,117,109,0.35);
             transition: all 0.3s ease;
             text-decoration: none;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Nunito', sans-serif !important;
         }
         .btn-tropical:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(232,117,109,0.45); }
 
@@ -115,7 +114,7 @@
             border-radius: 50px; cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none; background: transparent;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Nunito', sans-serif !important;
         }
         .btn-outline-tropical:hover { background: var(--teal); color: white; }
 
@@ -125,7 +124,7 @@
             background: var(--sand); border: 1.5px solid var(--border);
             border-radius: 16px; font-size: 14px; color: var(--text);
             transition: border-color 0.3s, box-shadow 0.3s;
-            font-family: 'Nunito', sans-serif;
+            font-family: 'Nunito', sans-serif !important;
         }
         .input-tropical:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(43,165,165,0.1); }
         .input-tropical::placeholder { color: var(--muted); opacity: 0.6; }
@@ -138,11 +137,9 @@
         /* Photo shapes */
         .organic-shape {
             border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-            overflow: hidden;
         }
         .organic-shape-alt {
             border-radius: 40% 60% 50% 50% / 50% 40% 60% 50%;
-            overflow: hidden;
         }
 
         /* Mobile Responsive */
@@ -157,7 +154,7 @@
         }
     </style>
 </head>
-<body class="bg-[var(--sand)]" x-data="invitationApp()" x-cloak>
+<body class="font-sans bg-[var(--sand)] text-[var(--text)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
 
 
     <!-- ===================== OPENING COVER ===================== -->
@@ -322,7 +319,7 @@
                         <path d="M55 10 C58 5, 62 3, 65 5 C67 7, 65 10, 62 12 C59 13, 56 12, 55 10Z" fill="var(--palm)" opacity="0.2"/>
                     </svg>
                 </div>
-                <p class="text-base sm:text-lg italic text-[var(--text)]/80 leading-loose font-light" style="font-family: 'Nunito', sans-serif;">"{{ $invitation->opening_text }}"</p>
+                <p class="text-base sm:text-lg italic text-[var(--text)]/80 leading-loose font-light" style="font-family: 'Nunito', sans-serif !important;">"{{ $invitation->opening_text }}"</p>
                 <div class="flex justify-center mt-8" style="transform: scaleY(-1);">
                     <svg width="120" height="30" viewBox="0 0 120 30" fill="none">
                         <path d="M0 15 C20 15, 30 5, 45 8 C55 10, 55 15, 60 15 C65 15, 65 10, 75 8 C90 5, 100 15, 120 15" stroke="var(--teal)" stroke-width="1" opacity="0.4"/>

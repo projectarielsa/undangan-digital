@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +9,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root { --color-primary: {{ $invitation->color_primary ?? '#D4AF37' }}; --color-secondary: {{ $invitation->color_secondary ?? '#1a1a2e' }}; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Lato', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif !important; }
+        .font-sans { font-family: 'Lato', sans-serif !important; }
         [x-cloak] { display: none !important; }
         .animate-spin-slow { animation: spin 3s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="font-sans bg-[#faf8f5] text-gray-800 overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-sans bg-[#faf8f5] text-gray-800" x-data="invitationApp()" x-cloak>
 
     <!-- Opening Cover -->
     <section x-show="!opened" class="fixed inset-0 z-50 flex items-center justify-center bg-[var(--color-secondary)]" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">

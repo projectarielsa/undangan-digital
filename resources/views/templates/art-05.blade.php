@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,9 +13,9 @@
             --color-secondary: {{ $invitation->color_secondary ?? '#2C2C2C' }};
             --color-accent: {{ $invitation->color_accent ?? '#F8F5F0' }};
         }
-        .font-display { font-family: 'Cormorant Garamond', serif; }
-        .font-body { font-family: 'Montserrat', sans-serif; }
-        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-display { font-family: 'Cormorant Garamond', serif !important; }
+        .font-body { font-family: 'Montserrat', sans-serif !important; }
+        .font-script { font-family: 'Great Vibes', cursive !important; }
         [x-cloak] { display: none !important; }
         .animate-spin-slow { animation: spin 3s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -36,7 +36,7 @@
         @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; } }
     </style>
 </head>
-<body class="font-body bg-[var(--color-accent)] text-[var(--color-secondary)] overflow-x-hidden" x-data="invitationApp()" x-cloak>
+<body class="overflow-x-hidden font-body bg-[var(--color-accent)] text-[var(--color-secondary)]" x-data="invitationApp()" x-cloak>
 
 
     <!-- ==================== OPENING COVER WITH PREWED BACKGROUND ==================== -->
